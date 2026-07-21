@@ -1,0 +1,5 @@
+condition,passed,detail
+a_valid_tight_deadline_ratios_at_least_2,True,"valid ratios <=1.35: [1.1, 1.2, 1.35]; strict ladder target <1.35: [1.1, 1.2]"
+b_saving_unique_values_at_least_20,True,minimum unique count=1816
+c_p1_boost_used_in_bad_state,True,maximum Bad-state rate=0.7991967871485943
+d_normal_dmin_is_36_045_ms,True,"{""device_0"": 36.045}"

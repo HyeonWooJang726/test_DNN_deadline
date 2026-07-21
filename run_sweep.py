@@ -1,4 +1,4 @@
-"""CLI entry point: python run_sweep.py --mode {quick|full}."""
+"""CLI entry point: python run_sweep.py --mode {smoke|quick|full}."""
 
 from __future__ import annotations
 
@@ -20,7 +20,9 @@ from metrics import (
     assert_sanity,
     combination_sanity_rows,
     interval_histogram,
+    mode_usage_rows,
     stable_simulation_digest,
+    summarize_saving,
     summarize_policy,
 )
 from plotting import create_all_plots
@@ -38,6 +40,46 @@ def _aggregate(frame: pd.DataFrame, group_columns: list[str], value_columns: lis
     return grouped
 
 
+def _deadline_axis_diagnostics(
+    comparison_aggregate: pd.DataFrame,
+    tolerance_percent: float,
+) -> pd.DataFrame:
+    """Check whether adjacent deadline ratios change the offline oracle gap."""
+    rows: list[dict[str, object]] = []
+    if comparison_aggregate.empty:
+        return pd.DataFrame(rows)
+    for (device, epsilon, skip_mode), group in comparison_aggregate.groupby(
+        ["device", "epsilon", "skip_mode"], dropna=False
+    ):
+        by_deadline = (
+            group.groupby("deadline_ratio", as_index=False)["oracle_gap_percent_mean"]
+            .mean()
+            .sort_values("deadline_ratio")
+        )
+        ratios = by_deadline["deadline_ratio"].to_numpy(dtype=float)
+        gaps = by_deadline["oracle_gap_percent_mean"].to_numpy(dtype=float)
+        differences = np.abs(np.diff(gaps))
+        assessable = len(differences) > 0
+        max_difference = float(np.max(differences)) if assessable else float("nan")
+        active = bool(assessable and max_difference > tolerance_percent)
+        rows.append(
+            {
+                "device": device,
+                "epsilon": epsilon,
+                "skip_mode": skip_mode,
+                "deadline_ratios_json": json.dumps(ratios.tolist()),
+                "oracle_gap_percent_json": json.dumps(gaps.tolist()),
+                "adjacent_abs_differences_percent_json": json.dumps(differences.tolist()),
+                "max_adjacent_abs_difference_percent": max_difference,
+                "tolerance_percent": tolerance_percent,
+                "assessable": assessable,
+                "deadline_axis_active": active,
+                "warning": "deadline axis inactive" if assessable and not active else "",
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plots: bool = True) -> dict[str, Path]:
     config = default_experiment(mode)
     sweep = config.sweep
@@ -49,13 +91,17 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
     preflight_rows: list[dict[str, object]] = []
     channel_rows: list[dict[str, object]] = []
     interval_rows: list[dict[str, object]] = []
+    mode_usage_output_rows: list[dict[str, object]] = []
+    saving_rows: list[dict[str, object]] = []
     sanity_rows: list[dict[str, object]] = []
     digest_rows: list[dict[str, object]] = []
+    warning_rows: list[dict[str, object]] = []
+    saving_seen: set[tuple[str, float, int, float, str]] = set()
 
     first_repro_args = None
     first_repro_digest = None
     device_dmins: dict[str, float] = {}
-    total_trace_count = len(config.devices) * len(sweep.l_values) * len(sweep.seeds)
+    total_trace_count = len(config.devices) * len(sweep.rho_values) * len(sweep.seeds)
     trace_number = 0
 
     for device in config.devices:
@@ -65,20 +111,20 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
         device_dmins[device.name] = d_min
 
         # Pre-flight is analytical and therefore repeated in the table for each
-        # L/skip combination even though feasibility itself is L-invariant.
-        valid_lookup: dict[tuple[int, float, float, str], bool] = {}
-        for l_value in sweep.l_values:
+        # rho/skip combination even though feasibility itself is rho-invariant.
+        valid_lookup: dict[tuple[float, float, float, str], bool] = {}
+        for rho in sweep.rho_values:
             for ratio in sweep.deadline_ratios:
                 deadline_ms = ratio * d_min
                 for epsilon in sweep.epsilons:
                     check = preflight_check(device, channel_config, deadline_ms, epsilon)
                     for skip_mode in sweep.skip_modes:
-                        key = (l_value, ratio, epsilon, skip_mode)
+                        key = (rho, ratio, epsilon, skip_mode)
                         valid_lookup[key] = check.valid
                         preflight_rows.append(
                             {
                                 "device": device.name,
-                                "L": l_value,
+                                "rho": rho,
                                 "deadline_ratio": ratio,
                                 "deadline_ms": deadline_ms,
                                 "epsilon": epsilon,
@@ -93,23 +139,24 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
                             }
                         )
 
-        for l_value in sweep.l_values:
+        for rho in sweep.rho_values:
             source = GilbertElliottChannel(
                 r_good_mbps=channel_config.r_good_mbps,
                 r_bad_mbps=channel_config.r_bad_mbps,
                 pi_bad=channel_config.pi_bad,
-                mean_bad_dwell_slots=l_value,
+                rho=rho,
+                rate_jitter_sigma_log=channel_config.rate_jitter_sigma_log,
                 marginal_tolerance=channel_config.enforce_marginal_tolerance,
                 max_resamples=channel_config.max_trace_resamples,
             )
             for seed in sweep.seeds:
                 trace = source.generate(sweep.t_slots, seed)
                 trace_number += 1
-                print(f"[{trace_number:02d}/{total_trace_count}] device={device.name} L={l_value} seed={seed}", flush=True)
+                print(f"[{trace_number:02d}/{total_trace_count}] device={device.name} rho={rho:g} seed={seed}", flush=True)
                 channel_rows.append(
                     {
                         "device": device.name,
-                        "L": l_value,
+                        "rho": rho,
                         "seed": seed,
                         **trace.metadata,
                     }
@@ -118,7 +165,7 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
                     deadline_ms = ratio * d_min
                     for epsilon in sweep.epsilons:
                         for skip_mode in sweep.skip_modes:
-                            if not valid_lookup[(l_value, ratio, epsilon, skip_mode)]:
+                            if not valid_lookup[(rho, ratio, epsilon, skip_mode)]:
                                 continue
                             simulation = simulate_trace(
                                 trace,
@@ -133,7 +180,7 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
                             )
                             common = {
                                 "device": device.name,
-                                "L": l_value,
+                                "rho": rho,
                                 "seed": seed,
                                 "deadline_ratio": ratio,
                                 "deadline_ms": deadline_ms,
@@ -150,9 +197,27 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
                             for result in simulation.policies.values():
                                 summary = summarize_policy(result, trace.state)
                                 policy_rows.append({**common, **summary})
+                                for usage in mode_usage_rows(result, trace.state):
+                                    mode_usage_output_rows.append({**common, **usage})
                                 if result.name in ("P2", "P3"):
                                     for hist in interval_histogram(result):
                                         interval_rows.append({**common, **hist})
+
+                            saving_key = (device.name, rho, seed, ratio, skip_mode)
+                            if saving_key not in saving_seen:
+                                saving_seen.add(saving_key)
+                                saving_summary = summarize_saving(simulation.costs)
+                                saving_rows.append(
+                                    {
+                                        "device": device.name,
+                                        "rho": rho,
+                                        "seed": seed,
+                                        "deadline_ratio": ratio,
+                                        "deadline_ms": deadline_ms,
+                                        "skip_mode": skip_mode,
+                                        **saving_summary,
+                                    }
+                                )
 
                             energies = {name: result.mean_energy_j for name, result in simulation.policies.items()}
                             p1 = energies["P1"]
@@ -202,20 +267,38 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
     # Channel assertions are evaluated after all seeds are present.
     channel_df = pd.DataFrame(channel_rows)
     for row in channel_rows:
-        passed = abs(float(row["pi_bad_observed"]) - channel_config.pi_bad) <= 0.01 + 1e-12
-        sanity_rows.append({"device": row["device"], "L": row["L"], "seed": row["seed"], "check": "channel_pi_bad_within_0.01", "passed": passed, "detail": f"observed={row['pi_bad_observed']:.6f}"})
+        pi_passed = abs(float(row["pi_bad_observed"]) - channel_config.pi_bad) <= 0.01 + 1e-12
+        rho_passed = abs(float(row["lag1_autocorr"]) - float(row["rho"])) <= 0.03 + 1e-12
+        theory_passed = abs(float(row["lag1_autocorr_theory"]) - float(row["rho"])) <= 1e-12
+        channel_checks = [
+            {
+                "device": row["device"],
+                "rho": row["rho"],
+                "seed": row["seed"],
+                "check": "channel_pi_bad_within_0.01",
+                "passed": pi_passed,
+                "detail": f"observed={row['pi_bad_observed']:.6f}",
+            },
+            {
+                "device": row["device"],
+                "rho": row["rho"],
+                "seed": row["seed"],
+                "check": "channel_rho_within_0.03",
+                "passed": rho_passed,
+                "detail": f"observed={row['lag1_autocorr']:.6f}, specified={row['rho']:.6f}",
+            },
+            {
+                "device": row["device"],
+                "rho": row["rho"],
+                "seed": row["seed"],
+                "check": "channel_rho_theory_matches_specification",
+                "passed": theory_passed,
+                "detail": f"theory={row['lag1_autocorr_theory']:.6f}, specified={row['rho']:.6f}",
+            },
+        ]
+        sanity_rows.extend(channel_checks)
         if strict_sanity:
-            assert passed
-    autocorr_means = channel_df.groupby("L")["lag1_autocorr"].mean()
-    l1_passed = abs(float(autocorr_means.loc[1])) <= 0.30
-    corr_order_passed = float(autocorr_means.loc[50]) > float(autocorr_means.loc[5])
-    channel_global_checks = [
-        {"check": "L1_autocorrelation_approximately_zero", "passed": l1_passed, "detail": f"rho1={autocorr_means.loc[1]:.6f}; formula implies -0.25 at pi_B=0.2"},
-        {"check": "autocorrelation_L50_gt_L5", "passed": corr_order_passed, "detail": f"rho50={autocorr_means.loc[50]:.6f}, rho5={autocorr_means.loc[5]:.6f}"},
-    ]
-    sanity_rows.extend(channel_global_checks)
-    if strict_sanity:
-        assert_sanity(channel_global_checks)
+            assert_sanity(channel_checks)
 
     # Re-run one full combination, including random P0, and compare hashes.
     if first_repro_args is not None:
@@ -230,15 +313,115 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
     comparison_df = pd.DataFrame(comparison_rows)
     preflight_df = pd.DataFrame(preflight_rows)
     interval_df = pd.DataFrame(interval_rows)
-    sanity_df = pd.DataFrame(sanity_rows)
+    mode_usage_df = pd.DataFrame(mode_usage_output_rows)
+    saving_df = pd.DataFrame(saving_rows)
     digest_df = pd.DataFrame(digest_rows)
 
-    policy_group = ["device", "L", "deadline_ratio", "epsilon", "skip_mode", "policy"]
-    policy_values = ["mean_energy_j", "violation_rate", "max_violation_run", "burst_count_ge2", "violation_state_bad_share", "selected_v"]
+    policy_group = ["device", "rho", "deadline_ratio", "epsilon", "skip_mode", "policy"]
+    policy_values = [
+        "mean_energy_j",
+        "violation_rate",
+        "max_violation_run",
+        "burst_count_ge2",
+        "violation_state_bad_share",
+        "boost_use_rate",
+        "boost_use_rate_good",
+        "boost_use_rate_bad",
+        "selected_v",
+    ]
     policy_aggregate = _aggregate(policy_df, policy_group, policy_values)
-    comparison_group = ["device", "L", "deadline_ratio", "epsilon", "skip_mode"]
+    comparison_group = ["device", "rho", "deadline_ratio", "epsilon", "skip_mode"]
     comparison_values = ["discard_gain_percent", "targeting_gain_percent", "oracle_gap_percent", "online_recovery", "p2prime_gap_percent", "pi_bad_observed", "lag1_autocorr"]
     comparison_aggregate = _aggregate(comparison_df, comparison_group, comparison_values)
+    deadline_axis_df = _deadline_axis_diagnostics(
+        comparison_aggregate, sweep.deadline_axis_tolerance_percent
+    )
+
+    for row in saving_rows:
+        if bool(row["saving_degenerate"]):
+            detail = (
+                f"saving degenerate: device={row['device']} rho={row['rho']} "
+                f"seed={row['seed']} D/Dmin={row['deadline_ratio']} "
+                f"skip={row['skip_mode']} unique={row['saving_unique_count']}"
+            )
+            warning_rows.append({"warning": "saving degenerate", "detail": detail})
+            print(f"WARNING: {detail}", file=sys.stderr, flush=True)
+
+    if not deadline_axis_df.empty:
+        for row in deadline_axis_df[deadline_axis_df["warning"] != ""].to_dict("records"):
+            detail = (
+                f"deadline axis inactive: device={row['device']} epsilon={row['epsilon']} "
+                f"skip={row['skip_mode']} max adjacent gap change="
+                f"{row['max_adjacent_abs_difference_percent']:.6g}%"
+            )
+            warning_rows.append({"warning": "deadline axis inactive", "detail": detail})
+            print(f"WARNING: {detail}", file=sys.stderr, flush=True)
+
+    p1_rows = policy_df[policy_df["policy"] == "P1"]
+    boost_used_in_bad = bool(
+        len(p1_rows) and (p1_rows["boost_use_rate_bad"].fillna(0.0) > 0.0).any()
+    )
+    if not boost_used_in_bad:
+        detail = "boost unused: P1 boost use rate is zero in Bad state for every setting"
+        warning_rows.append({"warning": "boost unused", "detail": detail})
+        print(f"WARNING: {detail}", file=sys.stderr, flush=True)
+
+    smoke_rows: list[dict[str, object]] = []
+    if mode == "smoke":
+        valid_tight_ratios = [
+            float(value)
+            for value in sorted(
+                preflight_df.loc[
+                    preflight_df["valid"] & (preflight_df["deadline_ratio"] <= 1.35 + 1e-12),
+                    "deadline_ratio",
+                ].unique()
+            )
+        ]
+        valid_below_1_35 = [value for value in valid_tight_ratios if value < 1.35 - 1e-12]
+        minimum_saving_unique = int(saving_df["saving_unique_count"].min()) if len(saving_df) else 0
+        dmin_unchanged = all(
+            abs(value - 36.045) <= 1e-12 for value in device_dmins.values()
+        )
+        smoke_rows = [
+            {
+                "condition": "a_valid_tight_deadline_ratios_at_least_2",
+                "passed": len(valid_tight_ratios) >= 2 and len(valid_below_1_35) >= 2,
+                "detail": (
+                    f"valid ratios <=1.35: {valid_tight_ratios}; "
+                    f"strict ladder target <1.35: {valid_below_1_35}"
+                ),
+            },
+            {
+                "condition": "b_saving_unique_values_at_least_20",
+                "passed": minimum_saving_unique >= 20,
+                "detail": f"minimum unique count={minimum_saving_unique}",
+            },
+            {
+                "condition": "c_p1_boost_used_in_bad_state",
+                "passed": boost_used_in_bad,
+                "detail": f"maximum Bad-state rate={p1_rows['boost_use_rate_bad'].max() if len(p1_rows) else 0.0}",
+            },
+            {
+                "condition": "d_normal_dmin_is_36_045_ms",
+                "passed": dmin_unchanged,
+                "detail": json.dumps(device_dmins, sort_keys=True),
+            },
+        ]
+        for row in smoke_rows:
+            sanity_rows.append(
+                {
+                    "check": row["condition"],
+                    "passed": row["passed"],
+                    "detail": row["detail"],
+                    "severity": "acceptance",
+                }
+            )
+            status = "PASS" if row["passed"] else "FAIL"
+            print(f"[smoke] {status} {row['condition']}: {row['detail']}", flush=True)
+
+    sanity_df = pd.DataFrame(sanity_rows)
+    warning_df = pd.DataFrame(warning_rows, columns=["warning", "detail"])
+    smoke_df = pd.DataFrame(smoke_rows, columns=["condition", "passed", "detail"])
 
     outputs = {
         "policy_runs": output_dir / "policy_runs.csv",
@@ -252,6 +435,11 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
         "sanity": output_dir / "sanity_checks.csv",
         "digests": output_dir / "reproducibility_hashes.csv",
         "parameters": output_dir / "run_parameters.json",
+        "saving_diagnostics": output_dir / "saving_diagnostics.csv",
+        "mode_usage": output_dir / "mode_usage.csv",
+        "deadline_axis_diagnostics": output_dir / "deadline_axis_diagnostics.csv",
+        "diagnostic_warnings": output_dir / "diagnostic_warnings.csv",
+        "smoke_acceptance": output_dir / "smoke_acceptance.csv",
     }
     policy_df.to_csv(outputs["policy_runs"], index=False)
     policy_aggregate.to_csv(outputs["policy_aggregate"], index=False)
@@ -263,6 +451,11 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
     interval_df.to_csv(outputs["interval_histograms"], index=False)
     sanity_df.to_csv(outputs["sanity"], index=False)
     digest_df.to_csv(outputs["digests"], index=False)
+    saving_df.to_csv(outputs["saving_diagnostics"], index=False)
+    mode_usage_df.to_csv(outputs["mode_usage"], index=False)
+    deadline_axis_df.to_csv(outputs["deadline_axis_diagnostics"], index=False)
+    warning_df.to_csv(outputs["diagnostic_warnings"], index=False)
+    smoke_df.to_csv(outputs["smoke_acceptance"], index=False)
 
     parameter_payload = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
@@ -271,7 +464,9 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
         "config": config.to_dict(),
         "derived_d_min_ms": device_dmins,
         "notes": {
-            "L1_autocorrelation": "The specified transition formula implies rho=-0.25, not exactly zero, for L=1 and pi_B=0.2; tolerance is |rho|<=0.30.",
+            "rho": "The state transition probabilities are inverted directly from stationary pi_B and specified lag-1 rho; rho=0 is i.i.d.",
+            "D_min": "D_min uses normal mode only and is fixed at 36.045 ms for the default profile.",
+            "rate_jitter": "Rates use independent clipped lognormal multiplicative jitter; state occupancy and autocorrelation checks use state labels only.",
             "P2prime": "T>2000 uses cardinality-priced (Lagrangian) exact path DP plus deterministic safe augmentation.",
             "invalid": "Combinations with expected forced violation rate >= epsilon/2 are excluded from policy simulation and retained in preflight.csv.",
         },
@@ -291,13 +486,19 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
             sweep.oracle_gap_mask_percent,
             output_dir,
         )
+    failed_smoke = [row for row in smoke_rows if not bool(row["passed"])]
+    if mode == "smoke" and strict_sanity and failed_smoke:
+        raise AssertionError(
+            "smoke acceptance failures: "
+            + "; ".join(f"{row['condition']} ({row['detail']})" for row in failed_smoke)
+        )
     print(f"Completed {mode} sweep. Outputs: {output_dir.resolve()}")
     return outputs
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--mode", choices=("quick", "full"), default="quick")
+    parser.add_argument("--mode", choices=("smoke", "quick", "full"), default="quick")
     parser.add_argument("--output", type=Path, default=None)
     parser.add_argument("--strict-sanity", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--plots", action=argparse.BooleanOptionalAction, default=True)

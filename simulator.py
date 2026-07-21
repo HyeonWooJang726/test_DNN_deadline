@@ -8,7 +8,12 @@ import numpy as np
 
 from channel import ChannelTrace
 from config import ChannelConfig, DeviceConfig
-from dnn_profile import SlotCosts, compute_slot_costs, state_feasibility
+from dnn_profile import (
+    SlotCosts,
+    compute_slot_costs,
+    infeasible_probability_with_jitter,
+    state_feasibility,
+)
 from policies import (
     P0RandomDrop,
     P1AlwaysMeet,
@@ -50,7 +55,22 @@ def preflight_check(
     bad_ok, bad_points = state_feasibility(
         device.profile, channel.r_bad_mbps, deadline_ms, channel.tx_power_w
     )
-    forced = (1.0 - channel.pi_bad) * (not good_ok) + channel.pi_bad * (not bad_ok)
+    good_forced_probability = infeasible_probability_with_jitter(
+        device.profile,
+        channel.r_good_mbps,
+        deadline_ms,
+        channel.rate_jitter_sigma_log,
+    )
+    bad_forced_probability = infeasible_probability_with_jitter(
+        device.profile,
+        channel.r_bad_mbps,
+        deadline_ms,
+        channel.rate_jitter_sigma_log,
+    )
+    forced = (
+        (1.0 - channel.pi_bad) * good_forced_probability
+        + channel.pi_bad * bad_forced_probability
+    )
     valid = forced < epsilon / 2.0
     if valid:
         reason = "valid: expected forced-violation rate is below epsilon/2"
@@ -60,9 +80,13 @@ def preflight_check(
             missing.append("Good")
         if not bad_ok:
             missing.append("Bad")
+        if missing:
+            cause = f"no feasible split/mode at nominal rate in {','.join(missing)} state(s)"
+        else:
+            cause = "jitter-induced infeasibility"
         reason = (
-            f"invalid: no feasible p in {','.join(missing)} state(s); "
-            f"expected forced rate {forced:.6f} >= epsilon/2 {epsilon/2:.6f}"
+            f"invalid: {cause}; expected forced rate {forced:.6f} "
+            f">= epsilon/2 {epsilon/2:.6f}"
         )
     return PreflightResult(
         good_feasible=good_ok,
@@ -125,4 +149,3 @@ def simulate_trace(
         "P3": P3OnlineThreshold(epsilon, p3_v_values).run(costs),
     }
     return SimulationResult(costs, policies, forced_count, discretionary_budget)
-

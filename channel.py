@@ -35,22 +35,22 @@ class ChannelSource(ABC):
         raise NotImplementedError
 
 
-def transition_probabilities(pi_bad: float, mean_bad_dwell_slots: float) -> tuple[float, float]:
-    """Return (P(B->G), P(G->B)) from stationary pi_B and bad dwell L."""
+def transition_probabilities(pi_bad: float, rho: float) -> tuple[float, float]:
+    """Return transition probabilities from stationary ``pi_B`` and lag-1 ``rho``."""
     if not 0.0 < pi_bad < 1.0:
         raise ValueError("pi_bad must lie strictly between zero and one")
-    if mean_bad_dwell_slots < 1.0:
-        raise ValueError("mean bad dwell must be at least one slot")
-    p_bg = 1.0 / mean_bad_dwell_slots
-    p_gb = pi_bad / (mean_bad_dwell_slots * (1.0 - pi_bad))
-    if p_gb > 1.0:
-        raise ValueError("parameters imply invalid P(G->B)>1")
+    if not -1.0 < rho < 1.0:
+        raise ValueError("rho must lie strictly between -1 and one")
+    p_bg = (1.0 - rho) * (1.0 - pi_bad)
+    p_gb = (1.0 - rho) * pi_bad
+    if p_bg > 1.0 or p_gb > 1.0:
+        raise ValueError("pi_bad and rho imply an invalid transition probability")
     return p_bg, p_gb
 
 
-def theoretical_lag1_autocorrelation(pi_bad: float, mean_bad_dwell_slots: float) -> float:
-    p_bg, p_gb = transition_probabilities(pi_bad, mean_bad_dwell_slots)
-    return 1.0 - p_bg - p_gb
+def theoretical_lag1_autocorrelation(pi_bad: float, rho: float) -> float:
+    transition_probabilities(pi_bad, rho)  # validate the implied matrix
+    return float(rho)
 
 
 @njit(cache=True)
@@ -81,22 +81,26 @@ class GilbertElliottChannel(ChannelSource):
     r_good_mbps: float
     r_bad_mbps: float
     pi_bad: float
-    mean_bad_dwell_slots: float
+    rho: float
+    rate_jitter_sigma_log: float = 0.25
     marginal_tolerance: float | None = 0.01
     max_resamples: int = 1_000
 
     def generate(self, t_slots: int, seed: int) -> ChannelTrace:
         if t_slots <= 0:
             raise ValueError("t_slots must be positive")
-        p_bg, p_gb = transition_probabilities(self.pi_bad, self.mean_bad_dwell_slots)
+        if self.rate_jitter_sigma_log < 0:
+            raise ValueError("rate_jitter_sigma_log must be nonnegative")
+        p_bg, p_gb = transition_probabilities(self.pi_bad, self.rho)
         accepted = None
         observed = float("nan")
         attempt = 0
         # Starting in stationarity removes burn-in. Rejection only controls finite-T
-        # marginal noise for the requested L-invariance sanity check; set tolerance
+        # marginal noise for the requested rho-invariance sanity check; set tolerance
         # to None to obtain an entirely unconditioned Markov trace.
         for attempt in range(self.max_resamples):
-            ss = np.random.SeedSequence([seed, int(self.mean_bad_dwell_slots * 1000), attempt])
+            rho_key = int(round((self.rho + 1.0) * 1_000_000))
+            ss = np.random.SeedSequence([seed, rho_key, attempt])
             rng = np.random.default_rng(ss)
             initial_bad = rng.random() < self.pi_bad
             states = _markov_states(rng.random(t_slots), initial_bad, p_bg, p_gb)
@@ -109,7 +113,20 @@ class GilbertElliottChannel(ChannelSource):
                 f"could not obtain pi_B within tolerance after {self.max_resamples} traces"
             )
 
-        rates = np.where(accepted == BAD, self.r_bad_mbps, self.r_good_mbps).astype(np.float64)
+        base_rates = np.where(accepted == BAD, self.r_bad_mbps, self.r_good_mbps).astype(np.float64)
+        if self.rate_jitter_sigma_log == 0.0:
+            jitter = np.ones(t_slots, dtype=np.float64)
+        else:
+            jitter_rng = np.random.default_rng(
+                np.random.SeedSequence([seed, rho_key, 0x4A495454])
+            )
+            jitter = np.clip(
+                jitter_rng.lognormal(mean=0.0, sigma=self.rate_jitter_sigma_log, size=t_slots),
+                0.5,
+                2.0,
+            )
+        rates = base_rates * jitter
+        jitter_p10, jitter_p50, jitter_p90 = np.quantile(jitter, [0.1, 0.5, 0.9])
         return ChannelTrace(
             rate_mbps=rates,
             state=accepted,
@@ -117,11 +134,16 @@ class GilbertElliottChannel(ChannelSource):
             metadata={
                 "p_bg": p_bg,
                 "p_gb": p_gb,
+                "rho": self.rho,
                 "pi_bad_observed": observed,
                 "lag1_autocorr": lag1_autocorrelation(accepted),
                 "lag1_autocorr_theory": theoretical_lag1_autocorrelation(
-                    self.pi_bad, self.mean_bad_dwell_slots
+                    self.pi_bad, self.rho
                 ),
+                "rate_jitter_sigma_log": self.rate_jitter_sigma_log,
+                "rate_jitter_p10": float(jitter_p10),
+                "rate_jitter_p50": float(jitter_p50),
+                "rate_jitter_p90": float(jitter_p90),
                 "resample_attempt": attempt,
             },
         )

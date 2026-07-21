@@ -2,41 +2,53 @@
 
 This package measures the value of reallocating a long-run deadline-violation
 budget over time. It implements P1, random-budget P0, offline P2, a
-no-consecutive-violation P2′, and virtual-queue P3 over a Gilbert–Elliott or CSV
-channel trace.
+no-consecutive-violation P2-prime, and virtual-queue P3 over a two-state
+Gilbert-Elliott or CSV channel trace.
+
+The local action space is the product of DNN split point and local execution
+mode. The default profile provides `normal` and a faster, higher-energy
+`boost` mode. `D_min` is intentionally defined using normal mode only. The
+synthetic channel is parameterized directly by lag-1 state autocorrelation
+`rho` and applies independent clipped-lognormal rate jitter within each state.
 
 ## Run
 
 ```powershell
 python -m pip install -r requirements.txt
 python -m pytest
+python run_sweep.py --mode smoke
 python run_sweep.py --mode quick
 python run_sweep.py --mode full
 ```
 
-`quick` uses T=10,000 and three seeds while retaining every requested sweep
-axis. `full` uses T=100,000 and ten seeds. Outputs go to `results/quick` or
-`results/full`; use `--output PATH` to override. Sanity assertions are strict by
-default and can be collected without stopping via `--no-strict-sanity`.
+- `smoke`: T=10,000, two seeds, rho in `{0, 0.75, 0.975}`.
+- `quick`: T=10,000, three seeds, full rho/deadline/epsilon grid.
+- `full`: T=100,000, ten seeds, full grid.
 
-## Output interpretation
+Outputs go to `results/<mode>`; use `--output PATH` to override. Sanity
+assertions are strict by default and can be collected without stopping via
+`--no-strict-sanity`. Plotting can be disabled with `--no-plots`.
 
-- `preflight.csv` retains invalid combinations and the exact exclusion reason.
-- `policy_runs.csv` and `policy_aggregate.csv` contain per-seed and mean±SD
-  policy metrics.
-- `comparisons.csv` contains the P1−P0 discard gain, P0−P2 pure temporal
-  targeting gain, online oracle recovery, and P2′ constraint cost.
-- violation patterns, interval histograms, channel statistics, sanity results,
-  stable hashes, JSON parameters, and all requested PNG plots are saved beside
-  them.
+## Main outputs
 
-The specified transition equations imply lag-1 correlation −0.25 at L=1 when
-πB=0.2, rather than exactly zero. The simulator preserves the equations and
-records this fact in both tests and run metadata. The large-T P2′ path uses the
-requested Lagrangian relaxation; the T=20 validation path is an exact
-cardinality DP. Since burst-capable P3 and no-adjacent P2′ optimize over
-different feasible sets, `P2prime <= P3` is recorded as a diagnostic rather
-than a required theorem; all other requested order/budget assertions are
-strict. P3 also uses a known-horizon terminal budget cap in addition to the
-specified virtual-queue threshold, ensuring its finite-run rate cannot exceed
-`floor(epsilon*T)/T` on valid traces.
+- `policy_runs.csv`, `policy_aggregate.csv`: policy energy, violation, burst,
+  selected-V, and boost-use metrics.
+- `comparisons.csv`, `comparison_aggregate.csv`: discard gain, temporal
+  targeting gain, offline oracle gap, online recovery, and P2-prime cost.
+- `preflight.csv`: invalid combinations and exact exclusion reasons under the
+  expected forced-violation `< epsilon/2` rule.
+- `channel_stats.csv`: state occupancy, specified/observed rho, and jitter
+  P10/P50/P90.
+- `saving_diagnostics.csv`: saving P10/P50/P90 and unique-value counts.
+- `mode_usage.csv`: local-mode use by policy and channel state.
+- `deadline_axis_diagnostics.csv`, `diagnostic_warnings.csv`: inactive-axis,
+  degenerate-saving, and unused-boost diagnostics.
+- `smoke_acceptance.csv`: the four smoke acceptance checks.
+- `sanity_checks.csv`, `reproducibility_hashes.csv`: invariant and fixed-seed
+  reproducibility checks.
+- `run_parameters.json`: complete configuration and derived normal-mode
+  `D_min` values.
+
+PNG figures beside the CSV files visualize the energy decomposition, deadline
+heatmaps, rho-dependent online recovery and burstiness, the P2/P2-prime gap,
+and the oracle-gap sanity diagnostic.

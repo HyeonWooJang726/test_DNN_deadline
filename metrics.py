@@ -9,6 +9,7 @@ from typing import Iterable
 import numpy as np
 
 from channel import BAD, GOOD
+from dnn_profile import SlotCosts
 from policies import PolicyResult
 from simulator import SimulationResult
 
@@ -37,6 +38,16 @@ def summarize_policy(
     at_violation = channel_states[result.violate]
     known = at_violation[at_violation >= 0]
     bad_share = float(np.mean(known == BAD)) if len(known) else float("nan")
+    boost_index = (
+        result.mode_names.index("boost") if "boost" in result.mode_names else None
+    )
+    boost = (
+        result.local_mode == boost_index
+        if boost_index is not None
+        else np.zeros(len(result.local_mode), dtype=bool)
+    )
+    good_slots = channel_states == GOOD
+    bad_slots = channel_states == BAD
     return {
         "policy": result.name,
         "mean_energy_j": result.mean_energy_j,
@@ -49,10 +60,63 @@ def summarize_policy(
         "violation_state_bad_share": bad_share,
         "violation_state_good_count": int(np.sum(at_violation == GOOD)),
         "violation_state_bad_count": int(np.sum(at_violation == BAD)),
+        "boost_use_rate": float(np.mean(boost)),
+        "boost_use_rate_good": float(np.mean(boost[good_slots])) if np.any(good_slots) else float("nan"),
+        "boost_use_rate_bad": float(np.mean(boost[bad_slots])) if np.any(bad_slots) else float("nan"),
         "selected_v": float(result.metadata.get("selected_v", np.nan)),
         "q_final": float(result.metadata.get("q_final", np.nan)),
         "q_max": float(result.metadata.get("q_max", np.nan)),
         "policy_metadata_json": json.dumps(result.metadata, sort_keys=True),
+    }
+
+
+def mode_usage_rows(
+    result: PolicyResult,
+    channel_states: np.ndarray,
+) -> list[dict[str, float | int | str]]:
+    """Return local-mode use rates for all slots and for each channel state."""
+    scopes = (
+        ("all", np.ones(len(channel_states), dtype=bool)),
+        ("Good", channel_states == GOOD),
+        ("Bad", channel_states == BAD),
+    )
+    rows: list[dict[str, float | int | str]] = []
+    for mode_index, mode_name in enumerate(result.mode_names):
+        used = result.local_mode == mode_index
+        for state_name, scope in scopes:
+            slot_count = int(scope.sum())
+            use_count = int(np.sum(used & scope))
+            rows.append(
+                {
+                    "policy": result.name,
+                    "local_mode": mode_name,
+                    "channel_state": state_name,
+                    "slot_count": slot_count,
+                    "use_count": use_count,
+                    "use_rate": float(use_count / slot_count) if slot_count else float("nan"),
+                }
+            )
+    return rows
+
+
+def summarize_saving(costs: SlotCosts) -> dict[str, float | int | str | bool]:
+    """Distribution diagnostic for the per-slot energy saving signal."""
+    saving = np.asarray(costs.saving_j, dtype=np.float64)
+    p10, p50, p90 = np.quantile(saving, [0.1, 0.5, 0.9])
+    feasible_saving = saving[costs.feasible]
+    unique_count = int(len(np.unique(np.round(saving, decimals=12))))
+    feasible_unique_count = int(
+        len(np.unique(np.round(feasible_saving, decimals=12)))
+    )
+    degenerate = unique_count < 5
+    return {
+        "saving_p10_j": float(p10),
+        "saving_p50_j": float(p50),
+        "saving_p90_j": float(p90),
+        "saving_unique_count": unique_count,
+        "saving_feasible_unique_count": feasible_unique_count,
+        "saving_degenerate": degenerate,
+        "warning": "saving degenerate" if degenerate else "",
     }
 
 
@@ -127,6 +191,8 @@ def stable_simulation_digest(simulation: SimulationResult) -> str:
         digest.update(name.encode("utf-8"))
         digest.update(np.ascontiguousarray(result.violate).tobytes())
         digest.update(np.ascontiguousarray(result.split_p).tobytes())
+        digest.update(np.ascontiguousarray(result.local_mode).tobytes())
         digest.update(np.ascontiguousarray(result.energy_j).tobytes())
+        digest.update(json.dumps(result.mode_names).encode("utf-8"))
         digest.update(json.dumps(result.metadata, sort_keys=True).encode("utf-8"))
     return digest.hexdigest()

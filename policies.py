@@ -23,8 +23,10 @@ class SlotState:
     t: int
     feasible: bool
     meet_p: int
+    meet_local_mode: int
     meet_energy_j: float
     skip_p: int
+    skip_local_mode: int
     skip_energy_j: float
     saving_j: float
 
@@ -34,7 +36,9 @@ class PolicyResult:
     name: str
     violate: np.ndarray
     split_p: np.ndarray
+    local_mode: np.ndarray
     energy_j: np.ndarray
+    mode_names: tuple[str, ...]
     metadata: dict[str, object] = field(default_factory=dict)
 
     @property
@@ -50,8 +54,8 @@ class Policy(ABC):
     name: str
 
     @abstractmethod
-    def decide(self, state: SlotState) -> tuple[bool, int, float]:
-        """Return (violate, split point, energy in J) for one prepared slot."""
+    def decide(self, state: SlotState) -> tuple[bool, int, int, float]:
+        """Return (violate, split point, local mode, energy) for one slot."""
 
     @abstractmethod
     def run(self, costs: SlotCosts) -> PolicyResult:
@@ -62,17 +66,20 @@ def _result_from_optional_mask(name: str, costs: SlotCosts, optional: np.ndarray
     forced = ~costs.feasible
     violate = forced | optional
     p = np.where(violate, costs.skip_p, costs.meet_p).astype(np.int16)
+    local_mode = np.where(
+        violate, costs.skip_local_mode, costs.meet_local_mode
+    ).astype(np.int8)
     energy = np.where(violate, costs.skip_energy_j, costs.meet_energy_j)
-    return PolicyResult(name, violate, p, energy, metadata)
+    return PolicyResult(name, violate, p, local_mode, energy, costs.mode_names, metadata)
 
 
 class P1AlwaysMeet(Policy):
     name = "P1"
 
-    def decide(self, state: SlotState) -> tuple[bool, int, float]:
+    def decide(self, state: SlotState) -> tuple[bool, int, int, float]:
         if state.feasible:
-            return False, state.meet_p, state.meet_energy_j
-        return True, state.skip_p, state.skip_energy_j
+            return False, state.meet_p, state.meet_local_mode, state.meet_energy_j
+        return True, state.skip_p, state.skip_local_mode, state.skip_energy_j
 
     def run(self, costs: SlotCosts) -> PolicyResult:
         return _result_from_optional_mask(self.name, costs, np.zeros(len(costs.feasible), dtype=bool))
@@ -81,12 +88,12 @@ class P1AlwaysMeet(Policy):
 class _PreparedMaskPolicy(Policy):
     selected: np.ndarray | None = None
 
-    def decide(self, state: SlotState) -> tuple[bool, int, float]:
+    def decide(self, state: SlotState) -> tuple[bool, int, int, float]:
         optional = bool(self.selected is not None and self.selected[state.t])
         violate = (not state.feasible) or optional
         if violate:
-            return True, state.skip_p, state.skip_energy_j
-        return False, state.meet_p, state.meet_energy_j
+            return True, state.skip_p, state.skip_local_mode, state.skip_energy_j
+        return False, state.meet_p, state.meet_local_mode, state.meet_energy_j
 
 
 class P0RandomDrop(_PreparedMaskPolicy):

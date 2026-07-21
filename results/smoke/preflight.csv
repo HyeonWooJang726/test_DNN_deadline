@@ -1,0 +1,145 @@
+device,rho,deadline_ratio,deadline_ms,epsilon,skip_mode,good_feasible,bad_feasible,good_feasible_points,bad_feasible_points,forced_violation_expected,valid,exclusion_reason
+device_0,0.0,1.05,37.84725,0.01,drop,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.005000
+device_0,0.0,1.05,37.84725,0.01,late,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.005000
+device_0,0.0,1.05,37.84725,0.05,drop,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.025000
+device_0,0.0,1.05,37.84725,0.05,late,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.025000
+device_0,0.0,1.05,37.84725,0.1,drop,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.050000
+device_0,0.0,1.05,37.84725,0.1,late,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.050000
+device_0,0.0,1.05,37.84725,0.15,drop,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.075000
+device_0,0.0,1.05,37.84725,0.15,late,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.075000
+device_0,0.0,1.1,39.6495,0.01,drop,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.005000
+device_0,0.0,1.1,39.6495,0.01,late,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.005000
+device_0,0.0,1.1,39.6495,0.05,drop,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.025000
+device_0,0.0,1.1,39.6495,0.05,late,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.025000
+device_0,0.0,1.1,39.6495,0.1,drop,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.050000
+device_0,0.0,1.1,39.6495,0.1,late,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.050000
+device_0,0.0,1.1,39.6495,0.15,drop,True,True,"[5, 6]",[6],0.07244622997999142,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.1,39.6495,0.15,late,True,True,"[5, 6]",[6],0.07244622997999142,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.2,43.254,0.01,drop,True,True,"[0, 5, 6]",[6],0.03353155560607,False,invalid: jitter-induced infeasibility; expected forced rate 0.033532 >= epsilon/2 0.005000
+device_0,0.0,1.2,43.254,0.01,late,True,True,"[0, 5, 6]",[6],0.03353155560607,False,invalid: jitter-induced infeasibility; expected forced rate 0.033532 >= epsilon/2 0.005000
+device_0,0.0,1.2,43.254,0.05,drop,True,True,"[0, 5, 6]",[6],0.03353155560607,False,invalid: jitter-induced infeasibility; expected forced rate 0.033532 >= epsilon/2 0.025000
+device_0,0.0,1.2,43.254,0.05,late,True,True,"[0, 5, 6]",[6],0.03353155560607,False,invalid: jitter-induced infeasibility; expected forced rate 0.033532 >= epsilon/2 0.025000
+device_0,0.0,1.2,43.254,0.1,drop,True,True,"[0, 5, 6]",[6],0.03353155560607,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.2,43.254,0.1,late,True,True,"[0, 5, 6]",[6],0.03353155560607,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.2,43.254,0.15,drop,True,True,"[0, 5, 6]",[6],0.03353155560607,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.2,43.254,0.15,late,True,True,"[0, 5, 6]",[6],0.03353155560607,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.35,48.66075000000001,0.01,drop,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,False,invalid: jitter-induced infeasibility; expected forced rate 0.008290 >= epsilon/2 0.005000
+device_0,0.0,1.35,48.66075000000001,0.01,late,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,False,invalid: jitter-induced infeasibility; expected forced rate 0.008290 >= epsilon/2 0.005000
+device_0,0.0,1.35,48.66075000000001,0.05,drop,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.35,48.66075000000001,0.05,late,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.35,48.66075000000001,0.1,drop,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.35,48.66075000000001,0.1,late,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.35,48.66075000000001,0.15,drop,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.35,48.66075000000001,0.15,late,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.5,54.0675,0.01,drop,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.5,54.0675,0.01,late,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.5,54.0675,0.05,drop,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.5,54.0675,0.05,late,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.5,54.0675,0.1,drop,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.5,54.0675,0.1,late,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.5,54.0675,0.15,drop,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,1.5,54.0675,0.15,late,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,2.0,72.09,0.01,drop,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,2.0,72.09,0.01,late,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,2.0,72.09,0.05,drop,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,2.0,72.09,0.05,late,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,2.0,72.09,0.1,drop,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,2.0,72.09,0.1,late,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,2.0,72.09,0.15,drop,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.0,2.0,72.09,0.15,late,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.05,37.84725,0.01,drop,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.005000
+device_0,0.75,1.05,37.84725,0.01,late,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.005000
+device_0,0.75,1.05,37.84725,0.05,drop,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.025000
+device_0,0.75,1.05,37.84725,0.05,late,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.025000
+device_0,0.75,1.05,37.84725,0.1,drop,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.050000
+device_0,0.75,1.05,37.84725,0.1,late,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.050000
+device_0,0.75,1.05,37.84725,0.15,drop,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.075000
+device_0,0.75,1.05,37.84725,0.15,late,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.075000
+device_0,0.75,1.1,39.6495,0.01,drop,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.005000
+device_0,0.75,1.1,39.6495,0.01,late,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.005000
+device_0,0.75,1.1,39.6495,0.05,drop,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.025000
+device_0,0.75,1.1,39.6495,0.05,late,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.025000
+device_0,0.75,1.1,39.6495,0.1,drop,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.050000
+device_0,0.75,1.1,39.6495,0.1,late,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.050000
+device_0,0.75,1.1,39.6495,0.15,drop,True,True,"[5, 6]",[6],0.07244622997999142,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.1,39.6495,0.15,late,True,True,"[5, 6]",[6],0.07244622997999142,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.2,43.254,0.01,drop,True,True,"[0, 5, 6]",[6],0.03353155560607,False,invalid: jitter-induced infeasibility; expected forced rate 0.033532 >= epsilon/2 0.005000
+device_0,0.75,1.2,43.254,0.01,late,True,True,"[0, 5, 6]",[6],0.03353155560607,False,invalid: jitter-induced infeasibility; expected forced rate 0.033532 >= epsilon/2 0.005000
+device_0,0.75,1.2,43.254,0.05,drop,True,True,"[0, 5, 6]",[6],0.03353155560607,False,invalid: jitter-induced infeasibility; expected forced rate 0.033532 >= epsilon/2 0.025000
+device_0,0.75,1.2,43.254,0.05,late,True,True,"[0, 5, 6]",[6],0.03353155560607,False,invalid: jitter-induced infeasibility; expected forced rate 0.033532 >= epsilon/2 0.025000
+device_0,0.75,1.2,43.254,0.1,drop,True,True,"[0, 5, 6]",[6],0.03353155560607,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.2,43.254,0.1,late,True,True,"[0, 5, 6]",[6],0.03353155560607,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.2,43.254,0.15,drop,True,True,"[0, 5, 6]",[6],0.03353155560607,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.2,43.254,0.15,late,True,True,"[0, 5, 6]",[6],0.03353155560607,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.35,48.66075000000001,0.01,drop,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,False,invalid: jitter-induced infeasibility; expected forced rate 0.008290 >= epsilon/2 0.005000
+device_0,0.75,1.35,48.66075000000001,0.01,late,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,False,invalid: jitter-induced infeasibility; expected forced rate 0.008290 >= epsilon/2 0.005000
+device_0,0.75,1.35,48.66075000000001,0.05,drop,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.35,48.66075000000001,0.05,late,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.35,48.66075000000001,0.1,drop,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.35,48.66075000000001,0.1,late,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.35,48.66075000000001,0.15,drop,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.35,48.66075000000001,0.15,late,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.5,54.0675,0.01,drop,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.5,54.0675,0.01,late,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.5,54.0675,0.05,drop,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.5,54.0675,0.05,late,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.5,54.0675,0.1,drop,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.5,54.0675,0.1,late,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.5,54.0675,0.15,drop,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,1.5,54.0675,0.15,late,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,2.0,72.09,0.01,drop,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,2.0,72.09,0.01,late,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,2.0,72.09,0.05,drop,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,2.0,72.09,0.05,late,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,2.0,72.09,0.1,drop,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,2.0,72.09,0.1,late,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,2.0,72.09,0.15,drop,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.75,2.0,72.09,0.15,late,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.05,37.84725,0.01,drop,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.005000
+device_0,0.975,1.05,37.84725,0.01,late,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.005000
+device_0,0.975,1.05,37.84725,0.05,drop,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.025000
+device_0,0.975,1.05,37.84725,0.05,late,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.025000
+device_0,0.975,1.05,37.84725,0.1,drop,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.050000
+device_0,0.975,1.05,37.84725,0.1,late,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.050000
+device_0,0.975,1.05,37.84725,0.15,drop,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.075000
+device_0,0.975,1.05,37.84725,0.15,late,True,True,"[5, 6]",[6],0.0993583552902707,False,invalid: jitter-induced infeasibility; expected forced rate 0.099358 >= epsilon/2 0.075000
+device_0,0.975,1.1,39.6495,0.01,drop,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.005000
+device_0,0.975,1.1,39.6495,0.01,late,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.005000
+device_0,0.975,1.1,39.6495,0.05,drop,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.025000
+device_0,0.975,1.1,39.6495,0.05,late,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.025000
+device_0,0.975,1.1,39.6495,0.1,drop,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.050000
+device_0,0.975,1.1,39.6495,0.1,late,True,True,"[5, 6]",[6],0.07244622997999142,False,invalid: jitter-induced infeasibility; expected forced rate 0.072446 >= epsilon/2 0.050000
+device_0,0.975,1.1,39.6495,0.15,drop,True,True,"[5, 6]",[6],0.07244622997999142,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.1,39.6495,0.15,late,True,True,"[5, 6]",[6],0.07244622997999142,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.2,43.254,0.01,drop,True,True,"[0, 5, 6]",[6],0.03353155560607,False,invalid: jitter-induced infeasibility; expected forced rate 0.033532 >= epsilon/2 0.005000
+device_0,0.975,1.2,43.254,0.01,late,True,True,"[0, 5, 6]",[6],0.03353155560607,False,invalid: jitter-induced infeasibility; expected forced rate 0.033532 >= epsilon/2 0.005000
+device_0,0.975,1.2,43.254,0.05,drop,True,True,"[0, 5, 6]",[6],0.03353155560607,False,invalid: jitter-induced infeasibility; expected forced rate 0.033532 >= epsilon/2 0.025000
+device_0,0.975,1.2,43.254,0.05,late,True,True,"[0, 5, 6]",[6],0.03353155560607,False,invalid: jitter-induced infeasibility; expected forced rate 0.033532 >= epsilon/2 0.025000
+device_0,0.975,1.2,43.254,0.1,drop,True,True,"[0, 5, 6]",[6],0.03353155560607,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.2,43.254,0.1,late,True,True,"[0, 5, 6]",[6],0.03353155560607,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.2,43.254,0.15,drop,True,True,"[0, 5, 6]",[6],0.03353155560607,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.2,43.254,0.15,late,True,True,"[0, 5, 6]",[6],0.03353155560607,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.35,48.66075000000001,0.01,drop,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,False,invalid: jitter-induced infeasibility; expected forced rate 0.008290 >= epsilon/2 0.005000
+device_0,0.975,1.35,48.66075000000001,0.01,late,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,False,invalid: jitter-induced infeasibility; expected forced rate 0.008290 >= epsilon/2 0.005000
+device_0,0.975,1.35,48.66075000000001,0.05,drop,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.35,48.66075000000001,0.05,late,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.35,48.66075000000001,0.1,drop,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.35,48.66075000000001,0.1,late,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.35,48.66075000000001,0.15,drop,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.35,48.66075000000001,0.15,late,True,True,"[0, 5, 6, 7]",[6],0.008289961396080403,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.5,54.0675,0.01,drop,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.5,54.0675,0.01,late,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.5,54.0675,0.05,drop,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.5,54.0675,0.05,late,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.5,54.0675,0.1,drop,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.5,54.0675,0.1,late,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.5,54.0675,0.15,drop,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,1.5,54.0675,0.15,late,True,True,"[0, 5, 6, 7]","[6, 7]",0.0017313254280474034,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,2.0,72.09,0.01,drop,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,2.0,72.09,0.01,late,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,2.0,72.09,0.05,drop,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,2.0,72.09,0.05,late,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,2.0,72.09,0.1,drop,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,2.0,72.09,0.1,late,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,2.0,72.09,0.15,drop,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2
+device_0,0.975,2.0,72.09,0.15,late,True,True,"[0, 4, 5, 6, 7]","[5, 6, 7]",0.0,True,valid: expected forced-violation rate is below epsilon/2

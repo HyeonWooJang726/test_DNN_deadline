@@ -8,6 +8,21 @@ from typing import Any
 
 
 @dataclass(frozen=True)
+class LocalMode:
+    """Local execution mode applied to the locally executed DNN prefix."""
+
+    name: str
+    speed_scale: float
+    energy_scale: float
+
+    def __post_init__(self) -> None:
+        if not self.name:
+            raise ValueError("local mode name must be non-empty")
+        if self.speed_scale <= 0 or self.energy_scale <= 0:
+            raise ValueError("local mode scales must be positive")
+
+
+@dataclass(frozen=True)
 class DNNProfileConfig:
     """One device's chain-DNN profile.
 
@@ -23,6 +38,12 @@ class DNNProfileConfig:
     # d[p] is the tensor sent after p local blocks; d[0] is the input.
     d_kb: tuple[float, ...] = (150.0, 400.0, 600.0, 450.0, 200.0, 80.0, 30.0, 10.0, 4.0)
     server_speedup: float = 20.0
+    local_modes: tuple[LocalMode, ...] = (
+        LocalMode("normal", 1.0, 1.0),
+        # The prescribed second smoke adjustment lowers 0.55 to 0.42 after
+        # r_B=12 Mbps still left fewer than two valid ratios below 1.35.
+        LocalMode("boost", 0.42, 2.6),
+    )
 
     def __post_init__(self) -> None:
         if len(self.t_loc_ms) != len(self.e_loc_mj):
@@ -33,6 +54,13 @@ class DNNProfileConfig:
             raise ValueError("profile values must be nonnegative")
         if self.server_speedup <= 0:
             raise ValueError("server_speedup must be positive")
+        if not self.local_modes:
+            raise ValueError("at least one local mode is required")
+        names = [mode.name for mode in self.local_modes]
+        if len(names) != len(set(names)):
+            raise ValueError("local mode names must be unique")
+        if "normal" not in names:
+            raise ValueError("local_modes must contain a normal mode")
 
     @property
     def k(self) -> int:
@@ -48,9 +76,11 @@ class DeviceConfig:
 @dataclass(frozen=True)
 class ChannelConfig:
     r_good_mbps: float = 40.0
-    r_bad_mbps: float = 10.0
+    # Raised from 10 after the prescribed smoke adjustment ladder: at 10 Mbps
+    # only D/D_min=1.35 survived at the tight end even with local boost.
+    r_bad_mbps: float = 12.0
     pi_bad: float = 0.2
-    mean_bad_dwell_slots: float = 1.0
+    rate_jitter_sigma_log: float = 0.25
     tx_power_w: float = 1.2
     enforce_marginal_tolerance: float = 0.01
     max_trace_resamples: int = 1_000
@@ -61,14 +91,15 @@ class SweepConfig:
     mode: str
     t_slots: int
     seeds: tuple[int, ...]
-    l_values: tuple[int, ...] = (1, 2, 5, 10, 20, 50)
-    deadline_ratios: tuple[float, ...] = (1.1, 1.3, 1.5, 2.0)
-    epsilons: tuple[float, ...] = (0.01, 0.05, 0.1)
+    rho_values: tuple[float, ...] = (0.0, 0.375, 0.75, 0.875, 0.9375, 0.975)
+    deadline_ratios: tuple[float, ...] = (1.05, 1.1, 1.2, 1.35, 1.5, 2.0)
+    epsilons: tuple[float, ...] = (0.01, 0.05, 0.1, 0.15)
     skip_modes: tuple[str, ...] = ("drop", "late")
     p3_v_values: tuple[float, ...] = (10.0, 100.0, 1_000.0, 10_000.0)
     relative_energy_tolerance: float = 0.005
     violation_tolerance: float = 0.005
     oracle_gap_mask_percent: float = 2.0
+    deadline_axis_tolerance_percent: float = 0.01
 
 
 @dataclass(frozen=True)
@@ -82,7 +113,14 @@ class ExperimentConfig:
 
 
 def default_experiment(mode: str = "quick") -> ExperimentConfig:
-    if mode == "quick":
+    if mode == "smoke":
+        sweep = SweepConfig(
+            mode="smoke",
+            t_slots=10_000,
+            seeds=(1701, 1702),
+            rho_values=(0.0, 0.75, 0.975),
+        )
+    elif mode == "quick":
         sweep = SweepConfig(mode="quick", t_slots=10_000, seeds=(1701, 1702, 1703))
     elif mode == "full":
         sweep = SweepConfig(
@@ -91,7 +129,7 @@ def default_experiment(mode: str = "quick") -> ExperimentConfig:
             seeds=tuple(range(1701, 1711)),
         )
     else:
-        raise ValueError("mode must be 'quick' or 'full'")
+        raise ValueError("mode must be 'smoke', 'quick', or 'full'")
     # A list/tuple of devices is used from day one so a future shared-server
     # extension does not need to change the configuration schema.
     return ExperimentConfig(
