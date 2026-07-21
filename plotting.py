@@ -27,6 +27,14 @@ def _save(fig: plt.Figure, path: Path) -> None:
     plt.close(fig)
 
 
+def _ordinal(ax, values):
+    """비등간격 스윕 값을 등간격 위치에 매핑하고 눈금을 설정."""
+    order = sorted(set(float(v) for v in values))
+    pos = {v: i for i, v in enumerate(order)}
+    ax.set_xticks(range(len(order)), [f"{v:g}" for v in order])
+    return pos
+
+
 def plot_gap_heatmaps(
     comparison_aggregate: pd.DataFrame,
     preflight: pd.DataFrame,
@@ -116,7 +124,8 @@ def plot_decomposition(
     for ax in axes[::3]:
         ax.set_ylabel("Energy normalized by P1 [%]")
     fig.suptitle(
-        f"Energy decomposition (D/Dmin={representative_ratio}, epsilon={representative_epsilon})\n"
+        f"Energy decomposition (D/Dmin={representative_ratio:g}, "
+        f"eps={representative_epsilon:g}, skip=drop/late)\n"
         "P1-P0: discard benefit; P0-P2: temporal-targeting benefit",
         y=1.02,
     )
@@ -142,34 +151,47 @@ def plot_rho_dependence(
     ].sort_values("rho")
 
     fig, ax = plt.subplots(figsize=(7, 4.5))
+    pos = _ordinal(ax, comp["rho"])
     for skip_mode, group in comp.groupby("skip_mode"):
         y = group["online_recovery_mean"].to_numpy(copy=True)
         oracle_gap = group["oracle_gap_percent_mean"].to_numpy()
         y[oracle_gap < gap_mask_percent] = np.nan
-        ax.errorbar(group["rho"], y, yerr=group["online_recovery_std"], marker="o", capsize=3, label=skip_mode)
+        x = [pos[float(value)] for value in group["rho"]]
+        ax.errorbar(x, y, yerr=group["online_recovery_std"], marker="o", capsize=3, label=skip_mode)
     ax.axhline(1.0, color="black", linewidth=0.8, linestyle="--")
-    ax.set(xlabel=r"Lag-1 state autocorrelation $\rho$", ylabel=r"Online recovery $(P1-P3)/(P1-P2)$", title=f"H1b(a): online oracle recovery (gap < {gap_mask_percent:g}% masked)")
-    rho_ticks = sorted(comp["rho"].unique())
-    ax.set_xticks(rho_ticks, [f"{v:g}" for v in rho_ticks])
+    ax.set(
+        xlabel=r"Lag-1 state autocorrelation $\rho$",
+        ylabel=r"Online recovery $(P1-P3)/(P1-P2)$",
+        title=(
+            f"H1b(a): online oracle recovery (gap < {gap_mask_percent:g}% masked)\n"
+            f"(D/Dmin={representative_ratio:g}, eps={representative_epsilon:g}, "
+            "skip=drop/late)"
+        ),
+    )
     ax.grid(alpha=0.25)
     ax.legend()
     _save(fig, output_dir / "rho_online_recovery.png")
 
     for skip_mode, group in pol.groupby("skip_mode"):
         fig, axes = plt.subplots(1, 2, figsize=(11, 4.2))
+        pos = _ordinal(axes[0], group["rho"])
+        _ordinal(axes[1], group["rho"])
         for policy, part in group.groupby("policy"):
             color = POLICY_COLORS[policy]
-            axes[0].errorbar(part["rho"], part["max_violation_run_mean"], yerr=part["max_violation_run_std"], marker="o", capsize=3, color=color, label=policy)
-            axes[1].errorbar(part["rho"], part["burst_count_ge2_mean"], yerr=part["burst_count_ge2_std"], marker="o", capsize=3, color=color, label=policy)
+            x = [pos[float(value)] for value in part["rho"]]
+            axes[0].errorbar(x, part["max_violation_run_mean"], yerr=part["max_violation_run_std"], marker="o", capsize=3, color=color, label=policy)
+            axes[1].errorbar(x, part["burst_count_ge2_mean"], yerr=part["burst_count_ge2_std"], marker="o", capsize=3, color=color, label=policy)
         for ax in axes:
-            rho_ticks = sorted(group["rho"].unique())
-            ax.set_xticks(rho_ticks, [f"{v:g}" for v in rho_ticks])
             ax.set_xlabel(r"Lag-1 state autocorrelation $\rho$")
             ax.grid(alpha=0.25)
             ax.legend()
         axes[0].set_ylabel("Maximum consecutive violations")
         axes[1].set_ylabel("Number of violation bursts (length >= 2)")
-        fig.suptitle(f"H1b(b): violation burstiness ({skip_mode})")
+        fig.suptitle(
+            "H1b(b): violation burstiness\n"
+            f"(D/Dmin={representative_ratio:g}, eps={representative_epsilon:g}, "
+            f"skip={skip_mode})"
+        )
         _save(fig, output_dir / f"rho_burstiness_{skip_mode}.png")
 
     # epsilon=0.15 exceeds pi_B/2 and exposes the P2-P2prime trade-off.
@@ -178,11 +200,18 @@ def plot_rho_dependence(
         & np.isclose(comparison_aggregate["epsilon"], 0.15)
     ].sort_values("rho")
     fig, ax = plt.subplots(figsize=(7, 4.5))
+    pos = _ordinal(ax, comp_gap["rho"])
     for skip_mode, group in comp_gap.groupby("skip_mode"):
-        ax.errorbar(group["rho"], group["p2prime_gap_percent_mean"], yerr=group["p2prime_gap_percent_std"], marker="o", capsize=3, label=skip_mode)
-    rho_ticks = sorted(comp_gap["rho"].unique())
-    ax.set_xticks(rho_ticks, [f"{v:g}" for v in rho_ticks])
-    ax.set(xlabel=r"Lag-1 state autocorrelation $\rho$", ylabel=r"$(P2'-P2)/P1$ [%]", title="H1b(c): no-consecutive-violation cost (epsilon=0.15)")
+        x = [pos[float(value)] for value in group["rho"]]
+        ax.errorbar(x, group["p2prime_gap_percent_mean"], yerr=group["p2prime_gap_percent_std"], marker="o", capsize=3, label=skip_mode)
+    ax.set(
+        xlabel=r"Lag-1 state autocorrelation $\rho$",
+        ylabel=r"$(P2'-P2)/P1$ [%]",
+        title=(
+            "H1b(c): no-consecutive-violation cost\n"
+            f"(D/Dmin={representative_ratio:g}, eps=0.15, skip=drop/late)"
+        ),
+    )
     ax.grid(alpha=0.25)
     ax.legend()
     _save(fig, output_dir / "rho_p2prime_gap.png")
@@ -201,16 +230,18 @@ def plot_oracle_invariance(
     ].sort_values("rho")
     channel_mean = channel_stats.groupby("rho", as_index=False)["pi_bad_observed"].mean()
     fig, ax = plt.subplots(figsize=(7.5, 4.6))
+    pos = _ordinal(ax, pd.concat([data["rho"], channel_mean["rho"]]))
     for skip_mode, group in data.groupby("skip_mode"):
-        ax.errorbar(group["rho"], group["oracle_gap_percent_mean"], yerr=group["oracle_gap_percent_std"], marker="o", capsize=3, label=f"oracle gap ({skip_mode})")
-    rho_ticks = sorted(data["rho"].unique())
-    ax.set_xticks(rho_ticks, [f"{v:g}" for v in rho_ticks])
+        x = [pos[float(value)] for value in group["rho"]]
+        ax.errorbar(x, group["oracle_gap_percent_mean"], yerr=group["oracle_gap_percent_std"], marker="o", capsize=3, label=f"oracle gap ({skip_mode})")
     ax.set_xlabel(r"Lag-1 state autocorrelation $\rho$")
     ax.set_ylabel(r"Offline oracle gap $(P1-P2)/P1$ [%]")
     ax.grid(alpha=0.25)
     ax2 = ax.twinx()
-    ax2.plot(channel_mean["rho"], channel_mean["pi_bad_observed"], color="#d62728", marker="s", linestyle="--", label="observed pi_B")
+    channel_x = [pos[float(value)] for value in channel_mean["rho"]]
+    ax2.plot(channel_x, channel_mean["pi_bad_observed"], color="#d62728", marker="s", linestyle="--", label="observed pi_B")
     ax2.axhline(0.2, color="#d62728", linewidth=0.8, alpha=0.5)
+    ax2.set_ylim(0.18, 0.22)
     ax2.set_ylabel("Observed Bad-state fraction", color="#d62728")
     lines, labels = ax.get_legend_handles_labels()
     lines2, labels2 = ax2.get_legend_handles_labels()
