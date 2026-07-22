@@ -1,0 +1,18 @@
+Resume equivalence test
+=======================
+
+Interrupted run: results/resume_a
+Uninterrupted run: results/resume_b
+Completed checkpoints before forced termination: 26/48
+Resume command: python run_sweep.py --mode smoke --output results/resume_a --resume
+
+Sorted exact-content comparisons:
+  policy_runs.csv: PASS; rows=840; sha256=53d9417e67784f3fa61b79deaccacf07c956051513f0acd19d081a897b42ee8b
+  comparison_aggregate.csv: PASS; rows=84; sha256=01e9c2974b83b0e32e54e544b86bef6ec24c945b60e82ab5d33d8f5c572cec3a
+  sanity_checks.csv: PASS; rows=1535; sha256=eab6b32ac51e99e98ea13e9a4b964d5235b3ebb2c7b647ddac093501de0d8226
+  reproducibility_hashes.csv: PASS; rows=168; sha256=7daedd25cf19189c5b30258b48539bb84efe875236c99f77b2905dc35128dad6
+
+Reproducibility hashes:
+  PASS; rows=168; all keys and sha256 values identical
+
+OVERALL: PASS

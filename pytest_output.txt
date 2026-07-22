@@ -1,0 +1,5 @@
+Command: python -m pytest -q
+
+...................                                                      [100%]
+
+Result: PASS (19 tests, exit code 0)

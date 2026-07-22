@@ -3,3 +3,6 @@ __pycache__/
 .pytest_cache/
 *.pyc
 results/*/checkpoint/
+results/destructive_test/
+results/resume_a/
+results/resume_b/

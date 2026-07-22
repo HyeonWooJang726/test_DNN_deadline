@@ -1,0 +1,50 @@
+Destructive exception-isolation test
+====================================
+
+Command:
+  python run_sweep.py --mode smoke --output results/destructive_test
+
+Temporary test setup:
+  - Added epsilon=0.002 to the smoke sweep only.
+  - The production preflight rule requires expected_forced < epsilon/2. For
+    every default smoke ratio with nonzero forced violations, the observed
+    forced rate was below 2*expected_forced, so no epsilon can both pass that
+    rule and exceed its actual forced count on these fixed traces.
+  - Therefore, epsilon=0.002 was admitted past preflight for this destructive
+    test only so the real simulate_trace forced-count exception path ran.
+
+Outcome: PASS
+  - Process completed normally without crashing.
+  - runtime_failures.csv rows: 54
+  - Exception types: ValueError=54
+  - Seeds recorded: 1701, 1702
+  - Actual forced-count range in recorded messages: 21..1077
+  - Failed combination keys (device/rho/ratio/epsilon/skip): 28
+
+Recorded rows by deadline ratio and skip mode:
+  ratio=1.05, drop: 6
+  ratio=1.05, late: 6
+  ratio=1.10, drop: 6
+  ratio=1.10, late: 6
+  ratio=1.20, drop: 6
+  ratio=1.20, late: 6
+  ratio=1.35, drop: 6
+  ratio=1.35, late: 6
+  ratio=1.50, drop: 3
+  ratio=1.50, late: 3
+
+Isolation/exclusion checks:
+  - Every failed key is marked valid=False with a runtime-invalid exclusion
+    reason in preflight.csv.
+  - Failed keys present in comparison_aggregate.csv: 0
+  - Both gap heatmaps were generated and use the invalid mask.
+  - Normal-epsilon policy rows generated: 840
+  - Nonfailing epsilon=0.002 policy rows generated: 90
+
+Restoration:
+  - The temporary epsilon and destructive-test preflight admission were
+    removed immediately after the run.
+  - git diff --exit-code -- config.py run_sweep.py: PASS (clean)
+
+The generated results/destructive_test directory is validation-only and is
+not committed.
