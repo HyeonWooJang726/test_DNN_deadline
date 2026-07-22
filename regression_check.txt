@@ -1,0 +1,22 @@
+H1 v0.1-h1 -> v0.2-h1 regression check
+old_source=v0.1-h1:results/full
+new_source=results/full
+
+Non-P0 mean_energy_j bitwise comparison:
+  P1: PASS; rows=1680; keys_equal=True; bitwise_mismatches=0
+  P2: PASS; rows=1680; keys_equal=True; bitwise_mismatches=0
+  P2prime: PASS; rows=1680; keys_equal=True; bitwise_mismatches=0
+  P3: PASS; rows=1680; keys_equal=True; bitwise_mismatches=0
+
+P0 intentional RNG-entropy change:
+  P0: PASS; rows=1680; keys_equal=True; changed_rows=1680
+
+P0-derived aggregate metric deltas (new-old, percentage points):
+  discard_gain_percent_mean: PASS; max_abs_delta_pp=0.140572161734; worst_combination=('device_0', 0.375, 1.35, 0.15, 'drop')
+  targeting_gain_percent_mean: PASS; max_abs_delta_pp=0.140572161734; worst_combination=('device_0', 0.375, 1.35, 0.15, 'drop')
+
+Sanity/runtime gate:
+  required sanity failures: PASS; count=0
+  runtime-invalid rows: PASS; count=0
+
+OVERALL: PASS

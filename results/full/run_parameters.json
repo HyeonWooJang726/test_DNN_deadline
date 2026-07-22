@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-07-21T10:06:00.803599+00:00",
+  "generated_utc": "2026-07-22T04:10:43.102605+00:00",
   "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
   "platform": "Windows-10-10.0.26200-SP0",
   "config": {
@@ -52,7 +52,8 @@
               "energy_scale": 2.6
             }
           ]
-        }
+        },
+        "expected_d_min_ms": 36.045
       }
     ],
     "channel": {
@@ -125,6 +126,6 @@
     "D_min": "D_min uses normal mode only and is fixed at 36.045 ms for the default profile.",
     "rate_jitter": "Rates use independent clipped lognormal multiplicative jitter; state occupancy and autocorrelation checks use state labels only.",
     "P2prime": "T>2000 uses cardinality-priced (Lagrangian) exact path DP plus deterministic safe augmentation.",
-    "invalid": "Combinations with expected forced violation rate >= epsilon/2 are excluded from policy simulation and retained in preflight.csv."
+    "invalid": "Preflight-invalid combinations and combinations with any runtime-invalid seed are excluded from aggregates and plots; per-seed runtime failures are retained in runtime_failures.csv."
   }
 }

@@ -27,9 +27,9 @@ the full deadline/ε grid.
 - **H1a — accepted.** At `ε=0.15`, pure temporal-targeting gain
   `(P0-P2)/P1` rises from **11.7%** at `D/D_min=1.1` to **25.9%** at
   `D/D_min=1.35` under the conservative `late` skip model (ρ-averaged values
-  from `comparison_aggregate.csv`: 11.68% and 25.92%). Under `drop`, it spans
+  from `comparison_aggregate.csv`: 11.67% and 25.93%). Under `drop`, it spans
   approximately **15–37%** over the same tight-deadline region and reaches
-  36.77% at `D/D_min=1.35, ε=0.15`. This exceeds the pre-registered 10
+  36.73% at `D/D_min=1.35, ε=0.15`. This exceeds the pre-registered 10
   percentage-point threshold. The gain peaks at `D/D_min=1.35` and grows with
   ε.
 
@@ -98,7 +98,10 @@ python run_sweep.py --mode full
 
 Outputs go to `results/<mode>`; use `--output PATH` to override. Sanity
 assertions are strict by default and can be collected without stopping via
-`--no-strict-sanity`. Plotting can be disabled with `--no-plots`.
+`--no-strict-sanity`. Plotting can be disabled with `--no-plots`. Each
+completed `(D/D_min, ε, skip)` group is checkpointed under
+`results/<mode>/checkpoint`; pass `--resume` to skip completed groups after an
+interruption.
 
 Paper figures are regenerated from committed CSVs without re-simulation:
 
@@ -108,7 +111,7 @@ python replot.py --results results/full
 
 Fixed seeds make full re-runs bit-identical, verified through
 `results/full/reproducibility_hashes.csv`. Results in this README correspond to
-tag `v0.1-h1`.
+tag `v0.2-h1`.
 
 ## Main outputs
 
@@ -118,6 +121,10 @@ tag `v0.1-h1`.
   targeting gain, offline oracle gap, online recovery, and P2' cost.
 - `preflight.csv`: invalid combinations and exact exclusion reasons under the
   expected forced-violation `< ε/2` rule.
+- `runtime_failures.csv`: per-seed `runtime-invalid` combinations and exception
+  messages; these combinations are excluded from aggregates and plots.
+- `checkpoint/`: combination-group raw rows used for incremental persistence
+  and `--resume` (ignored by Git).
 - `channel_stats.csv`: state occupancy, specified/observed ρ, and jitter
   P10/P50/P90.
 - `saving_diagnostics.csv`: saving P10/P50/P90 and unique-value counts.
