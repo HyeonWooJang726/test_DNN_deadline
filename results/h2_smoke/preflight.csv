@@ -1,0 +1,17 @@
+N,channel_sync,rho,deadline_ratio,deadline_ms,d_min_n_ms,epsilon,skip_mode,forced_violation_expected,valid,exclusion_reason
+2,independent,0.0,1.35,60.73650000000001,44.99,0.15,drop,0.0033947977847330504,True,valid: expected forced-violation rate is below epsilon/2
+2,common,0.0,1.35,60.73650000000001,44.99,0.15,drop,0.0033947977847330504,True,valid: expected forced-violation rate is below epsilon/2
+2,independent,0.0,1.35,60.73650000000001,44.99,0.15,late,0.0033947977847330504,True,valid: expected forced-violation rate is below epsilon/2
+2,common,0.0,1.35,60.73650000000001,44.99,0.15,late,0.0033947977847330504,True,valid: expected forced-violation rate is below epsilon/2
+2,independent,0.975,1.35,60.73650000000001,44.99,0.15,drop,0.0033947977847330504,True,valid: expected forced-violation rate is below epsilon/2
+2,common,0.975,1.35,60.73650000000001,44.99,0.15,drop,0.0033947977847330504,True,valid: expected forced-violation rate is below epsilon/2
+2,independent,0.975,1.35,60.73650000000001,44.99,0.15,late,0.0033947977847330504,True,valid: expected forced-violation rate is below epsilon/2
+2,common,0.975,1.35,60.73650000000001,44.99,0.15,late,0.0033947977847330504,True,valid: expected forced-violation rate is below epsilon/2
+4,independent,0.0,1.35,84.888,62.88,0.15,drop,0.0,True,valid: expected forced-violation rate is below epsilon/2
+4,common,0.0,1.35,84.888,62.88,0.15,drop,0.0,True,valid: expected forced-violation rate is below epsilon/2
+4,independent,0.0,1.35,84.888,62.88,0.15,late,0.0,True,valid: expected forced-violation rate is below epsilon/2
+4,common,0.0,1.35,84.888,62.88,0.15,late,0.0,True,valid: expected forced-violation rate is below epsilon/2
+4,independent,0.975,1.35,84.888,62.88,0.15,drop,0.0,True,valid: expected forced-violation rate is below epsilon/2
+4,common,0.975,1.35,84.888,62.88,0.15,drop,0.0,True,valid: expected forced-violation rate is below epsilon/2
+4,independent,0.975,1.35,84.888,62.88,0.15,late,0.0,True,valid: expected forced-violation rate is below epsilon/2
+4,common,0.975,1.35,84.888,62.88,0.15,late,0.0,True,valid: expected forced-violation rate is below epsilon/2

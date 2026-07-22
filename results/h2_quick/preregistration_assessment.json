@@ -1,0 +1,23 @@
+{
+  "criteria": {
+    "scope": "late mode with independent channels",
+    "high_load_region": "N in {4,8}, rho>=0.75, D/D_min(N)<=1.35",
+    "H2a_adopt": "interaction >= 2 percentage points in the high-load region",
+    "H2a_conditional": "interaction in [0.5, 2) percentage points",
+    "H2a_reject": "interaction < 0.5 percentage points throughout",
+    "H2b": "independent interaction exceeds common interaction broadly",
+    "H2c": "J2 fairness is not worse than I2 by violation spread/Jain index"
+  },
+  "observed": {
+    "status": "assessed",
+    "H2a_decision": "reject_on_observed_region",
+    "maximum_high_load_interaction_percent_points": -1.588711250707768,
+    "H2b_independent_higher_pair_count": 0,
+    "H2b_paired_combination_count": 54,
+    "H2b_independent_higher_share": 0.0,
+    "H2b_mean_independent_minus_common_percent_points": -4.769082543169859,
+    "H2c_fairness_not_worse_share": 0.46296296296296297,
+    "H2c_max_violation_spread_increase": 0.11796666666666666,
+    "H2c_min_jain_index_change": -0.3984689706241763
+  }
+}

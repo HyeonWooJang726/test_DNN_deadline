@@ -1,0 +1,52 @@
+H2 shared-server extension validation
+=====================================
+
+H1 preservation
+---------------
+- No H1 simulator, policy, channel, configuration, metric, or committed
+  results/full file was modified.
+- N=1 P1/I1 and P2/I2 arrays are compared bitwise in the automated suite.
+
+Performance gate and Pareto pruning
+-----------------------------------
+- Initial unpruned smoke projection: 6.08 h (> 4 h).
+- Meet-option Pareto pruning was therefore enabled under the preregistered
+  performance rule; the violation option is never pruned against meet actions.
+- Pruned and unpruned I1/I2/J1/J2 violation, action, energy, and allocation
+  arrays match exactly in the automated regression test.
+- Final projected/full-equivalent time: smoke 3.027 h, quick 2.875 h,
+  full measured projection 3.810 h.
+
+Sweep validation
+----------------
+- smoke: required sanity failures 0; runtime failures 0; J2 heuristic source
+  share 1.000000.
+- quick: required sanity failures 0; runtime failures 0; J2 heuristic source
+  share 0.956790.
+- full: required sanity failures 0; runtime failures 0; J2 heuristic source
+  share 0.960648 (I2 guard 0.039352; J1 guard 0).
+- Full decomposition identity maximum absolute error: 1.4211e-14 percentage
+  points. Capacity sanity failures: 0.
+- Full D_min(N): N=2 44.99 ms; N=4 62.88 ms; N=8 98.66 ms.
+- Full deterministic resume equivalence: PASS for policy_runs.csv,
+  policy_aggregate.csv, h2_runs.csv, h2_decomposition.csv,
+  sanity_checks.csv, and reproducibility_hashes.csv.
+
+Preregistered findings (full)
+-----------------------------
+- H2a: reject on observed region; maximum high-load interaction =
+  -1.603202 percentage points.
+- H2b: independent interaction exceeded common interaction in 0/54 paired
+  combinations; mean independent-minus-common = -4.814566 percentage points.
+- H2c: J2 fairness was not worse than I2 in 50.0% of scoped combinations;
+  maximum violation-spread increase 0.115874 and minimum Jain-index change
+  -0.396039. The preregistered fairness expectation is therefore unsupported.
+
+Tests and artifacts
+-------------------
+- python -m pytest -q: 29 passed.
+- H2 checkpoint runtime-failure isolation, non-strict checkpoint survival,
+  interrupted resume equivalence, and full-horizon projection scaling are
+  covered by tests/test_h2_checkpointing.py.
+- Four plots were generated in each H2 results directory: decomposition,
+  interaction heatmaps, independent/common paired control, and fairness table.

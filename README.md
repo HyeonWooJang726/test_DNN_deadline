@@ -113,6 +113,31 @@ Fixed seeds make full re-runs bit-identical, verified through
 `results/full/reproducibility_hashes.csv`. Results in this README correspond to
 tag `v0.2-h1`.
 
+## H2 shared-server extension
+
+H2 models `N` devices sharing a fixed server speedup of 20 through ideal
+GPS-style proportional allocation. `I1` and `I2` retain fixed equal shares
+and exactly reuse the H1 policy path; `J1` jointly reallocates server capacity
+with I1's violation sets fixed; `J2` jointly selects violations and capacity
+with a Lagrangian heuristic, capacity-aware repair, and an `I2`/`J1` guard.
+Late work consumes energy but runs outside the missed slot's real-time server
+capacity. The independent/common channel synchronization control and all
+other modeling assumptions are recorded in each run's `run_parameters.json`.
+
+Run H2 in the preregistered order:
+
+```powershell
+python run_h2_sweep.py --mode smoke
+python run_h2_sweep.py --mode quick
+python run_h2_sweep.py --mode full
+```
+
+H2 outputs go to `results/h2_<mode>`. They include raw and aggregate policy
+CSVs, `h2_decomposition.csv`, `h2_fairness.csv`, capacity/budget sanity
+checks, reproducibility hashes, runtime projection, preregistration
+assessment, and four H2 figures. Checkpoint/resume, preflight exclusion, and
+per-seed runtime-failure isolation follow the H1 workflow.
+
 ## Main outputs
 
 - `policy_runs.csv`, `policy_aggregate.csv`: policy energy, violation, burst,

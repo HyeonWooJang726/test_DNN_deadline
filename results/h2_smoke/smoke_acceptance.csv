@@ -1,0 +1,7 @@
+condition,passed,detail
+a_N1_bitwise_reduction,True,P1/I1 and P2/I2 arrays compared bitwise
+b_required_capacity_budget_sanity,True,required_failures=0
+c1_J1_strictly_improves_I1_somewhere,True,strict_improvement_exists=True
+c2_I2_strictly_improves_I1_somewhere,True,strict_improvement_exists=True
+d_J2_heuristic_adoption_reported,True,heuristic_share=1.000000
+e_full_runtime_projection_reported,True,"{""exceeds_four_hours"": false, ""n8_method"": ""max(linear slope extrapolation, N-linear floor from N=4)"", ""projected_full_hours"": 3.0267089999988457, ""projected_full_seconds_by_N"": {""2"": 1029.93129000497, ""4"": 2981.5209225002036, ""8"": 6884.700187490671}, ""smoke_mean_seconds_per_combination_seed_by_N"": {""2"": 0.28609202500138053, ""4"": 0.8282002562500566}}"

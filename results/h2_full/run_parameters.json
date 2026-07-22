@@ -1,0 +1,159 @@
+{
+  "generated_utc": "2026-07-22T10:49:16.468315+00:00",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "config": {
+    "profile": {
+      "name": "synthetic_alexnet_scale",
+      "t_loc_ms": [
+        2.0,
+        2.5,
+        3.0,
+        3.5,
+        4.0,
+        6.1,
+        75.0,
+        103.9
+      ],
+      "e_loc_mj": [
+        10.0,
+        14.0,
+        18.0,
+        22.0,
+        30.0,
+        46.0,
+        260.0,
+        400.0
+      ],
+      "d_kb": [
+        150.0,
+        400.0,
+        600.0,
+        450.0,
+        200.0,
+        80.0,
+        30.0,
+        10.0,
+        4.0
+      ],
+      "server_speedup": 20.0,
+      "local_modes": [
+        {
+          "name": "normal",
+          "speed_scale": 1.0,
+          "energy_scale": 1.0
+        },
+        {
+          "name": "boost",
+          "speed_scale": 0.42,
+          "energy_scale": 2.6
+        }
+      ]
+    },
+    "channel": {
+      "r_good_mbps": 40.0,
+      "r_bad_mbps": 12.0,
+      "pi_bad": 0.2,
+      "rate_jitter_sigma_log": 0.25,
+      "tx_power_w": 1.2,
+      "enforce_marginal_tolerance": 0.01,
+      "max_trace_resamples": 1000
+    },
+    "sweep": {
+      "mode": "full",
+      "t_slots": 50000,
+      "seeds": [
+        1701,
+        1702,
+        1703,
+        1704,
+        1705,
+        1706,
+        1707,
+        1708,
+        1709,
+        1710
+      ],
+      "n_devices": [
+        2,
+        4,
+        8
+      ],
+      "rho_values": [
+        0.0,
+        0.75,
+        0.975
+      ],
+      "deadline_ratios": [
+        1.2,
+        1.35,
+        1.5
+      ],
+      "epsilons": [
+        0.05,
+        0.15
+      ],
+      "skip_modes": [
+        "drop",
+        "late"
+      ],
+      "channel_sync_values": [
+        "independent",
+        "common"
+      ],
+      "server_total_speedup": 20.0,
+      "capacity_bins": 200,
+      "lambda_iterations": 20,
+      "lambda_eta_initial": 0.5,
+      "lambda_min_factor": 0.0001,
+      "relative_energy_tolerance": 0.005,
+      "violation_tolerance": 1e-12,
+      "grid_resolution_tolerance": 0.001,
+      "heuristic_adoption_warning_threshold": 0.5,
+      "pareto_pruning": true
+    },
+    "late_uses_realtime_capacity": false
+  },
+  "derived_d_min_ms_by_N": {
+    "2": 44.99,
+    "4": 62.88,
+    "8": 98.66
+  },
+  "runtime_projection": {
+    "smoke_mean_seconds_per_combination_seed_by_N": {
+      "2": 2.5339255713885804,
+      "4": 5.3965230074999555,
+      "8": 12.866446042638684
+    },
+    "projected_full_seconds_by_N": {
+      "2": 1824.4264113997779,
+      "4": 3885.496565399968,
+      "8": 8007.636873400348
+    },
+    "projected_full_hours": 3.8104332917222483,
+    "n8_method": "max(linear slope extrapolation, N-linear floor from N=4)",
+    "exceeds_four_hours": false
+  },
+  "J2_source_adoption": {
+    "heuristic": 0.9606481481481481,
+    "I2_guard": 0.03935185185185185,
+    "J1_guard": 0.0
+  },
+  "notes": {
+    "server_model": "Server is a GPS-style proportional-share processor: concurrent execution, linear scaling in f, no partitioning granularity/interference/switching overhead. All policies share this idealization; relaxing it is future work.",
+    "late": "A late violation runs in best-effort/idle time outside real-time capacity and consumes no server capacity in its missed slot; drop also consumes none.",
+    "D_min": "D_min(N) uses normal mode, nominal Good rate, and fixed equal share f=1/N.",
+    "channel_sync": "independent uses device-index entropy; common reuses device-index-zero state and jitter arrays for every device.",
+    "capacity_grid": "minimum shares are rounded upward to 1/200; all configured 1/N shares are exact grid points.",
+    "performance_optimization": "Meet-option Pareto dominance pruning is enabled because the initial unpruned smoke projected 6.08 full hours (>4 h); the violation option is never pruned against meet options.",
+    "tie_rotation": "At slot t the joint DP processes devices in order (i+t) mod N to avoid device-zero tie bias.",
+    "J2": {
+      "lambda_initial": "per-device median positive equal-share saving",
+      "lambda_min_factor": 0.0001,
+      "eta_schedule": "0.5/sqrt(iteration+1)",
+      "max_full_horizon_iterations": 20,
+      "repair": "lowest equal-share-saving violations first; each forced-meet change re-solves the joint slot",
+      "guard": "minimum-energy feasible member of heuristic, I2, and J1"
+    }
+  }
+}

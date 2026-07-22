@@ -1,0 +1,754 @@
+N,channel_sync,rho,seed,deadline_ratio,deadline_ms,d_min_n_ms,epsilon,skip_mode,check,passed,detail,severity
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J2_le_I2,True,"{""I1"": 0.1707881554376455, ""I2"": 0.08964490329790677, ""J1"": 0.1425661147416369, ""J2"": 0.08322405991609484}",required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J2_le_J1,True,"{""I1"": 0.1707881554376455, ""I2"": 0.08964490329790677, ""J1"": 0.1425661147416369, ""J2"": 0.08322405991609484}",required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J1_le_I1,True,"{""I1"": 0.1707881554376455, ""I2"": 0.08964490329790677, ""J1"": 0.1425661147416369, ""J2"": 0.08322405991609484}",required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,energy_I2_le_I1,True,"{""I1"": 0.1707881554376455, ""I2"": 0.08964490329790677, ""J1"": 0.1425661147416369, ""J2"": 0.08322405991609484}",required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_I1_within_one,True,max=1,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I1_device_0,True,count=38 budget=1500,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I1_device_1,True,count=44 budget=1500,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_J1_within_one,True,max=1,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J1_device_0,True,count=38 budget=1500,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J1_device_1,True,count=44 budget=1500,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_I2_within_one,True,max=1,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I2_device_0,True,count=1500 budget=1500,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I2_device_1,True,count=1500 budget=1500,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_J2_within_one,True,max=1,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J2_device_0,True,count=1443 budget=1500,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J2_device_1,True,count=1500 budget=1500,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,decomposition_total_identity,True,error_pp=7.105427357601002e-15,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J2_le_I2,True,"{""I1"": 0.16994422871729584, ""I2"": 0.08816234130948121, ""J1"": 0.14188875124982947, ""J2"": 0.08081530036216}",required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J2_le_J1,True,"{""I1"": 0.16994422871729584, ""I2"": 0.08816234130948121, ""J1"": 0.14188875124982947, ""J2"": 0.08081530036216}",required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J1_le_I1,True,"{""I1"": 0.16994422871729584, ""I2"": 0.08816234130948121, ""J1"": 0.14188875124982947, ""J2"": 0.08081530036216}",required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,energy_I2_le_I1,True,"{""I1"": 0.16994422871729584, ""I2"": 0.08816234130948121, ""J1"": 0.14188875124982947, ""J2"": 0.08081530036216}",required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_I1_within_one,True,max=1,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I1_device_0,True,count=43 budget=1500,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I1_device_1,True,count=33 budget=1500,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_J1_within_one,True,max=1,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J1_device_0,True,count=43 budget=1500,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J1_device_1,True,count=33 budget=1500,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_I2_within_one,True,max=1,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I2_device_0,True,count=1500 budget=1500,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I2_device_1,True,count=1500 budget=1500,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_J2_within_one,True,max=1,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J2_device_0,True,count=1467 budget=1500,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J2_device_1,True,count=1484 budget=1500,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,decomposition_total_identity,True,error_pp=7.105427357601002e-15,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J2_le_I2,True,"{""I1"": 0.16708465372330242, ""I2"": 0.08728414619753487, ""J1"": 0.14099617403684653, ""J2"": 0.07946530188054841}",required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J2_le_J1,True,"{""I1"": 0.16708465372330242, ""I2"": 0.08728414619753487, ""J1"": 0.14099617403684653, ""J2"": 0.07946530188054841}",required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J1_le_I1,True,"{""I1"": 0.16708465372330242, ""I2"": 0.08728414619753487, ""J1"": 0.14099617403684653, ""J2"": 0.07946530188054841}",required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,energy_I2_le_I1,True,"{""I1"": 0.16708465372330242, ""I2"": 0.08728414619753487, ""J1"": 0.14099617403684653, ""J2"": 0.07946530188054841}",required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_I1_within_one,True,max=1,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I1_device_0,True,count=34 budget=1500,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I1_device_1,True,count=32 budget=1500,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_J1_within_one,True,max=1,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J1_device_0,True,count=34 budget=1500,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J1_device_1,True,count=32 budget=1500,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_I2_within_one,True,max=1,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I2_device_0,True,count=1500 budget=1500,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I2_device_1,True,count=1500 budget=1500,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_J2_within_one,True,max=1,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J2_device_0,True,count=1500 budget=1500,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J2_device_1,True,count=1500 budget=1500,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,decomposition_total_identity,True,error_pp=-7.105427357601002e-15,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J2_le_I2,True,"{""I1"": 0.16669972361350394, ""I2"": 0.08674962586986106, ""J1"": 0.14058511037810278, ""J2"": 0.07866259970570998}",required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J2_le_J1,True,"{""I1"": 0.16669972361350394, ""I2"": 0.08674962586986106, ""J1"": 0.14058511037810278, ""J2"": 0.07866259970570998}",required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J1_le_I1,True,"{""I1"": 0.16669972361350394, ""I2"": 0.08674962586986106, ""J1"": 0.14058511037810278, ""J2"": 0.07866259970570998}",required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,energy_I2_le_I1,True,"{""I1"": 0.16669972361350394, ""I2"": 0.08674962586986106, ""J1"": 0.14058511037810278, ""J2"": 0.07866259970570998}",required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_I1_within_one,True,max=1,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I1_device_0,True,count=34 budget=1500,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I1_device_1,True,count=30 budget=1500,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_J1_within_one,True,max=1,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J1_device_0,True,count=34 budget=1500,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J1_device_1,True,count=30 budget=1500,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_I2_within_one,True,max=1,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I2_device_0,True,count=1500 budget=1500,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I2_device_1,True,count=1500 budget=1500,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_J2_within_one,True,max=1,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J2_device_0,True,count=1500 budget=1500,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J2_device_1,True,count=1500 budget=1500,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,decomposition_total_identity,True,error_pp=7.105427357601002e-15,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J2_le_I2,True,"{""I1"": 0.1697505756995429, ""I2"": 0.0893117805142911, ""J1"": 0.15606650371491856, ""J2"": 0.08582169922054536}",required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J2_le_J1,True,"{""I1"": 0.1697505756995429, ""I2"": 0.0893117805142911, ""J1"": 0.15606650371491856, ""J2"": 0.08582169922054536}",required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J1_le_I1,True,"{""I1"": 0.1697505756995429, ""I2"": 0.0893117805142911, ""J1"": 0.15606650371491856, ""J2"": 0.08582169922054536}",required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,energy_I2_le_I1,True,"{""I1"": 0.1697505756995429, ""I2"": 0.0893117805142911, ""J1"": 0.15606650371491856, ""J2"": 0.08582169922054536}",required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_I1_within_one,True,max=1,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I1_device_0,True,count=38 budget=1500,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I1_device_1,True,count=38 budget=1500,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_J1_within_one,True,max=1,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J1_device_0,True,count=38 budget=1500,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J1_device_1,True,count=38 budget=1500,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_I2_within_one,True,max=1,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I2_device_0,True,count=1500 budget=1500,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I2_device_1,True,count=1500 budget=1500,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_J2_within_one,True,max=1,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J2_device_0,True,count=1500 budget=1500,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J2_device_1,True,count=1500 budget=1500,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,decomposition_total_identity,True,error_pp=7.105427357601002e-15,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,drop,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J2_le_I2,True,"{""I1"": 0.17121943853492388, ""I2"": 0.08873862316587257, ""J1"": 0.156080580386876, ""J2"": 0.08565962973313843}",required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J2_le_J1,True,"{""I1"": 0.17121943853492388, ""I2"": 0.08873862316587257, ""J1"": 0.156080580386876, ""J2"": 0.08565962973313843}",required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J1_le_I1,True,"{""I1"": 0.17121943853492388, ""I2"": 0.08873862316587257, ""J1"": 0.156080580386876, ""J2"": 0.08565962973313843}",required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,energy_I2_le_I1,True,"{""I1"": 0.17121943853492388, ""I2"": 0.08873862316587257, ""J1"": 0.156080580386876, ""J2"": 0.08565962973313843}",required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_I1_within_one,True,max=1,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I1_device_0,True,count=43 budget=1500,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I1_device_1,True,count=43 budget=1500,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_J1_within_one,True,max=1,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J1_device_0,True,count=43 budget=1500,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J1_device_1,True,count=43 budget=1500,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_I2_within_one,True,max=1,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I2_device_0,True,count=1500 budget=1500,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I2_device_1,True,count=1500 budget=1500,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_J2_within_one,True,max=1,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J2_device_0,True,count=1486 budget=1500,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J2_device_1,True,count=1500 budget=1500,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,decomposition_total_identity,True,error_pp=0.0,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,drop,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J2_le_I2,True,"{""I1"": 0.16800933431441412, ""I2"": 0.08667916887610809, ""J1"": 0.15471487699933964, ""J2"": 0.08362393551763055}",required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J2_le_J1,True,"{""I1"": 0.16800933431441412, ""I2"": 0.08667916887610809, ""J1"": 0.15471487699933964, ""J2"": 0.08362393551763055}",required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J1_le_I1,True,"{""I1"": 0.16800933431441412, ""I2"": 0.08667916887610809, ""J1"": 0.15471487699933964, ""J2"": 0.08362393551763055}",required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,energy_I2_le_I1,True,"{""I1"": 0.16800933431441412, ""I2"": 0.08667916887610809, ""J1"": 0.15471487699933964, ""J2"": 0.08362393551763055}",required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_I1_within_one,True,max=1,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I1_device_0,True,count=34 budget=1500,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I1_device_1,True,count=34 budget=1500,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_J1_within_one,True,max=1,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J1_device_0,True,count=34 budget=1500,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J1_device_1,True,count=34 budget=1500,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_I2_within_one,True,max=1,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I2_device_0,True,count=1500 budget=1500,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I2_device_1,True,count=1500 budget=1500,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_J2_within_one,True,max=1,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J2_device_0,True,count=1500 budget=1500,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J2_device_1,True,count=1494 budget=1500,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,decomposition_total_identity,True,error_pp=7.105427357601002e-15,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,drop,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J2_le_I2,True,"{""I1"": 0.16810125305528645, ""I2"": 0.0871940711241366, ""J1"": 0.1550247983823703, ""J2"": 0.08377041421326366}",required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J2_le_J1,True,"{""I1"": 0.16810125305528645, ""I2"": 0.0871940711241366, ""J1"": 0.1550247983823703, ""J2"": 0.08377041421326366}",required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,energy_J1_le_I1,True,"{""I1"": 0.16810125305528645, ""I2"": 0.0871940711241366, ""J1"": 0.1550247983823703, ""J2"": 0.08377041421326366}",required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,energy_I2_le_I1,True,"{""I1"": 0.16810125305528645, ""I2"": 0.0871940711241366, ""J1"": 0.1550247983823703, ""J2"": 0.08377041421326366}",required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_I1_within_one,True,max=1,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I1_device_0,True,count=34 budget=1500,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I1_device_1,True,count=34 budget=1500,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_J1_within_one,True,max=1,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J1_device_0,True,count=34 budget=1500,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J1_device_1,True,count=34 budget=1500,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_I2_within_one,True,max=1,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I2_device_0,True,count=1500 budget=1500,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_I2_device_1,True,count=1500 budget=1500,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,capacity_J2_within_one,True,max=1,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J2_device_0,True,count=1500 budget=1500,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,budget_J2_device_1,True,count=1487 budget=1500,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,decomposition_total_identity,True,error_pp=0.0,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,drop,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,energy_J2_le_I2,True,"{""I1"": 0.17229834659013482, ""I2"": 0.12610708907290863, ""J1"": 0.14407630589412623, ""J2"": 0.11673645609111773}",required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,energy_J2_le_J1,True,"{""I1"": 0.17229834659013482, ""I2"": 0.12610708907290863, ""J1"": 0.14407630589412623, ""J2"": 0.11673645609111773}",required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,energy_J1_le_I1,True,"{""I1"": 0.17229834659013482, ""I2"": 0.12610708907290863, ""J1"": 0.14407630589412623, ""J2"": 0.11673645609111773}",required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,energy_I2_le_I1,True,"{""I1"": 0.17229834659013482, ""I2"": 0.12610708907290863, ""J1"": 0.14407630589412623, ""J2"": 0.11673645609111773}",required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,capacity_I1_within_one,True,max=1,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_I1_device_0,True,count=38 budget=1500,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_I1_device_1,True,count=44 budget=1500,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,capacity_J1_within_one,True,max=1,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_J1_device_0,True,count=38 budget=1500,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_J1_device_1,True,count=44 budget=1500,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,capacity_I2_within_one,True,max=1,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_I2_device_0,True,count=1500 budget=1500,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_I2_device_1,True,count=1500 budget=1500,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,capacity_J2_within_one,True,max=1,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_J2_device_0,True,count=1498 budget=1500,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_J2_device_1,True,count=1500 budget=1500,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,decomposition_total_identity,True,error_pp=-3.552713678800501e-15,required
+2.0,independent,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,energy_J2_le_I2,True,"{""I1"": 0.1713470717058395, ""I2"": 0.12469656570003487, ""J1"": 0.14329159423837315, ""J2"": 0.11563915330546051}",required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,energy_J2_le_J1,True,"{""I1"": 0.1713470717058395, ""I2"": 0.12469656570003487, ""J1"": 0.14329159423837315, ""J2"": 0.11563915330546051}",required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,energy_J1_le_I1,True,"{""I1"": 0.1713470717058395, ""I2"": 0.12469656570003487, ""J1"": 0.14329159423837315, ""J2"": 0.11563915330546051}",required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,energy_I2_le_I1,True,"{""I1"": 0.1713470717058395, ""I2"": 0.12469656570003487, ""J1"": 0.14329159423837315, ""J2"": 0.11563915330546051}",required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,capacity_I1_within_one,True,max=1,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_I1_device_0,True,count=43 budget=1500,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_I1_device_1,True,count=33 budget=1500,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,capacity_J1_within_one,True,max=1,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_J1_device_0,True,count=43 budget=1500,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_J1_device_1,True,count=33 budget=1500,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,capacity_I2_within_one,True,max=1,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_I2_device_0,True,count=1500 budget=1500,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_I2_device_1,True,count=1500 budget=1500,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,capacity_J2_within_one,True,max=1,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_J2_device_0,True,count=1495 budget=1500,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_J2_device_1,True,count=1500 budget=1500,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,decomposition_total_identity,True,error_pp=0.0,required
+2.0,independent,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,energy_J2_le_I2,True,"{""I1"": 0.16830184578444432, ""I2"": 0.12328338044621814, ""J1"": 0.14221336609798838, ""J2"": 0.11447143111456216}",required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,energy_J2_le_J1,True,"{""I1"": 0.16830184578444432, ""I2"": 0.12328338044621814, ""J1"": 0.14221336609798838, ""J2"": 0.11447143111456216}",required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,energy_J1_le_I1,True,"{""I1"": 0.16830184578444432, ""I2"": 0.12328338044621814, ""J1"": 0.14221336609798838, ""J2"": 0.11447143111456216}",required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,energy_I2_le_I1,True,"{""I1"": 0.16830184578444432, ""I2"": 0.12328338044621814, ""J1"": 0.14221336609798838, ""J2"": 0.11447143111456216}",required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,capacity_I1_within_one,True,max=1,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_I1_device_0,True,count=34 budget=1500,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_I1_device_1,True,count=32 budget=1500,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,capacity_J1_within_one,True,max=1,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_J1_device_0,True,count=34 budget=1500,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_J1_device_1,True,count=32 budget=1500,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,capacity_I2_within_one,True,max=1,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_I2_device_0,True,count=1500 budget=1500,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_I2_device_1,True,count=1500 budget=1500,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,capacity_J2_within_one,True,max=1,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_J2_device_0,True,count=1500 budget=1500,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_J2_device_1,True,count=1499 budget=1500,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,decomposition_total_identity,True,error_pp=-3.552713678800501e-15,required
+2.0,independent,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,energy_J2_le_I2,True,"{""I1"": 0.16787647450247367, ""I2"": 0.12275653185040933, ""J1"": 0.1417618612670725, ""J2"": 0.11344547167037422}",required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,energy_J2_le_J1,True,"{""I1"": 0.16787647450247367, ""I2"": 0.12275653185040933, ""J1"": 0.1417618612670725, ""J2"": 0.11344547167037422}",required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,energy_J1_le_I1,True,"{""I1"": 0.16787647450247367, ""I2"": 0.12275653185040933, ""J1"": 0.1417618612670725, ""J2"": 0.11344547167037422}",required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,energy_I2_le_I1,True,"{""I1"": 0.16787647450247367, ""I2"": 0.12275653185040933, ""J1"": 0.1417618612670725, ""J2"": 0.11344547167037422}",required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,capacity_I1_within_one,True,max=1,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_I1_device_0,True,count=34 budget=1500,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_I1_device_1,True,count=30 budget=1500,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,capacity_J1_within_one,True,max=1,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_J1_device_0,True,count=34 budget=1500,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_J1_device_1,True,count=30 budget=1500,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,capacity_I2_within_one,True,max=1,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_I2_device_0,True,count=1500 budget=1500,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_I2_device_1,True,count=1500 budget=1500,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,capacity_J2_within_one,True,max=1,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_J2_device_0,True,count=1500 budget=1500,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_J2_device_1,True,count=1500 budget=1500,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,decomposition_total_identity,True,error_pp=0.0,required
+2.0,independent,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,energy_J2_le_I2,True,"{""I1"": 0.17114993099126063, ""I2"": 0.1255377373863664, ""J1"": 0.15746585900663626, ""J2"": 0.12013470318975569}",required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,energy_J2_le_J1,True,"{""I1"": 0.17114993099126063, ""I2"": 0.1255377373863664, ""J1"": 0.15746585900663626, ""J2"": 0.12013470318975569}",required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,energy_J1_le_I1,True,"{""I1"": 0.17114993099126063, ""I2"": 0.1255377373863664, ""J1"": 0.15746585900663626, ""J2"": 0.12013470318975569}",required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,energy_I2_le_I1,True,"{""I1"": 0.17114993099126063, ""I2"": 0.1255377373863664, ""J1"": 0.15746585900663626, ""J2"": 0.12013470318975569}",required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,capacity_I1_within_one,True,max=1,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_I1_device_0,True,count=38 budget=1500,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_I1_device_1,True,count=38 budget=1500,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,capacity_J1_within_one,True,max=1,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_J1_device_0,True,count=38 budget=1500,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_J1_device_1,True,count=38 budget=1500,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,capacity_I2_within_one,True,max=1,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_I2_device_0,True,count=1500 budget=1500,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_I2_device_1,True,count=1500 budget=1500,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,capacity_J2_within_one,True,max=1,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_J2_device_0,True,count=1188 budget=1500,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_J2_device_1,True,count=1500 budget=1500,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,decomposition_total_identity,True,error_pp=3.552713678800501e-15,required
+2.0,common,0.0,1701.0,1.35,60.73650000000001,44.99,0.15,late,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,energy_J2_le_I2,True,"{""I1"": 0.17280511455787123, ""I2"": 0.12548426229940823, ""J1"": 0.15766625640982335, ""J2"": 0.12008223193023741}",required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,energy_J2_le_J1,True,"{""I1"": 0.17280511455787123, ""I2"": 0.12548426229940823, ""J1"": 0.15766625640982335, ""J2"": 0.12008223193023741}",required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,energy_J1_le_I1,True,"{""I1"": 0.17280511455787123, ""I2"": 0.12548426229940823, ""J1"": 0.15766625640982335, ""J2"": 0.12008223193023741}",required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,energy_I2_le_I1,True,"{""I1"": 0.17280511455787123, ""I2"": 0.12548426229940823, ""J1"": 0.15766625640982335, ""J2"": 0.12008223193023741}",required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,capacity_I1_within_one,True,max=1,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_I1_device_0,True,count=43 budget=1500,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_I1_device_1,True,count=43 budget=1500,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,capacity_J1_within_one,True,max=1,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_J1_device_0,True,count=43 budget=1500,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_J1_device_1,True,count=43 budget=1500,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,capacity_I2_within_one,True,max=1,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_I2_device_0,True,count=1500 budget=1500,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_I2_device_1,True,count=1500 budget=1500,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,capacity_J2_within_one,True,max=1,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_J2_device_0,True,count=1195 budget=1500,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_J2_device_1,True,count=1500 budget=1500,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,decomposition_total_identity,True,error_pp=0.0,required
+2.0,common,0.0,1702.0,1.35,60.73650000000001,44.99,0.15,late,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,energy_J2_le_I2,True,"{""I1"": 0.1692655109636606, ""I2"": 0.1231390134808843, ""J1"": 0.15597105364858616, ""J2"": 0.118410778251154}",required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,energy_J2_le_J1,True,"{""I1"": 0.1692655109636606, ""I2"": 0.1231390134808843, ""J1"": 0.15597105364858616, ""J2"": 0.118410778251154}",required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,energy_J1_le_I1,True,"{""I1"": 0.1692655109636606, ""I2"": 0.1231390134808843, ""J1"": 0.15597105364858616, ""J2"": 0.118410778251154}",required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,energy_I2_le_I1,True,"{""I1"": 0.1692655109636606, ""I2"": 0.1231390134808843, ""J1"": 0.15597105364858616, ""J2"": 0.118410778251154}",required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,capacity_I1_within_one,True,max=1,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_I1_device_0,True,count=34 budget=1500,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_I1_device_1,True,count=34 budget=1500,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,capacity_J1_within_one,True,max=1,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_J1_device_0,True,count=34 budget=1500,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_J1_device_1,True,count=34 budget=1500,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,capacity_I2_within_one,True,max=1,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_I2_device_0,True,count=1500 budget=1500,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_I2_device_1,True,count=1500 budget=1500,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,capacity_J2_within_one,True,max=1,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_J2_device_0,True,count=1150 budget=1500,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,budget_J2_device_1,True,count=1500 budget=1500,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,decomposition_total_identity,True,error_pp=0.0,required
+2.0,common,0.975,1701.0,1.35,60.73650000000001,44.99,0.15,late,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,energy_J2_le_I2,True,"{""I1"": 0.16934944928230225, ""I2"": 0.12353780771555378, ""J1"": 0.15627299460938607, ""J2"": 0.1181840379619829}",required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,energy_J2_le_J1,True,"{""I1"": 0.16934944928230225, ""I2"": 0.12353780771555378, ""J1"": 0.15627299460938607, ""J2"": 0.1181840379619829}",required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,energy_J1_le_I1,True,"{""I1"": 0.16934944928230225, ""I2"": 0.12353780771555378, ""J1"": 0.15627299460938607, ""J2"": 0.1181840379619829}",required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,energy_I2_le_I1,True,"{""I1"": 0.16934944928230225, ""I2"": 0.12353780771555378, ""J1"": 0.15627299460938607, ""J2"": 0.1181840379619829}",required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,capacity_I1_within_one,True,max=1,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_I1_device_0,True,count=34 budget=1500,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_I1_device_1,True,count=34 budget=1500,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,capacity_J1_within_one,True,max=1,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_J1_device_0,True,count=34 budget=1500,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_J1_device_1,True,count=34 budget=1500,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,capacity_I2_within_one,True,max=1,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_I2_device_0,True,count=1500 budget=1500,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_I2_device_1,True,count=1500 budget=1500,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,capacity_J2_within_one,True,max=1,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_J2_device_0,True,count=1500 budget=1500,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,budget_J2_device_1,True,count=1190 budget=1500,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,decomposition_total_identity,True,error_pp=-3.552713678800501e-15,required
+2.0,common,0.975,1702.0,1.35,60.73650000000001,44.99,0.15,late,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,energy_J2_le_I2,True,"{""I1"": 0.27746424177451307, ""I2"": 0.16153104181325303, ""J1"": 0.24680494942803166, ""J2"": 0.1452163830989861}",required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,energy_J2_le_J1,True,"{""I1"": 0.27746424177451307, ""I2"": 0.16153104181325303, ""J1"": 0.24680494942803166, ""J2"": 0.1452163830989861}",required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,energy_J1_le_I1,True,"{""I1"": 0.27746424177451307, ""I2"": 0.16153104181325303, ""J1"": 0.24680494942803166, ""J2"": 0.1452163830989861}",required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,energy_I2_le_I1,True,"{""I1"": 0.27746424177451307, ""I2"": 0.16153104181325303, ""J1"": 0.24680494942803166, ""J2"": 0.1452163830989861}",required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,capacity_I1_within_one,True,max=1,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_0,True,count=0 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_1,True,count=0 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_2,True,count=0 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_3,True,count=0 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,capacity_J1_within_one,True,max=1,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_0,True,count=0 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_1,True,count=0 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_2,True,count=0 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_3,True,count=0 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,capacity_I2_within_one,True,max=1,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_0,True,count=1500 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_1,True,count=1500 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_2,True,count=1500 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_3,True,count=1500 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,capacity_J2_within_one,True,max=1,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_0,True,count=1500 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_1,True,count=1500 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_2,True,count=1500 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_3,True,count=1500 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,decomposition_total_identity,True,error_pp=7.105427357601002e-15,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,drop,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,energy_J2_le_I2,True,"{""I1"": 0.2777449117498346, ""I2"": 0.1616289022937827, ""J1"": 0.24702872273034676, ""J2"": 0.14531415820745527}",required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,energy_J2_le_J1,True,"{""I1"": 0.2777449117498346, ""I2"": 0.1616289022937827, ""J1"": 0.24702872273034676, ""J2"": 0.14531415820745527}",required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,energy_J1_le_I1,True,"{""I1"": 0.2777449117498346, ""I2"": 0.1616289022937827, ""J1"": 0.24702872273034676, ""J2"": 0.14531415820745527}",required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,energy_I2_le_I1,True,"{""I1"": 0.2777449117498346, ""I2"": 0.1616289022937827, ""J1"": 0.24702872273034676, ""J2"": 0.14531415820745527}",required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,capacity_I1_within_one,True,max=1,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_0,True,count=0 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_1,True,count=0 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_2,True,count=0 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_3,True,count=0 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,capacity_J1_within_one,True,max=1,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_0,True,count=0 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_1,True,count=0 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_2,True,count=0 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_3,True,count=0 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,capacity_I2_within_one,True,max=1,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_0,True,count=1500 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_1,True,count=1500 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_2,True,count=1500 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_3,True,count=1500 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,capacity_J2_within_one,True,max=1,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_0,True,count=1500 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_1,True,count=1500 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_2,True,count=1500 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_3,True,count=1500 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,decomposition_total_identity,True,error_pp=-7.105427357601002e-15,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,drop,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,energy_J2_le_I2,True,"{""I1"": 0.2747924101021859, ""I2"": 0.1591789966136571, ""J1"": 0.24421806984723926, ""J2"": 0.14309306782969908}",required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,energy_J2_le_J1,True,"{""I1"": 0.2747924101021859, ""I2"": 0.1591789966136571, ""J1"": 0.24421806984723926, ""J2"": 0.14309306782969908}",required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,energy_J1_le_I1,True,"{""I1"": 0.2747924101021859, ""I2"": 0.1591789966136571, ""J1"": 0.24421806984723926, ""J2"": 0.14309306782969908}",required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,energy_I2_le_I1,True,"{""I1"": 0.2747924101021859, ""I2"": 0.1591789966136571, ""J1"": 0.24421806984723926, ""J2"": 0.14309306782969908}",required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,capacity_I1_within_one,True,max=1,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_0,True,count=0 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_1,True,count=0 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_2,True,count=0 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_3,True,count=0 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,capacity_J1_within_one,True,max=1,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_0,True,count=0 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_1,True,count=0 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_2,True,count=0 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_3,True,count=0 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,capacity_I2_within_one,True,max=1,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_0,True,count=1500 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_1,True,count=1500 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_2,True,count=1500 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_3,True,count=1500 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,capacity_J2_within_one,True,max=1,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_0,True,count=1500 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_1,True,count=1500 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_2,True,count=1500 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_3,True,count=1500 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,decomposition_total_identity,True,error_pp=7.105427357601002e-15,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,drop,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,energy_J2_le_I2,True,"{""I1"": 0.2778865707762104, ""I2"": 0.16105250934474313, ""J1"": 0.24653993632581978, ""J2"": 0.14516629731959732}",required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,energy_J2_le_J1,True,"{""I1"": 0.2778865707762104, ""I2"": 0.16105250934474313, ""J1"": 0.24653993632581978, ""J2"": 0.14516629731959732}",required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,energy_J1_le_I1,True,"{""I1"": 0.2778865707762104, ""I2"": 0.16105250934474313, ""J1"": 0.24653993632581978, ""J2"": 0.14516629731959732}",required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,energy_I2_le_I1,True,"{""I1"": 0.2778865707762104, ""I2"": 0.16105250934474313, ""J1"": 0.24653993632581978, ""J2"": 0.14516629731959732}",required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,capacity_I1_within_one,True,max=1,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_0,True,count=0 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_1,True,count=0 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_2,True,count=0 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_3,True,count=0 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,capacity_J1_within_one,True,max=1,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_0,True,count=0 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_1,True,count=0 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_2,True,count=0 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_3,True,count=0 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,capacity_I2_within_one,True,max=1,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_0,True,count=1500 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_1,True,count=1500 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_2,True,count=1500 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_3,True,count=1500 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,capacity_J2_within_one,True,max=1,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_0,True,count=1500 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_1,True,count=1500 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_2,True,count=1500 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_3,True,count=1500 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,decomposition_total_identity,True,error_pp=0.0,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,drop,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,energy_J2_le_I2,True,"{""I1"": 0.27927352537591105, ""I2"": 0.16362282442197199, ""J1"": 0.26419039833178976, ""J2"": 0.15447184003848066}",required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,energy_J2_le_J1,True,"{""I1"": 0.27927352537591105, ""I2"": 0.16362282442197199, ""J1"": 0.26419039833178976, ""J2"": 0.15447184003848066}",required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,energy_J1_le_I1,True,"{""I1"": 0.27927352537591105, ""I2"": 0.16362282442197199, ""J1"": 0.26419039833178976, ""J2"": 0.15447184003848066}",required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,energy_I2_le_I1,True,"{""I1"": 0.27927352537591105, ""I2"": 0.16362282442197199, ""J1"": 0.26419039833178976, ""J2"": 0.15447184003848066}",required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,capacity_I1_within_one,True,max=1,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_0,True,count=0 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_1,True,count=0 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_2,True,count=0 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_3,True,count=0 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,capacity_J1_within_one,True,max=1,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_0,True,count=0 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_1,True,count=0 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_2,True,count=0 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_3,True,count=0 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,capacity_I2_within_one,True,max=1,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_0,True,count=1500 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_1,True,count=1500 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_2,True,count=1500 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_3,True,count=1500 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,capacity_J2_within_one,True,max=1,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_0,True,count=1500 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_1,True,count=1500 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_2,True,count=1500 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_3,True,count=1500 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,decomposition_total_identity,True,error_pp=-7.105427357601002e-15,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,drop,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,energy_J2_le_I2,True,"{""I1"": 0.2796873135036165, ""I2"": 0.1623575307196192, ""J1"": 0.26426370975735797, ""J2"": 0.1540010937693392}",required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,energy_J2_le_J1,True,"{""I1"": 0.2796873135036165, ""I2"": 0.1623575307196192, ""J1"": 0.26426370975735797, ""J2"": 0.1540010937693392}",required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,energy_J1_le_I1,True,"{""I1"": 0.2796873135036165, ""I2"": 0.1623575307196192, ""J1"": 0.26426370975735797, ""J2"": 0.1540010937693392}",required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,energy_I2_le_I1,True,"{""I1"": 0.2796873135036165, ""I2"": 0.1623575307196192, ""J1"": 0.26426370975735797, ""J2"": 0.1540010937693392}",required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,capacity_I1_within_one,True,max=1,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_0,True,count=0 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_1,True,count=0 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_2,True,count=0 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_3,True,count=0 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,capacity_J1_within_one,True,max=1,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_0,True,count=0 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_1,True,count=0 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_2,True,count=0 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_3,True,count=0 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,capacity_I2_within_one,True,max=1,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_0,True,count=1500 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_1,True,count=1500 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_2,True,count=1500 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_3,True,count=1500 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,capacity_J2_within_one,True,max=1,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_0,True,count=1500 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_1,True,count=1500 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_2,True,count=1500 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_3,True,count=1500 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,decomposition_total_identity,True,error_pp=0.0,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,drop,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,energy_J2_le_I2,True,"{""I1"": 0.2771233630440976, ""I2"": 0.16033467886899258, ""J1"": 0.2611536912108963, ""J2"": 0.15163510447303946}",required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,energy_J2_le_J1,True,"{""I1"": 0.2771233630440976, ""I2"": 0.16033467886899258, ""J1"": 0.2611536912108963, ""J2"": 0.15163510447303946}",required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,energy_J1_le_I1,True,"{""I1"": 0.2771233630440976, ""I2"": 0.16033467886899258, ""J1"": 0.2611536912108963, ""J2"": 0.15163510447303946}",required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,energy_I2_le_I1,True,"{""I1"": 0.2771233630440976, ""I2"": 0.16033467886899258, ""J1"": 0.2611536912108963, ""J2"": 0.15163510447303946}",required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,capacity_I1_within_one,True,max=1,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_0,True,count=0 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_1,True,count=0 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_2,True,count=0 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_3,True,count=0 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,capacity_J1_within_one,True,max=1,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_0,True,count=0 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_1,True,count=0 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_2,True,count=0 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_3,True,count=0 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,capacity_I2_within_one,True,max=1,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_0,True,count=1500 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_1,True,count=1500 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_2,True,count=1500 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_3,True,count=1500 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,capacity_J2_within_one,True,max=1,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_0,True,count=1500 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_1,True,count=1500 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_2,True,count=1500 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_3,True,count=1500 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,decomposition_total_identity,True,error_pp=0.0,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,drop,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,energy_J2_le_I2,True,"{""I1"": 0.2774003344039151, ""I2"": 0.15941277808758386, ""J1"": 0.2608151418932828, ""J2"": 0.1505878122832919}",required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,energy_J2_le_J1,True,"{""I1"": 0.2774003344039151, ""I2"": 0.15941277808758386, ""J1"": 0.2608151418932828, ""J2"": 0.1505878122832919}",required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,energy_J1_le_I1,True,"{""I1"": 0.2774003344039151, ""I2"": 0.15941277808758386, ""J1"": 0.2608151418932828, ""J2"": 0.1505878122832919}",required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,energy_I2_le_I1,True,"{""I1"": 0.2774003344039151, ""I2"": 0.15941277808758386, ""J1"": 0.2608151418932828, ""J2"": 0.1505878122832919}",required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,capacity_I1_within_one,True,max=1,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_0,True,count=0 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_1,True,count=0 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_2,True,count=0 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_I1_device_3,True,count=0 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,capacity_J1_within_one,True,max=1,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_0,True,count=0 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_1,True,count=0 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_2,True,count=0 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_J1_device_3,True,count=0 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,capacity_I2_within_one,True,max=1,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_0,True,count=1500 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_1,True,count=1500 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_2,True,count=1500 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_I2_device_3,True,count=1500 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,capacity_J2_within_one,True,max=1,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_0,True,count=1500 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_1,True,count=1500 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_2,True,count=1500 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,budget_J2_device_3,True,count=1500 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,decomposition_total_identity,True,error_pp=0.0,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,drop,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,energy_J2_le_I2,True,"{""I1"": 0.27746424177451307, ""I2"": 0.22862636335400374, ""J1"": 0.24680494942803166, ""J2"": 0.21942302973108946}",required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,energy_J2_le_J1,True,"{""I1"": 0.27746424177451307, ""I2"": 0.22862636335400374, ""J1"": 0.24680494942803166, ""J2"": 0.21942302973108946}",required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,energy_J1_le_I1,True,"{""I1"": 0.27746424177451307, ""I2"": 0.22862636335400374, ""J1"": 0.24680494942803166, ""J2"": 0.21942302973108946}",required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,energy_I2_le_I1,True,"{""I1"": 0.27746424177451307, ""I2"": 0.22862636335400374, ""J1"": 0.24680494942803166, ""J2"": 0.21942302973108946}",required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,capacity_I1_within_one,True,max=1,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_I1_device_0,True,count=0 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_I1_device_1,True,count=0 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_I1_device_2,True,count=0 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_I1_device_3,True,count=0 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,capacity_J1_within_one,True,max=1,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_J1_device_0,True,count=0 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_J1_device_1,True,count=0 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_J1_device_2,True,count=0 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_J1_device_3,True,count=0 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,capacity_I2_within_one,True,max=1,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_I2_device_0,True,count=1500 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_I2_device_1,True,count=1500 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_I2_device_2,True,count=1500 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_I2_device_3,True,count=1500 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,capacity_J2_within_one,True,max=1,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_J2_device_0,True,count=1500 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_J2_device_1,True,count=1500 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_J2_device_2,True,count=1500 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_J2_device_3,True,count=1500 budget=1500,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,decomposition_total_identity,True,error_pp=-1.7763568394002505e-15,required
+4.0,independent,0.0,1701.0,1.35,84.888,62.88,0.15,late,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,energy_J2_le_I2,True,"{""I1"": 0.2777449117498346, ""I2"": 0.22884782258573505, ""J1"": 0.24702872273034676, ""J2"": 0.21965694405588485}",required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,energy_J2_le_J1,True,"{""I1"": 0.2777449117498346, ""I2"": 0.22884782258573505, ""J1"": 0.24702872273034676, ""J2"": 0.21965694405588485}",required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,energy_J1_le_I1,True,"{""I1"": 0.2777449117498346, ""I2"": 0.22884782258573505, ""J1"": 0.24702872273034676, ""J2"": 0.21965694405588485}",required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,energy_I2_le_I1,True,"{""I1"": 0.2777449117498346, ""I2"": 0.22884782258573505, ""J1"": 0.24702872273034676, ""J2"": 0.21965694405588485}",required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,capacity_I1_within_one,True,max=1,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_I1_device_0,True,count=0 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_I1_device_1,True,count=0 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_I1_device_2,True,count=0 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_I1_device_3,True,count=0 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,capacity_J1_within_one,True,max=1,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_J1_device_0,True,count=0 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_J1_device_1,True,count=0 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_J1_device_2,True,count=0 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_J1_device_3,True,count=0 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,capacity_I2_within_one,True,max=1,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_I2_device_0,True,count=1500 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_I2_device_1,True,count=1500 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_I2_device_2,True,count=1500 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_I2_device_3,True,count=1500 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,capacity_J2_within_one,True,max=1,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_J2_device_0,True,count=1500 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_J2_device_1,True,count=1500 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_J2_device_2,True,count=1500 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_J2_device_3,True,count=1500 budget=1500,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,decomposition_total_identity,True,error_pp=0.0,required
+4.0,independent,0.0,1702.0,1.35,84.888,62.88,0.15,late,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,energy_J2_le_I2,True,"{""I1"": 0.2747924101021859, ""I2"": 0.22615980313941506, ""J1"": 0.24421806984723926, ""J2"": 0.2170968768821605}",required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,energy_J2_le_J1,True,"{""I1"": 0.2747924101021859, ""I2"": 0.22615980313941506, ""J1"": 0.24421806984723926, ""J2"": 0.2170968768821605}",required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,energy_J1_le_I1,True,"{""I1"": 0.2747924101021859, ""I2"": 0.22615980313941506, ""J1"": 0.24421806984723926, ""J2"": 0.2170968768821605}",required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,energy_I2_le_I1,True,"{""I1"": 0.2747924101021859, ""I2"": 0.22615980313941506, ""J1"": 0.24421806984723926, ""J2"": 0.2170968768821605}",required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,capacity_I1_within_one,True,max=1,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_I1_device_0,True,count=0 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_I1_device_1,True,count=0 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_I1_device_2,True,count=0 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_I1_device_3,True,count=0 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,capacity_J1_within_one,True,max=1,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_J1_device_0,True,count=0 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_J1_device_1,True,count=0 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_J1_device_2,True,count=0 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_J1_device_3,True,count=0 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,capacity_I2_within_one,True,max=1,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_I2_device_0,True,count=1500 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_I2_device_1,True,count=1500 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_I2_device_2,True,count=1500 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_I2_device_3,True,count=1500 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,capacity_J2_within_one,True,max=1,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_J2_device_0,True,count=1500 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_J2_device_1,True,count=1500 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_J2_device_2,True,count=1458 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_J2_device_3,True,count=1500 budget=1500,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,decomposition_total_identity,True,error_pp=-1.7763568394002505e-15,required
+4.0,independent,0.975,1701.0,1.35,84.888,62.88,0.15,late,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,energy_J2_le_I2,True,"{""I1"": 0.2778865707762104, ""I2"": 0.22837090849371033, ""J1"": 0.24653993632581978, ""J2"": 0.21918601862525444}",required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,energy_J2_le_J1,True,"{""I1"": 0.2778865707762104, ""I2"": 0.22837090849371033, ""J1"": 0.24653993632581978, ""J2"": 0.21918601862525444}",required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,energy_J1_le_I1,True,"{""I1"": 0.2778865707762104, ""I2"": 0.22837090849371033, ""J1"": 0.24653993632581978, ""J2"": 0.21918601862525444}",required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,energy_I2_le_I1,True,"{""I1"": 0.2778865707762104, ""I2"": 0.22837090849371033, ""J1"": 0.24653993632581978, ""J2"": 0.21918601862525444}",required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,capacity_I1_within_one,True,max=1,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_I1_device_0,True,count=0 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_I1_device_1,True,count=0 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_I1_device_2,True,count=0 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_I1_device_3,True,count=0 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,capacity_J1_within_one,True,max=1,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_J1_device_0,True,count=0 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_J1_device_1,True,count=0 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_J1_device_2,True,count=0 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_J1_device_3,True,count=0 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,capacity_I2_within_one,True,max=1,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_I2_device_0,True,count=1500 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_I2_device_1,True,count=1500 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_I2_device_2,True,count=1500 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_I2_device_3,True,count=1500 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,capacity_J2_within_one,True,max=1,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_J2_device_0,True,count=1500 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_J2_device_1,True,count=1473 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_J2_device_2,True,count=1496 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_J2_device_3,True,count=1500 budget=1500,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,decomposition_total_identity,True,error_pp=3.552713678800501e-15,required
+4.0,independent,0.975,1702.0,1.35,84.888,62.88,0.15,late,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,energy_J2_le_I2,True,"{""I1"": 0.27927352537591105, ""I2"": 0.23047176944065914, ""J1"": 0.26419039833178976, ""J2"": 0.2239320342903899}",required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,energy_J2_le_J1,True,"{""I1"": 0.27927352537591105, ""I2"": 0.23047176944065914, ""J1"": 0.26419039833178976, ""J2"": 0.2239320342903899}",required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,energy_J1_le_I1,True,"{""I1"": 0.27927352537591105, ""I2"": 0.23047176944065914, ""J1"": 0.26419039833178976, ""J2"": 0.2239320342903899}",required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,energy_I2_le_I1,True,"{""I1"": 0.27927352537591105, ""I2"": 0.23047176944065914, ""J1"": 0.26419039833178976, ""J2"": 0.2239320342903899}",required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,capacity_I1_within_one,True,max=1,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_I1_device_0,True,count=0 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_I1_device_1,True,count=0 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_I1_device_2,True,count=0 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_I1_device_3,True,count=0 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,capacity_J1_within_one,True,max=1,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_J1_device_0,True,count=0 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_J1_device_1,True,count=0 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_J1_device_2,True,count=0 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_J1_device_3,True,count=0 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,capacity_I2_within_one,True,max=1,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_I2_device_0,True,count=1500 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_I2_device_1,True,count=1500 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_I2_device_2,True,count=1500 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_I2_device_3,True,count=1500 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,capacity_J2_within_one,True,max=1,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_J2_device_0,True,count=1169 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_J2_device_1,True,count=1331 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_J2_device_2,True,count=1490 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,budget_J2_device_3,True,count=1500 budget=1500,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,decomposition_total_identity,True,error_pp=1.7763568394002505e-15,required
+4.0,common,0.0,1701.0,1.35,84.888,62.88,0.15,late,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,energy_J2_le_I2,True,"{""I1"": 0.2796873135036165, ""I2"": 0.2301920063597552, ""J1"": 0.26426370975735797, ""J2"": 0.2243406936050744}",required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,energy_J2_le_J1,True,"{""I1"": 0.2796873135036165, ""I2"": 0.2301920063597552, ""J1"": 0.26426370975735797, ""J2"": 0.2243406936050744}",required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,energy_J1_le_I1,True,"{""I1"": 0.2796873135036165, ""I2"": 0.2301920063597552, ""J1"": 0.26426370975735797, ""J2"": 0.2243406936050744}",required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,energy_I2_le_I1,True,"{""I1"": 0.2796873135036165, ""I2"": 0.2301920063597552, ""J1"": 0.26426370975735797, ""J2"": 0.2243406936050744}",required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,capacity_I1_within_one,True,max=1,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_I1_device_0,True,count=0 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_I1_device_1,True,count=0 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_I1_device_2,True,count=0 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_I1_device_3,True,count=0 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,capacity_J1_within_one,True,max=1,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_J1_device_0,True,count=0 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_J1_device_1,True,count=0 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_J1_device_2,True,count=0 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_J1_device_3,True,count=0 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,capacity_I2_within_one,True,max=1,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_I2_device_0,True,count=1500 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_I2_device_1,True,count=1500 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_I2_device_2,True,count=1500 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_I2_device_3,True,count=1500 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,capacity_J2_within_one,True,max=1,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_J2_device_0,True,count=1488 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_J2_device_1,True,count=1500 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_J2_device_2,True,count=1335 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,budget_J2_device_3,True,count=1166 budget=1500,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,decomposition_total_identity,True,error_pp=0.0,required
+4.0,common,0.0,1702.0,1.35,84.888,62.88,0.15,late,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,energy_J2_le_I2,True,"{""I1"": 0.2771233630440976, ""I2"": 0.2278217580176749, ""J1"": 0.2611536912108963, ""J2"": 0.22182627151475262}",required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,energy_J2_le_J1,True,"{""I1"": 0.2771233630440976, ""I2"": 0.2278217580176749, ""J1"": 0.2611536912108963, ""J2"": 0.22182627151475262}",required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,energy_J1_le_I1,True,"{""I1"": 0.2771233630440976, ""I2"": 0.2278217580176749, ""J1"": 0.2611536912108963, ""J2"": 0.22182627151475262}",required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,energy_I2_le_I1,True,"{""I1"": 0.2771233630440976, ""I2"": 0.2278217580176749, ""J1"": 0.2611536912108963, ""J2"": 0.22182627151475262}",required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,capacity_I1_within_one,True,max=1,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_I1_device_0,True,count=0 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_I1_device_1,True,count=0 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_I1_device_2,True,count=0 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_I1_device_3,True,count=0 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,capacity_J1_within_one,True,max=1,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_J1_device_0,True,count=0 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_J1_device_1,True,count=0 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_J1_device_2,True,count=0 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_J1_device_3,True,count=0 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,capacity_I2_within_one,True,max=1,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_I2_device_0,True,count=1500 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_I2_device_1,True,count=1500 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_I2_device_2,True,count=1500 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_I2_device_3,True,count=1500 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,capacity_J2_within_one,True,max=1,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_J2_device_0,True,count=1330 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_J2_device_1,True,count=1500 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_J2_device_2,True,count=1173 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,budget_J2_device_3,True,count=1460 budget=1500,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,decomposition_total_identity,True,error_pp=0.0,required
+4.0,common,0.975,1701.0,1.35,84.888,62.88,0.15,late,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,energy_J2_le_I2,True,"{""I1"": 0.2774003344039151, ""I2"": 0.2270451544081299, ""J1"": 0.2608151418932828, ""J2"": 0.22091173468987846}",required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,energy_J2_le_J1,True,"{""I1"": 0.2774003344039151, ""I2"": 0.2270451544081299, ""J1"": 0.2608151418932828, ""J2"": 0.22091173468987846}",required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,energy_J1_le_I1,True,"{""I1"": 0.2774003344039151, ""I2"": 0.2270451544081299, ""J1"": 0.2608151418932828, ""J2"": 0.22091173468987846}",required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,energy_I2_le_I1,True,"{""I1"": 0.2774003344039151, ""I2"": 0.2270451544081299, ""J1"": 0.2608151418932828, ""J2"": 0.22091173468987846}",required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,capacity_I1_within_one,True,max=1,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_I1_device_0,True,count=0 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_I1_device_1,True,count=0 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_I1_device_2,True,count=0 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_I1_device_3,True,count=0 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,capacity_J1_within_one,True,max=1,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_J1_device_0,True,count=0 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_J1_device_1,True,count=0 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_J1_device_2,True,count=0 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_J1_device_3,True,count=0 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,capacity_I2_within_one,True,max=1,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_I2_device_0,True,count=1500 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_I2_device_1,True,count=1500 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_I2_device_2,True,count=1500 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_I2_device_3,True,count=1500 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,capacity_J2_within_one,True,max=1,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_J2_device_0,True,count=1446 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_J2_device_1,True,count=1500 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_J2_device_2,True,count=1298 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,budget_J2_device_3,True,count=1142 budget=1500,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,J1_violation_sets_equal_I1,True,per-device violation arrays compared exactly,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,decomposition_total_identity,True,error_pp=-1.7763568394002505e-15,required
+4.0,common,0.975,1702.0,1.35,84.888,62.88,0.15,late,J2_repair_or_guard_feasible,True,source=heuristic repair_success=True,required
+2.0,independent,0.0,1701.0,,,,,,channel_hashes_independent,True,"[""92cf0b2e17979e08f2350152726a5b742bbb4fdb8cfe51e23918a21f1ae8c9a9"", ""614e85fa4d6120539b63632dc5ddaff4b99f6a363d448e0cfa08132f134e34d8""]",required
+2.0,independent,0.0,1702.0,,,,,,channel_hashes_independent,True,"[""ca3f85a7a16f8b33bbb9e42d5c7346f58e31b060f56bbe6419ebbec63c49ecfb"", ""201d29cf97407684d4aea04c35b54586d783780e944fee98a9895788f50ea9ae""]",required
+2.0,independent,0.975,1701.0,,,,,,channel_hashes_independent,True,"[""3f411437569c4b42aa9d50c37cf6532d8b09d821140731f4a3a4bbda9b9afe42"", ""ffbaef91fdfa40fe8e421c63b89d66f9d87d680469f519a890e4f39b61963dea""]",required
+2.0,independent,0.975,1702.0,,,,,,channel_hashes_independent,True,"[""04084b22d4e789c7d5d86a2c0afa9dc3313fab39ddf2fe7b24d8d7d355b82bad"", ""a74722e3c8e46a4201263908b7399cf9426a5269f8e59672caa441f44dafab64""]",required
+2.0,common,0.0,1701.0,,,,,,channel_hashes_common,True,"[""92cf0b2e17979e08f2350152726a5b742bbb4fdb8cfe51e23918a21f1ae8c9a9"", ""92cf0b2e17979e08f2350152726a5b742bbb4fdb8cfe51e23918a21f1ae8c9a9""]",required
+2.0,common,0.0,1702.0,,,,,,channel_hashes_common,True,"[""ca3f85a7a16f8b33bbb9e42d5c7346f58e31b060f56bbe6419ebbec63c49ecfb"", ""ca3f85a7a16f8b33bbb9e42d5c7346f58e31b060f56bbe6419ebbec63c49ecfb""]",required
+2.0,common,0.975,1701.0,,,,,,channel_hashes_common,True,"[""3f411437569c4b42aa9d50c37cf6532d8b09d821140731f4a3a4bbda9b9afe42"", ""3f411437569c4b42aa9d50c37cf6532d8b09d821140731f4a3a4bbda9b9afe42""]",required
+2.0,common,0.975,1702.0,,,,,,channel_hashes_common,True,"[""04084b22d4e789c7d5d86a2c0afa9dc3313fab39ddf2fe7b24d8d7d355b82bad"", ""04084b22d4e789c7d5d86a2c0afa9dc3313fab39ddf2fe7b24d8d7d355b82bad""]",required
+4.0,independent,0.0,1701.0,,,,,,channel_hashes_independent,True,"[""92cf0b2e17979e08f2350152726a5b742bbb4fdb8cfe51e23918a21f1ae8c9a9"", ""614e85fa4d6120539b63632dc5ddaff4b99f6a363d448e0cfa08132f134e34d8"", ""2fa87752f95a126185782e0847e7fdf3f73d655fe5a8f457e70c7d2d6740ce19"", ""e7f812283e52becf7a5da02b2c9264e29a39f517e10b1e0dabd0c030c167b1ef""]",required
+4.0,independent,0.0,1702.0,,,,,,channel_hashes_independent,True,"[""ca3f85a7a16f8b33bbb9e42d5c7346f58e31b060f56bbe6419ebbec63c49ecfb"", ""201d29cf97407684d4aea04c35b54586d783780e944fee98a9895788f50ea9ae"", ""5be99e5f6b2e523d7acba62686e11f388beb77309849e6c32cb202520e466972"", ""cff04430139e1bf589fcee611ef62276c7abf2fb07afac151c05b940c0a0f796""]",required
+4.0,independent,0.975,1701.0,,,,,,channel_hashes_independent,True,"[""3f411437569c4b42aa9d50c37cf6532d8b09d821140731f4a3a4bbda9b9afe42"", ""ffbaef91fdfa40fe8e421c63b89d66f9d87d680469f519a890e4f39b61963dea"", ""749997a93fbd07c191fd4dd5364e64f8325c99015cb84c56b3d5cf4c5af53eaa"", ""bd37d989e3b1ca1dfc65987fc631e02d18beda79d361a720852c863d70bb9c20""]",required
+4.0,independent,0.975,1702.0,,,,,,channel_hashes_independent,True,"[""04084b22d4e789c7d5d86a2c0afa9dc3313fab39ddf2fe7b24d8d7d355b82bad"", ""a74722e3c8e46a4201263908b7399cf9426a5269f8e59672caa441f44dafab64"", ""0944d81e1110d1d5ae51f7342fdaa60f6a6ca11ff3d68cbe534671479ce3d87e"", ""ba8e3477bb050776f5e482941fcc78d542b3c50365a7a389d08c2b7e6fb6c3c9""]",required
+4.0,common,0.0,1701.0,,,,,,channel_hashes_common,True,"[""92cf0b2e17979e08f2350152726a5b742bbb4fdb8cfe51e23918a21f1ae8c9a9"", ""92cf0b2e17979e08f2350152726a5b742bbb4fdb8cfe51e23918a21f1ae8c9a9"", ""92cf0b2e17979e08f2350152726a5b742bbb4fdb8cfe51e23918a21f1ae8c9a9"", ""92cf0b2e17979e08f2350152726a5b742bbb4fdb8cfe51e23918a21f1ae8c9a9""]",required
+4.0,common,0.0,1702.0,,,,,,channel_hashes_common,True,"[""ca3f85a7a16f8b33bbb9e42d5c7346f58e31b060f56bbe6419ebbec63c49ecfb"", ""ca3f85a7a16f8b33bbb9e42d5c7346f58e31b060f56bbe6419ebbec63c49ecfb"", ""ca3f85a7a16f8b33bbb9e42d5c7346f58e31b060f56bbe6419ebbec63c49ecfb"", ""ca3f85a7a16f8b33bbb9e42d5c7346f58e31b060f56bbe6419ebbec63c49ecfb""]",required
+4.0,common,0.975,1701.0,,,,,,channel_hashes_common,True,"[""3f411437569c4b42aa9d50c37cf6532d8b09d821140731f4a3a4bbda9b9afe42"", ""3f411437569c4b42aa9d50c37cf6532d8b09d821140731f4a3a4bbda9b9afe42"", ""3f411437569c4b42aa9d50c37cf6532d8b09d821140731f4a3a4bbda9b9afe42"", ""3f411437569c4b42aa9d50c37cf6532d8b09d821140731f4a3a4bbda9b9afe42""]",required
+4.0,common,0.975,1702.0,,,,,,channel_hashes_common,True,"[""04084b22d4e789c7d5d86a2c0afa9dc3313fab39ddf2fe7b24d8d7d355b82bad"", ""04084b22d4e789c7d5d86a2c0afa9dc3313fab39ddf2fe7b24d8d7d355b82bad"", ""04084b22d4e789c7d5d86a2c0afa9dc3313fab39ddf2fe7b24d8d7d355b82bad"", ""04084b22d4e789c7d5d86a2c0afa9dc3313fab39ddf2fe7b24d8d7d355b82bad""]",required
+,,,,,,,,,N1_policy_path_bitwise_reduction,True,P1/I1 and P2/I2 arrays compared bitwise,required
