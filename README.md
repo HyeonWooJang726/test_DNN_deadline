@@ -43,7 +43,9 @@ the full deadline/ε grid.
   figure is the representative `D/D_min=1.5, ε=0.05` slice, where recovery
   falls to approximately **73%** under `drop`; it therefore does not directly
   display the 58–63% full-grid values. A myopic Lyapunov policy suffices except
-  in the tight-and-correlated regime.
+  in the tight-and-correlated regime. P3's recovery is an optimistic upper
+  bound on truly online performance; the tight-regime decline therefore holds
+  a fortiori.
 
   ![Online recovery at the representative condition](results/full/fig_h1b1_online_recovery.png)
 
@@ -72,7 +74,7 @@ and [oracle-flatness sanity check](results/full/fig_sanity_oracle_flatness.png).
 |---|---|---|
 | P1 | Meet every deadline (boost allowed) | Status-quo baseline |
 | P0 | Spend the same budget on random slots | Control: isolates the workload-reduction benefit |
-| P3 | Online virtual-queue threshold (per-combination V calibration, horizon budget cap) | Realistically achievable |
+| P3 | Calibrated-V upper bound of online performance (V selected post hoc per combination; uses horizon budget cap ⌊εT⌋) | Optimistic online upper bound |
 | P2' | Oracle + no-consecutive-violation constraint | Cost of banning bursts |
 | P2 | Offline oracle: spend on highest-saving slots | Upper bound |
 

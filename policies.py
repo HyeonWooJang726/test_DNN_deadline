@@ -294,6 +294,13 @@ def _threshold_mask(feasible, saving, epsilon, v_parameter, max_total_violations
 
 
 class P3OnlineThreshold(_PreparedMaskPolicy):
+    """Calibrated-V upper bound of online performance.
+
+    V is selected post hoc per combination, and every candidate uses the
+    horizon budget cap floor(epsilon*T); P3 is therefore optimistic rather
+    than a truly online deployable policy.
+    """
+
     name = "P3"
 
     def __init__(self, epsilon: float, v_values: tuple[float, ...]):
