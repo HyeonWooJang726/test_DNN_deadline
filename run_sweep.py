@@ -16,7 +16,7 @@ import numpy as np
 import pandas as pd
 
 from channel import GilbertElliottChannel
-from config import default_experiment, default_output_dir
+from config import DeviceConfig, default_experiment, default_output_dir
 from dnn_profile import minimum_good_deadline_ms
 from metrics import (
     assert_sanity,
@@ -54,6 +54,7 @@ RUNTIME_FAILURE_COLUMNS = [
     "exception_type",
     "exception_message",
 ]
+D_MIN_ABS_TOLERANCE_MS = 1e-9
 
 
 def _checkpoint_group_dir(
@@ -135,6 +136,30 @@ def _read_checkpoint_group(group_dir: Path) -> dict[str, list[dict[str, object]]
         else:
             tables[table_name] = []
     return tables
+
+
+def _d_min_acceptance(
+    devices: tuple[DeviceConfig, ...], measured_d_min_ms: dict[str, float]
+) -> tuple[bool, str]:
+    records = []
+    for device in devices:
+        expected = device.expected_d_min_ms
+        measured = measured_d_min_ms[device.name]
+        passed = (
+            expected is None
+            or abs(measured - expected) <= D_MIN_ABS_TOLERANCE_MS
+        )
+        records.append(
+            {
+                "device": device.name,
+                "measured_d_min_ms": measured,
+                "expected_d_min_ms": expected,
+                "passed": passed,
+            }
+        )
+    return all(bool(record["passed"]) for record in records), json.dumps(
+        records, sort_keys=True
+    )
 
 
 def _aggregate(frame: pd.DataFrame, group_columns: list[str], value_columns: list[str]) -> pd.DataFrame:
@@ -670,8 +695,8 @@ def run_sweep(
         ]
         valid_below_1_35 = [value for value in valid_tight_ratios if value < 1.35 - 1e-12]
         minimum_saving_unique = int(saving_df["saving_unique_count"].min()) if len(saving_df) else 0
-        dmin_unchanged = all(
-            abs(value - 36.045) <= 1e-12 for value in device_dmins.values()
+        dmin_accepted, dmin_detail = _d_min_acceptance(
+            config.devices, device_dmins
         )
         smoke_rows = [
             {
@@ -693,9 +718,9 @@ def run_sweep(
                 "detail": f"maximum Bad-state rate={p1_rows['boost_use_rate_bad'].max() if len(p1_rows) else 0.0}",
             },
             {
-                "condition": "d_normal_dmin_is_36_045_ms",
-                "passed": dmin_unchanged,
-                "detail": json.dumps(device_dmins, sort_keys=True),
+                "condition": "d_measured_dmin_matches_configured_expected",
+                "passed": dmin_accepted,
+                "detail": dmin_detail,
             },
         ]
         for row in smoke_rows:

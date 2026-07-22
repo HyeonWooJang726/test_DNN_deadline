@@ -71,6 +71,13 @@ class DNNProfileConfig:
 class DeviceConfig:
     name: str = "device_0"
     profile: DNNProfileConfig = field(default_factory=DNNProfileConfig)
+    # Update this frozen-profile guard when profile measurements change, or
+    # set it to None to record the measured D_min without enforcing a value.
+    expected_d_min_ms: float | None = 36.045
+
+    def __post_init__(self) -> None:
+        if self.expected_d_min_ms is not None and self.expected_d_min_ms <= 0:
+            raise ValueError("expected_d_min_ms must be positive or None")
 
 
 @dataclass(frozen=True)
