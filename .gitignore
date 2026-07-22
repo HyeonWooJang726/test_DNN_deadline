@@ -2,3 +2,4 @@ venv1/
 __pycache__/
 .pytest_cache/
 *.pyc
+results/*/checkpoint/

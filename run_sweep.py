@@ -5,6 +5,8 @@ from __future__ import annotations
 import argparse
 import json
 import platform
+import re
+import shutil
 import sys
 from dataclasses import asdict
 from datetime import datetime, timezone
@@ -27,6 +29,112 @@ from metrics import (
 )
 from plotting import create_all_plots
 from simulator import preflight_check, simulate_trace
+
+
+CHECKPOINT_SCHEMA_VERSION = 1
+CHECKPOINT_TABLES = (
+    "policy_rows",
+    "comparison_rows",
+    "interval_rows",
+    "mode_usage_rows",
+    "saving_rows",
+    "sanity_rows",
+    "digest_rows",
+    "runtime_failure_rows",
+)
+RUNTIME_FAILURE_COLUMNS = [
+    "device",
+    "rho",
+    "seed",
+    "deadline_ratio",
+    "deadline_ms",
+    "epsilon",
+    "skip_mode",
+    "status",
+    "exception_type",
+    "exception_message",
+]
+
+
+def _checkpoint_group_dir(
+    checkpoint_dir: Path,
+    device_index: int,
+    device_name: str,
+    deadline_ratio: float,
+    epsilon: float,
+    skip_mode: str,
+) -> Path:
+    safe_device = re.sub(r"[^A-Za-z0-9_.-]+", "_", device_name)
+    return checkpoint_dir / (
+        f"device-{device_index:03d}-{safe_device}"
+        f"__ratio-{round(deadline_ratio * 10_000):08d}"
+        f"__epsilon-{round(epsilon * 1_000_000):08d}"
+        f"__skip-{skip_mode}"
+    )
+
+
+def _checkpoint_identity(
+    device_index: int,
+    device_name: str,
+    deadline_ratio: float,
+    epsilon: float,
+    skip_mode: str,
+) -> dict[str, object]:
+    return {
+        "schema_version": CHECKPOINT_SCHEMA_VERSION,
+        "device_index": device_index,
+        "device": device_name,
+        "deadline_ratio": deadline_ratio,
+        "epsilon": epsilon,
+        "skip_mode": skip_mode,
+    }
+
+
+def _completed_checkpoint(group_dir: Path, identity: dict[str, object]) -> bool:
+    marker = group_dir / "_complete.json"
+    if not marker.exists():
+        return False
+    try:
+        with marker.open("r", encoding="utf-8") as handle:
+            return json.load(handle) == identity
+    except (OSError, ValueError, TypeError):
+        return False
+
+
+def _write_checkpoint_group(
+    group_dir: Path,
+    identity: dict[str, object],
+    tables: dict[str, list[dict[str, object]]],
+) -> None:
+    """Atomically mark one combination group complete after writing raw rows."""
+    group_dir.mkdir(parents=True, exist_ok=True)
+    marker = group_dir / "_complete.json"
+    marker.unlink(missing_ok=True)
+    for table_name in CHECKPOINT_TABLES:
+        path = group_dir / f"{table_name}.csv"
+        rows = tables[table_name]
+        if not rows:
+            path.unlink(missing_ok=True)
+            continue
+        temporary = path.with_suffix(".csv.tmp")
+        pd.DataFrame(rows).to_csv(temporary, index=False, float_format="%.17g")
+        temporary.replace(path)
+    temporary_marker = marker.with_suffix(".json.tmp")
+    with temporary_marker.open("w", encoding="utf-8") as handle:
+        json.dump(identity, handle, ensure_ascii=False, sort_keys=True, indent=2)
+    temporary_marker.replace(marker)
+
+
+def _read_checkpoint_group(group_dir: Path) -> dict[str, list[dict[str, object]]]:
+    tables: dict[str, list[dict[str, object]]] = {}
+    for table_name in CHECKPOINT_TABLES:
+        path = group_dir / f"{table_name}.csv"
+        if path.exists():
+            frame = pd.read_csv(path, float_precision="round_trip")
+            tables[table_name] = frame.to_dict("records")
+        else:
+            tables[table_name] = []
+    return tables
 
 
 def _aggregate(frame: pd.DataFrame, group_columns: list[str], value_columns: list[str]) -> pd.DataFrame:
@@ -80,31 +188,34 @@ def _deadline_axis_diagnostics(
     return pd.DataFrame(rows)
 
 
-def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plots: bool = True) -> dict[str, Path]:
+def run_sweep(
+    mode: str,
+    output_dir: Path,
+    strict_sanity: bool = True,
+    make_plots: bool = True,
+    resume: bool = False,
+) -> dict[str, Path]:
     config = default_experiment(mode)
     sweep = config.sweep
     channel_config = config.channel
     output_dir.mkdir(parents=True, exist_ok=True)
+    checkpoint_dir = output_dir / "checkpoint"
+    if checkpoint_dir.exists() and not resume:
+        shutil.rmtree(checkpoint_dir)
+    checkpoint_dir.mkdir(parents=True, exist_ok=True)
 
-    policy_rows: list[dict[str, object]] = []
-    comparison_rows: list[dict[str, object]] = []
     preflight_rows: list[dict[str, object]] = []
     channel_rows: list[dict[str, object]] = []
-    interval_rows: list[dict[str, object]] = []
-    mode_usage_output_rows: list[dict[str, object]] = []
-    saving_rows: list[dict[str, object]] = []
-    sanity_rows: list[dict[str, object]] = []
-    digest_rows: list[dict[str, object]] = []
     warning_rows: list[dict[str, object]] = []
     saving_seen: set[tuple[str, float, int, float, str]] = set()
 
-    first_repro_args = None
-    first_repro_digest = None
     device_dmins: dict[str, float] = {}
+    traces: dict[tuple[int, float, int], object] = {}
+    checkpoint_groups: list[Path] = []
     total_trace_count = len(config.devices) * len(sweep.rho_values) * len(sweep.seeds)
     trace_number = 0
 
-    for device in config.devices:
+    for device_index, device in enumerate(config.devices):
         d_min = minimum_good_deadline_ms(
             device.profile, channel_config.r_good_mbps, channel_config.tx_power_w
         )
@@ -151,6 +262,7 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
             )
             for seed in sweep.seeds:
                 trace = source.generate(sweep.t_slots, seed)
+                traces[(device_index, rho, seed)] = trace
                 trace_number += 1
                 print(f"[{trace_number:02d}/{total_trace_count}] device={device.name} rho={rho:g} seed={seed}", flush=True)
                 channel_rows.append(
@@ -161,23 +273,95 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
                         **trace.metadata,
                     }
                 )
-                for ratio in sweep.deadline_ratios:
-                    deadline_ms = ratio * d_min
-                    for epsilon in sweep.epsilons:
-                        for skip_mode in sweep.skip_modes:
-                            if not valid_lookup[(rho, ratio, epsilon, skip_mode)]:
-                                continue
-                            simulation = simulate_trace(
-                                trace,
-                                device,
-                                channel_config,
-                                deadline_ms,
-                                ratio,
-                                epsilon,
-                                skip_mode,
-                                sweep.p3_v_values,
-                                seed,
+        total_group_count = (
+            len(sweep.deadline_ratios) * len(sweep.epsilons) * len(sweep.skip_modes)
+        )
+        group_number = 0
+        for ratio in sweep.deadline_ratios:
+            deadline_ms = ratio * d_min
+            for epsilon in sweep.epsilons:
+                for skip_mode in sweep.skip_modes:
+                    group_number += 1
+                    group_dir = _checkpoint_group_dir(
+                        checkpoint_dir,
+                        device_index,
+                        device.name,
+                        ratio,
+                        epsilon,
+                        skip_mode,
+                    )
+                    identity = _checkpoint_identity(
+                        device_index,
+                        device.name,
+                        ratio,
+                        epsilon,
+                        skip_mode,
+                    )
+                    checkpoint_groups.append(group_dir)
+                    if resume and _completed_checkpoint(group_dir, identity):
+                        completed = _read_checkpoint_group(group_dir)
+                        for row in completed["saving_rows"]:
+                            saving_seen.add(
+                                (
+                                    str(row["device"]),
+                                    float(row["rho"]),
+                                    int(row["seed"]),
+                                    float(row["deadline_ratio"]),
+                                    str(row["skip_mode"]),
+                                )
                             )
+                        print(
+                            f"[checkpoint {group_number:02d}/{total_group_count}] "
+                            f"resume-skip device={device.name} D/Dmin={ratio:g} "
+                            f"epsilon={epsilon:g} skip={skip_mode}",
+                            flush=True,
+                        )
+                        continue
+
+                    group_tables: dict[str, list[dict[str, object]]] = {
+                        table_name: [] for table_name in CHECKPOINT_TABLES
+                    }
+                    for rho in sweep.rho_values:
+                        if not valid_lookup[(rho, ratio, epsilon, skip_mode)]:
+                            continue
+                        for seed in sweep.seeds:
+                            trace = traces[(device_index, rho, seed)]
+                            try:
+                                simulation = simulate_trace(
+                                    trace,
+                                    device,
+                                    channel_config,
+                                    deadline_ms,
+                                    ratio,
+                                    epsilon,
+                                    skip_mode,
+                                    sweep.p3_v_values,
+                                    seed,
+                                )
+                            except Exception as exc:
+                                group_tables["runtime_failure_rows"].append(
+                                    {
+                                        "device": device.name,
+                                        "rho": rho,
+                                        "seed": seed,
+                                        "deadline_ratio": ratio,
+                                        "deadline_ms": deadline_ms,
+                                        "epsilon": epsilon,
+                                        "skip_mode": skip_mode,
+                                        "status": "runtime-invalid",
+                                        "exception_type": type(exc).__name__,
+                                        "exception_message": str(exc),
+                                    }
+                                )
+                                print(
+                                    f"WARNING: runtime-invalid device={device.name} "
+                                    f"rho={rho:g} seed={seed} D/Dmin={ratio:g} "
+                                    f"epsilon={epsilon:g} skip={skip_mode}: "
+                                    f"{type(exc).__name__}: {exc}",
+                                    file=sys.stderr,
+                                    flush=True,
+                                )
+                                continue
                             common = {
                                 "device": device.name,
                                 "rho": rho,
@@ -196,18 +380,18 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
                             }
                             for result in simulation.policies.values():
                                 summary = summarize_policy(result, trace.state)
-                                policy_rows.append({**common, **summary})
+                                group_tables["policy_rows"].append({**common, **summary})
                                 for usage in mode_usage_rows(result, trace.state):
-                                    mode_usage_output_rows.append({**common, **usage})
+                                    group_tables["mode_usage_rows"].append({**common, **usage})
                                 if result.name in ("P2", "P3"):
                                     for hist in interval_histogram(result):
-                                        interval_rows.append({**common, **hist})
+                                        group_tables["interval_rows"].append({**common, **hist})
 
                             saving_key = (device.name, rho, seed, ratio, skip_mode)
                             if saving_key not in saving_seen:
                                 saving_seen.add(saving_key)
                                 saving_summary = summarize_saving(simulation.costs)
-                                saving_rows.append(
+                                group_tables["saving_rows"].append(
                                     {
                                         "device": device.name,
                                         "rho": rho,
@@ -223,7 +407,7 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
                             p1 = energies["P1"]
                             oracle_denominator = energies["P1"] - energies["P2"]
                             oracle_gap_percent = 100.0 * oracle_denominator / max(p1, 1e-15)
-                            comparison_rows.append(
+                            group_tables["comparison_rows"].append(
                                 {
                                     **common,
                                     "discard_gain_percent": 100.0 * (energies["P1"] - energies["P0"]) / max(p1, 1e-15),
@@ -254,15 +438,37 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
                                     else "required"
                                 )
                             for check in checks:
-                                sanity_rows.append({**common, **check})
+                                group_tables["sanity_rows"].append({**common, **check})
                             if strict_sanity:
                                 assert_sanity(checks)
 
                             digest = stable_simulation_digest(simulation)
-                            digest_rows.append({**common, "sha256": digest})
-                            if first_repro_args is None:
-                                first_repro_args = (trace, device, channel_config, deadline_ms, ratio, epsilon, skip_mode, sweep.p3_v_values, seed)
-                                first_repro_digest = digest
+                            group_tables["digest_rows"].append({**common, "sha256": digest})
+
+                    _write_checkpoint_group(group_dir, identity, group_tables)
+                    print(
+                        f"[checkpoint {group_number:02d}/{total_group_count}] "
+                        f"saved device={device.name} D/Dmin={ratio:g} "
+                        f"epsilon={epsilon:g} skip={skip_mode}",
+                        flush=True,
+                    )
+
+    raw_tables: dict[str, list[dict[str, object]]] = {
+        table_name: [] for table_name in CHECKPOINT_TABLES
+    }
+    for group_dir in checkpoint_groups:
+        completed = _read_checkpoint_group(group_dir)
+        for table_name in CHECKPOINT_TABLES:
+            raw_tables[table_name].extend(completed[table_name])
+
+    policy_rows = raw_tables["policy_rows"]
+    comparison_rows = raw_tables["comparison_rows"]
+    interval_rows = raw_tables["interval_rows"]
+    mode_usage_output_rows = raw_tables["mode_usage_rows"]
+    saving_rows = raw_tables["saving_rows"]
+    sanity_rows = raw_tables["sanity_rows"]
+    digest_rows = raw_tables["digest_rows"]
+    runtime_failure_rows = raw_tables["runtime_failure_rows"]
 
     # Channel assertions are evaluated after all seeds are present.
     channel_df = pd.DataFrame(channel_rows)
@@ -300,10 +506,29 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
         if strict_sanity:
             assert_sanity(channel_checks)
 
-    # Re-run one full combination, including random P0, and compare hashes.
-    if first_repro_args is not None:
-        repeated = simulate_trace(*first_repro_args)
+    # Re-run one successful full combination, including random P0, and compare
+    # hashes. Reconstructing the arguments from checkpoint rows also exercises
+    # the resume-only path where every group was skipped.
+    if digest_rows:
+        first_digest = digest_rows[0]
+        repro_device_index = next(
+            index
+            for index, candidate in enumerate(config.devices)
+            if candidate.name == first_digest["device"]
+        )
+        repeated = simulate_trace(
+            traces[(repro_device_index, float(first_digest["rho"]), int(first_digest["seed"]))],
+            config.devices[repro_device_index],
+            channel_config,
+            float(first_digest["deadline_ms"]),
+            float(first_digest["deadline_ratio"]),
+            float(first_digest["epsilon"]),
+            str(first_digest["skip_mode"]),
+            sweep.p3_v_values,
+            int(first_digest["seed"]),
+        )
         repeated_digest = stable_simulation_digest(repeated)
+        first_repro_digest = str(first_digest["sha256"])
         repro_passed = repeated_digest == first_repro_digest
         sanity_rows.append({"check": "fixed_seed_pipeline_hash_reproducible", "passed": repro_passed, "detail": f"{first_repro_digest} == {repeated_digest}"})
         if strict_sanity:
@@ -316,6 +541,66 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
     mode_usage_df = pd.DataFrame(mode_usage_output_rows)
     saving_df = pd.DataFrame(saving_rows)
     digest_df = pd.DataFrame(digest_rows)
+    runtime_failure_df = pd.DataFrame(
+        runtime_failure_rows, columns=RUNTIME_FAILURE_COLUMNS
+    )
+
+    runtime_invalid_keys = {
+        (
+            str(row["device"]),
+            float(row["rho"]),
+            float(row["deadline_ratio"]),
+            float(row["epsilon"]),
+            str(row["skip_mode"]),
+        )
+        for row in runtime_failure_rows
+    }
+    for invalid_key in sorted(runtime_invalid_keys):
+        device_name, rho, ratio, epsilon, skip_mode = invalid_key
+        failures = [
+            row
+            for row in runtime_failure_rows
+            if (
+                str(row["device"]),
+                float(row["rho"]),
+                float(row["deadline_ratio"]),
+                float(row["epsilon"]),
+                str(row["skip_mode"]),
+            )
+            == invalid_key
+        ]
+        mask = (
+            (preflight_df["device"] == device_name)
+            & np.isclose(preflight_df["rho"], rho)
+            & np.isclose(preflight_df["deadline_ratio"], ratio)
+            & np.isclose(preflight_df["epsilon"], epsilon)
+            & (preflight_df["skip_mode"] == skip_mode)
+        )
+        messages = "; ".join(
+            f"seed={int(row['seed'])} {row['exception_type']}: {row['exception_message']}"
+            for row in failures
+        )
+        preflight_df.loc[mask, "valid"] = False
+        preflight_df.loc[mask, "exclusion_reason"] = f"runtime-invalid: {messages}"
+
+    def without_runtime_invalid(frame: pd.DataFrame) -> pd.DataFrame:
+        if frame.empty or not runtime_invalid_keys:
+            return frame
+        keep = [
+            (
+                str(row.device),
+                float(row.rho),
+                float(row.deadline_ratio),
+                float(row.epsilon),
+                str(row.skip_mode),
+            )
+            not in runtime_invalid_keys
+            for row in frame.itertuples(index=False)
+        ]
+        return frame.loc[keep].copy()
+
+    policy_analysis_df = without_runtime_invalid(policy_df)
+    comparison_analysis_df = without_runtime_invalid(comparison_df)
 
     policy_group = ["device", "rho", "deadline_ratio", "epsilon", "skip_mode", "policy"]
     policy_values = [
@@ -329,10 +614,12 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
         "boost_use_rate_bad",
         "selected_v",
     ]
-    policy_aggregate = _aggregate(policy_df, policy_group, policy_values)
+    policy_aggregate = _aggregate(policy_analysis_df, policy_group, policy_values)
     comparison_group = ["device", "rho", "deadline_ratio", "epsilon", "skip_mode"]
     comparison_values = ["discard_gain_percent", "targeting_gain_percent", "oracle_gap_percent", "online_recovery", "p2prime_gap_percent", "pi_bad_observed", "lag1_autocorr"]
-    comparison_aggregate = _aggregate(comparison_df, comparison_group, comparison_values)
+    comparison_aggregate = _aggregate(
+        comparison_analysis_df, comparison_group, comparison_values
+    )
     deadline_axis_df = _deadline_axis_diagnostics(
         comparison_aggregate, sweep.deadline_axis_tolerance_percent
     )
@@ -440,6 +727,7 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
         "deadline_axis_diagnostics": output_dir / "deadline_axis_diagnostics.csv",
         "diagnostic_warnings": output_dir / "diagnostic_warnings.csv",
         "smoke_acceptance": output_dir / "smoke_acceptance.csv",
+        "runtime_failures": output_dir / "runtime_failures.csv",
     }
     policy_df.to_csv(outputs["policy_runs"], index=False)
     policy_aggregate.to_csv(outputs["policy_aggregate"], index=False)
@@ -456,6 +744,7 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
     deadline_axis_df.to_csv(outputs["deadline_axis_diagnostics"], index=False)
     warning_df.to_csv(outputs["diagnostic_warnings"], index=False)
     smoke_df.to_csv(outputs["smoke_acceptance"], index=False)
+    runtime_failure_df.to_csv(outputs["runtime_failures"], index=False)
 
     parameter_payload = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
@@ -468,7 +757,7 @@ def run_sweep(mode: str, output_dir: Path, strict_sanity: bool = True, make_plot
             "D_min": "D_min uses normal mode only and is fixed at 36.045 ms for the default profile.",
             "rate_jitter": "Rates use independent clipped lognormal multiplicative jitter; state occupancy and autocorrelation checks use state labels only.",
             "P2prime": "T>2000 uses cardinality-priced (Lagrangian) exact path DP plus deterministic safe augmentation.",
-            "invalid": "Combinations with expected forced violation rate >= epsilon/2 are excluded from policy simulation and retained in preflight.csv.",
+            "invalid": "Preflight-invalid combinations and combinations with any runtime-invalid seed are excluded from aggregates and plots; per-seed runtime failures are retained in runtime_failures.csv.",
         },
     }
     with outputs["parameters"].open("w", encoding="utf-8") as handle:
@@ -502,6 +791,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", type=Path, default=None)
     parser.add_argument("--strict-sanity", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--plots", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="skip completed combination groups found under <output>/checkpoint",
+    )
     return parser.parse_args()
 
 
@@ -512,4 +806,5 @@ if __name__ == "__main__":
         args.output or default_output_dir(args.mode),
         strict_sanity=args.strict_sanity,
         make_plots=args.plots,
+        resume=args.resume,
     )
