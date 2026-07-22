@@ -337,6 +337,8 @@ def run_sweep(
                                     skip_mode,
                                     sweep.p3_v_values,
                                     seed,
+                                    rho,
+                                    device_index,
                                 )
                             except Exception as exc:
                                 group_tables["runtime_failure_rows"].append(
@@ -526,6 +528,8 @@ def run_sweep(
             str(first_digest["skip_mode"]),
             sweep.p3_v_values,
             int(first_digest["seed"]),
+            float(first_digest["rho"]),
+            repro_device_index,
         )
         repeated_digest = stable_simulation_digest(repeated)
         first_repro_digest = str(first_digest["sha256"])

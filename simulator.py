@@ -99,14 +99,25 @@ def preflight_check(
     )
 
 
-def _combination_rng(seed: int, deadline_ratio: float, epsilon: float, skip_mode: str) -> np.random.Generator:
+def _combination_rng(
+    seed: int,
+    deadline_ratio: float,
+    epsilon: float,
+    skip_mode: str,
+    rho: float,
+    device_index: int,
+) -> np.random.Generator:
     # SeedSequence avoids Python's process-randomized hash(), giving bitwise
-    # reproducibility across independent interpreter runs.
+    # reproducibility across independent interpreter runs. Including rho and
+    # device_index intentionally changes P0's random stream from the v0.1-h1
+    # results and prevents collisions ahead of the H2 multi-device extension.
     entropy = [
         int(seed),
         int(round(deadline_ratio * 10_000)),
         int(round(epsilon * 1_000_000)),
         0 if skip_mode == "drop" else 1,
+        int(round((rho + 1.0) * 1_000_000)),
+        int(device_index),
     ]
     return np.random.default_rng(np.random.SeedSequence(entropy))
 
@@ -121,6 +132,8 @@ def simulate_trace(
     skip_mode: str,
     p3_v_values: tuple[float, ...],
     seed: int,
+    rho: float,
+    device_index: int,
 ) -> SimulationResult:
     costs = compute_slot_costs(
         device.profile,
@@ -142,7 +155,14 @@ def simulate_trace(
         "P1": P1AlwaysMeet().run(costs),
         "P0": P0RandomDrop(
             discretionary_budget,
-            _combination_rng(seed, deadline_ratio, epsilon, skip_mode),
+            _combination_rng(
+                seed,
+                deadline_ratio,
+                epsilon,
+                skip_mode,
+                rho,
+                device_index,
+            ),
         ).run(costs),
         "P2": P2OfflineOracle(discretionary_budget).run(costs),
         "P2prime": P2BurstOracle(discretionary_budget).run(costs),

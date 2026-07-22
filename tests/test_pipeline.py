@@ -2,7 +2,23 @@ from channel import GilbertElliottChannel
 from config import default_experiment
 from dnn_profile import minimum_good_deadline_ms
 from metrics import assert_sanity, combination_sanity_rows, stable_simulation_digest
-from simulator import preflight_check, simulate_trace
+from simulator import _combination_rng, preflight_check, simulate_trace
+
+
+def test_combination_rng_includes_rho_and_device_index():
+    arguments = (88, 1.5, 0.05, "drop", 0.75, 0)
+    reference = _combination_rng(*arguments).integers(0, 2**63, size=8)
+    repeated = _combination_rng(*arguments).integers(0, 2**63, size=8)
+    other_rho = _combination_rng(88, 1.5, 0.05, "drop", 0.875, 0).integers(
+        0, 2**63, size=8
+    )
+    other_device = _combination_rng(88, 1.5, 0.05, "drop", 0.75, 1).integers(
+        0, 2**63, size=8
+    )
+
+    assert (reference == repeated).all()
+    assert not (reference == other_rho).all()
+    assert not (reference == other_device).all()
 
 
 def test_preflight_and_fixed_seed_pipeline_hash():
@@ -16,7 +32,19 @@ def test_preflight_and_fixed_seed_pipeline_hash():
 
     source = GilbertElliottChannel(40.0, 10.0, 0.2, 0.75, marginal_tolerance=0.01)
     trace = source.generate(1_000, 88)
-    args = (trace, device, channel, 1.5 * d_min, 1.5, 0.05, "drop", config.sweep.p3_v_values, 88)
+    args = (
+        trace,
+        device,
+        channel,
+        1.5 * d_min,
+        1.5,
+        0.05,
+        "drop",
+        config.sweep.p3_v_values,
+        88,
+        0.75,
+        0,
+    )
     first = simulate_trace(*args)
     second = simulate_trace(*args)
     assert stable_simulation_digest(first) == stable_simulation_digest(second)
