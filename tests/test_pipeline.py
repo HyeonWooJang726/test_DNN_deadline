@@ -46,6 +46,7 @@ def test_preflight_and_fixed_seed_pipeline_hash():
         88,
         0.75,
         0,
+        config.sweep.violation_tolerance,
     )
     first = simulate_trace(*args)
     second = simulate_trace(*args)

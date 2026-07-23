@@ -180,6 +180,7 @@ def _n1_reduction_check(config: H2ExperimentConfig) -> tuple[bool, str]:
         9917,
         0.75,
         0,
+        0.005,
     )
     i1, i2, _ = independent_policy_sets(
         (trace,),

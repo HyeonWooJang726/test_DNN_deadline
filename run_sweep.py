@@ -571,6 +571,7 @@ def run_sweep(
             int(first_digest["seed"]),
             float(first_digest["rho"]),
             repro_device_index,
+            sweep.violation_tolerance,
         )
         repeated_digest = stable_simulation_digest(repeated)
         first_repro_digest = str(first_digest["sha256"])

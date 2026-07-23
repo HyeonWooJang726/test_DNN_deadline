@@ -134,7 +134,7 @@ def simulate_trace(
     seed: int,
     rho: float,
     device_index: int,
-    p3_violation_tolerance: float = 0.005,
+    p3_violation_tolerance: float,
 ) -> SimulationResult:
     costs = compute_slot_costs(
         device.profile,
