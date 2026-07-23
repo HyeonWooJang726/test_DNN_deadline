@@ -85,7 +85,9 @@ P3 is a post-hoc-calibrated upper bound, not a deployable policy. A deployable
 online policy would reserve budget against expected future forced violations
 (estimable from the preflight forced-rate) and therefore performs at or below
 P3; the tight-regime recovery decline reported here thus applies a fortiori to
-any such policy.
+any such policy. A five-seed cross-seed check finds that transferring the
+calibrated V changes recovery by less than 1 percentage point in all tested
+conditions.
 
 ## Run
 
