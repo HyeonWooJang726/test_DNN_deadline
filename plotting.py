@@ -19,7 +19,9 @@ POLICY_COLORS = {
     "P2prime": "#6baed6",
     "P3": "#f28e2b",
 }
-RHO_AXIS_LABEL = "Channel state correlation (mean bad-burst length)"
+RHO_AXIS_LABEL = (
+    "Channel state correlation ρ (run = mean bad-state run length, slots)"
+)
 
 
 def _save(fig: plt.Figure, path: Path, *, tight_layout: bool = True) -> None:
@@ -29,13 +31,26 @@ def _save(fig: plt.Figure, path: Path, *, tight_layout: bool = True) -> None:
     plt.close(fig)
 
 
-def rho_label(rho, pi_bad=0.2):
-    """Return a listener-friendly label for a state-correlation value."""
+def rho_label(rho, pi_bad=0.2, style="axis"):
+    """Return a listener-friendly label for a state-correlation value.
+
+    L is the model expectation of a consecutive Bad-state run (the geometric
+    mean), not an approximation.
+    """
     rho = float(rho)
-    if np.isclose(rho, 0.0):
-        return "i.i.d."
-    mean_bad_burst = 1.0 / ((1.0 - rho) * (1.0 - pi_bad))
-    return f"ρ={rho:g} (≈{mean_bad_burst:.0f}-slot bursts)"
+    mean_bad_run = 1.0 / ((1.0 - rho) * (1.0 - pi_bad))
+    if style == "axis":
+        if np.isclose(rho, 0.0):
+            return "i.i.d."
+        return f"ρ={rho:g} (run {mean_bad_run:g})"
+    if style == "panel":
+        if np.isclose(rho, 0.0):
+            return f"i.i.d. (mean bad-state run: {mean_bad_run:g} slots)"
+        return (
+            f"ρ={rho:g} "
+            f"(mean bad-state run: {mean_bad_run:g} slots)"
+        )
+    raise ValueError("style must be 'axis' or 'panel'")
 
 
 def _ordinal(ax, values):
@@ -182,10 +197,7 @@ def plot_decomposition(
                     color="#666666",
                     fontsize=9,
                 )
-        channel_description = rho_label(rho)
-        if channel_description != "i.i.d.":
-            channel_description = f"correlated {channel_description[channel_description.index('('):]}"
-        ax.set_title(f"{skip_mode} — {channel_description}")
+        ax.set_title(f"{skip_mode} — {rho_label(rho, style='panel')}")
         ax.grid(axis="y", alpha=0.25)
     if all_values:
         axes[0].set_ylim(bottom=max(0.0, min(all_values) - 3.0), top=102.0)

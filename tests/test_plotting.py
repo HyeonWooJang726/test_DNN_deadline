@@ -7,10 +7,22 @@ import pandas as pd
 import plotting
 
 
-def test_rho_label_uses_iid_and_mean_bad_burst_length():
+def test_rho_label_uses_axis_and_panel_styles():
     assert plotting.rho_label(0.0) == "i.i.d."
-    assert plotting.rho_label(0.75) == "ρ=0.75 (≈5-slot bursts)"
-    assert plotting.rho_label(0.975) == "ρ=0.975 (≈50-slot bursts)"
+    assert plotting.rho_label(0.75) == "ρ=0.75 (run 5)"
+    assert plotting.rho_label(0.975) == "ρ=0.975 (run 50)"
+    assert (
+        plotting.rho_label(0.0, style="panel")
+        == "i.i.d. (mean bad-state run: 1.25 slots)"
+    )
+    assert (
+        plotting.rho_label(0.75, style="panel")
+        == "ρ=0.75 (mean bad-state run: 5 slots)"
+    )
+    assert (
+        plotting.rho_label(0.975, style="panel")
+        == "ρ=0.975 (mean bad-state run: 50 slots)"
+    )
 
 
 def test_decomposition_has_five_policy_ticks_in_every_panel(monkeypatch, tmp_path: Path):
