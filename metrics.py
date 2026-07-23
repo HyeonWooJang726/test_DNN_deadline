@@ -33,8 +33,11 @@ def run_statistics(violations: np.ndarray) -> tuple[int, int, int]:
 def summarize_policy(
     result: PolicyResult,
     channel_states: np.ndarray,
+    burn_in_slots: int = 0,
 ) -> dict[str, float | int | str]:
-    maximum, bursts, runs = run_statistics(result.violate)
+    if not 0 <= burn_in_slots <= len(result.violate):
+        raise ValueError("burn_in_slots must lie within the policy horizon")
+    maximum, bursts, runs = run_statistics(result.violate[burn_in_slots:])
     at_violation = channel_states[result.violate]
     known = at_violation[at_violation >= 0]
     bad_share = float(np.mean(known == BAD)) if len(known) else float("nan")
@@ -163,6 +166,15 @@ def combination_sanity_rows(
         checks.append(
             (f"violation_{name}_within_budget", rate <= epsilon + violation_tolerance + 1e-12, f"{rate:.9g} <= {epsilon + violation_tolerance:.9g}")
         )
+    p3_count = int(p["P3"].violate.sum())
+    total_budget = int(np.floor(epsilon * len(p["P3"].violate)))
+    checks.append(
+        (
+            "violation_P3_total_within_floor_budget",
+            p3_count <= total_budget,
+            f"{p3_count} <= floor(epsilon*T)={total_budget}",
+        )
+    )
     p1_rate = p["P1"].violation_rate
     forced_rate = simulation.forced_count / len(p["P1"].violate)
     checks.append(

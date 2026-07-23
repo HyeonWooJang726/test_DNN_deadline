@@ -48,3 +48,14 @@ def test_lagrangian_large_path_respects_budget_and_adjacency():
     assert selected.sum() <= 200
     assert not np.any(selected[:-1] & selected[1:])
 
+
+def test_lagrangian_t2000_matches_exact_selected_value_to_four_decimals():
+    rng = np.random.default_rng(7)
+    weights = rng.random(2_000)
+    allowed = rng.random(2_000) > 0.1
+    exact = exact_burst_selection(weights, allowed, budget=200)
+    lagrangian = lagrangian_burst_selection(weights, allowed, budget=200)
+
+    assert round(float(weights[lagrangian].sum()), 4) == round(
+        float(weights[exact].sum()), 4
+    )

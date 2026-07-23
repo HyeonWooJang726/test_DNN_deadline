@@ -1,3 +1,5 @@
+import numpy as np
+
 from channel import GilbertElliottChannel
 from config import default_experiment
 from dnn_profile import minimum_good_deadline_ms
@@ -49,3 +51,6 @@ def test_preflight_and_fixed_seed_pipeline_hash():
     second = simulate_trace(*args)
     assert stable_simulation_digest(first) == stable_simulation_digest(second)
     assert_sanity(combination_sanity_rows(first, 0.05, 0.005, 0.005))
+    assert first.policies["P3"].violate.sum() <= np.floor(
+        0.05 * len(first.policies["P3"].violate)
+    )

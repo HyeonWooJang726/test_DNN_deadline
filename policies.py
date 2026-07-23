@@ -269,22 +269,22 @@ class P2BurstOracle(_PreparedMaskPolicy):
 
 
 @njit(cache=True)
-def _threshold_mask(feasible, saving, epsilon, v_parameter, max_total_violations):
+def _threshold_mask(feasible, saving, epsilon, v_parameter, discretionary_budget):
     n = len(feasible)
     optional = np.zeros(n, dtype=np.uint8)
     queue = 0.0
     queue_max = 0.0
-    violation_count = 0
+    selected_count = 0
     for t in range(n):
         if feasible[t]:
             violate = 1 if (
                 saving[t] > queue / v_parameter
-                and violation_count < max_total_violations
+                and selected_count < discretionary_budget
             ) else 0
             optional[t] = violate
+            selected_count += violate
         else:
             violate = 1
-        violation_count += violate
         queue = queue + violate - epsilon
         if queue < 0.0:
             queue = 0.0
@@ -296,34 +296,60 @@ def _threshold_mask(feasible, saving, epsilon, v_parameter, max_total_violations
 class P3OnlineThreshold(_PreparedMaskPolicy):
     """Calibrated-V upper bound of online performance.
 
-    V is selected post hoc per combination, and every candidate uses the
-    horizon budget cap floor(epsilon*T); P3 is therefore optimistic rather
-    than a truly online deployable policy.
+    V is selected post hoc per combination. A coarse V grid can push this
+    optimistic upper bound downward and invalidate the intended a-fortiori
+    comparison, so calibration uses the dense grid supplied by SweepConfig.
+
+    Every candidate caps optional violations at floor(epsilon*T) minus the
+    trace's complete forced-violation count. Using that future forced count is
+    offline information, like post-hoc V calibration, and is part of P3's
+    optimistic-upper-bound framing. A deployable policy must reserve budget
+    for future forced violations and therefore performs at or below P3.
     """
 
     name = "P3"
 
-    def __init__(self, epsilon: float, v_values: tuple[float, ...]):
+    def __init__(
+        self,
+        epsilon: float,
+        v_values: tuple[float, ...],
+        discretionary_budget: int,
+        violation_tolerance: float,
+    ):
         self.epsilon = float(epsilon)
         self.v_values = tuple(float(v) for v in v_values)
+        self.discretionary_budget = int(discretionary_budget)
+        self.violation_tolerance = float(violation_tolerance)
 
     def run(self, costs: SlotCosts) -> PolicyResult:
         candidates = []
-        max_total_violations = int(np.floor(self.epsilon * len(costs.feasible)))
         for v in self.v_values:
             raw, q_final, q_max = _threshold_mask(
                 costs.feasible,
                 costs.saving_j,
                 self.epsilon,
                 v,
-                max_total_violations,
+                self.discretionary_budget,
             )
             optional = raw.astype(bool)
             result = _result_from_optional_mask("P3", costs, optional)
             candidates.append((abs(result.violation_rate - self.epsilon), result.mean_energy_j, v, optional, q_final, q_max, result.violation_rate))
         # V is calibrated per (trace, D, epsilon, skip mode), never globally.
-        candidates.sort(key=lambda item: (item[0], item[1], item[2]))
-        _, _, v, self.selected, q_final, q_max, rate = candidates[0]
+        within_budget = [
+            candidate
+            for candidate in candidates
+            if candidate[6] <= self.epsilon + self.violation_tolerance
+        ]
+        if within_budget:
+            within_budget.sort(key=lambda item: (item[1], item[2]))
+            selected = within_budget[0]
+            selection_rule = "minimum_energy_within_violation_tolerance"
+        else:
+            candidates.sort(key=lambda item: (item[0], item[1], item[2]))
+            selected = candidates[0]
+            selection_rule = "closest_violation_rate_fallback"
+        _, _, v, self.selected, q_final, q_max, rate = selected
+        forced_count = int((~costs.feasible).sum())
         return _result_from_optional_mask(
             self.name,
             costs,
@@ -332,6 +358,10 @@ class P3OnlineThreshold(_PreparedMaskPolicy):
             q_final=float(q_final),
             q_max=float(q_max),
             calibrated_violation_rate=float(rate),
-            horizon_budget_cap=max_total_violations,
+            horizon_budget_cap=forced_count + self.discretionary_budget,
+            discretionary_budget_cap=self.discretionary_budget,
+            post_hoc_forced_count=forced_count,
+            violation_tolerance=self.violation_tolerance,
+            selection_rule=selection_rule,
             candidate_rates={str(c[2]): float(c[6]) for c in candidates},
         )

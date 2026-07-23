@@ -134,6 +134,7 @@ def simulate_trace(
     seed: int,
     rho: float,
     device_index: int,
+    p3_violation_tolerance: float = 0.005,
 ) -> SimulationResult:
     costs = compute_slot_costs(
         device.profile,
@@ -166,6 +167,11 @@ def simulate_trace(
         ).run(costs),
         "P2": P2OfflineOracle(discretionary_budget).run(costs),
         "P2prime": P2BurstOracle(discretionary_budget).run(costs),
-        "P3": P3OnlineThreshold(epsilon, p3_v_values).run(costs),
+        "P3": P3OnlineThreshold(
+            epsilon,
+            p3_v_values,
+            discretionary_budget,
+            p3_violation_tolerance,
+        ).run(costs),
     }
     return SimulationResult(costs, policies, forced_count, discretionary_budget)

@@ -102,7 +102,23 @@ class SweepConfig:
     deadline_ratios: tuple[float, ...] = (1.05, 1.1, 1.2, 1.35, 1.5, 2.0)
     epsilons: tuple[float, ...] = (0.01, 0.05, 0.1, 0.15)
     skip_modes: tuple[str, ...] = ("drop", "late")
-    p3_v_values: tuple[float, ...] = (10.0, 100.0, 1_000.0, 10_000.0)
+    p3_v_values: tuple[float, ...] = (
+        10.0,
+        20.0,
+        30.0,
+        50.0,
+        70.0,
+        100.0,
+        150.0,
+        200.0,
+        300.0,
+        500.0,
+        700.0,
+        1_000.0,
+        2_000.0,
+        5_000.0,
+        10_000.0,
+    )
     relative_energy_tolerance: float = 0.005
     violation_tolerance: float = 0.005
     oracle_gap_mask_percent: float = 2.0

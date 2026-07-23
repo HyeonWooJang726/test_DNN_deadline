@@ -31,7 +31,7 @@ from plotting import create_all_plots
 from simulator import preflight_check, simulate_trace
 
 
-CHECKPOINT_SCHEMA_VERSION = 1
+CHECKPOINT_SCHEMA_VERSION = 2
 CHECKPOINT_TABLES = (
     "policy_rows",
     "comparison_rows",
@@ -223,6 +223,7 @@ def run_sweep(
     config = default_experiment(mode)
     sweep = config.sweep
     channel_config = config.channel
+    burst_burn_in_slots = max(200, sweep.t_slots // 100)
     output_dir.mkdir(parents=True, exist_ok=True)
     checkpoint_dir = output_dir / "checkpoint"
     if checkpoint_dir.exists() and not resume:
@@ -364,6 +365,7 @@ def run_sweep(
                                     seed,
                                     rho,
                                     device_index,
+                                    sweep.violation_tolerance,
                                 )
                             except Exception as exc:
                                 group_tables["runtime_failure_rows"].append(
@@ -404,9 +406,14 @@ def run_sweep(
                                 "lag1_autocorr": trace.metadata["lag1_autocorr"],
                                 "forced_count": simulation.forced_count,
                                 "discretionary_budget": simulation.discretionary_budget,
+                                "burst_burn_in_slots": burst_burn_in_slots,
                             }
                             for result in simulation.policies.values():
-                                summary = summarize_policy(result, trace.state)
+                                summary = summarize_policy(
+                                    result,
+                                    trace.state,
+                                    burn_in_slots=burst_burn_in_slots,
+                                )
                                 group_tables["policy_rows"].append({**common, **summary})
                                 for usage in mode_usage_rows(result, trace.state):
                                     group_tables["mode_usage_rows"].append({**common, **usage})
@@ -431,6 +438,10 @@ def run_sweep(
                                 )
 
                             energies = {name: result.mean_energy_j for name, result in simulation.policies.items()}
+                            violation_counts = {
+                                name: int(result.violate.sum())
+                                for name, result in simulation.policies.items()
+                            }
                             p1 = energies["P1"]
                             oracle_denominator = energies["P1"] - energies["P2"]
                             oracle_gap_percent = 100.0 * oracle_denominator / max(p1, 1e-15)
@@ -446,6 +457,11 @@ def run_sweep(
                                         else np.nan
                                     ),
                                     "p2prime_gap_percent": 100.0 * (energies["P2prime"] - energies["P2"]) / max(p1, 1e-15),
+                                    "P1_violation_count": violation_counts["P1"],
+                                    "P0_violation_count": violation_counts["P0"],
+                                    "P2_violation_count": violation_counts["P2"],
+                                    "P2prime_violation_count": violation_counts["P2prime"],
+                                    "P3_violation_count": violation_counts["P3"],
                                 }
                             )
                             checks = combination_sanity_rows(
@@ -781,11 +797,13 @@ def run_sweep(
         "platform": platform.platform(),
         "config": config.to_dict(),
         "derived_d_min_ms": device_dmins,
+        "burst_burn_in_slots": burst_burn_in_slots,
         "notes": {
             "rho": "The state transition probabilities are inverted directly from stationary pi_B and specified lag-1 rho; rho=0 is i.i.d.",
             "D_min": "D_min uses normal mode only and is fixed at 36.045 ms for the default profile.",
             "rate_jitter": "Rates use independent clipped lognormal multiplicative jitter; state occupancy and autocorrelation checks use state labels only.",
             "P2prime": "T>2000 uses cardinality-priced (Lagrangian) exact path DP plus deterministic safe augmentation.",
+            "burst_statistics": "Maximum violation run and burst counts exclude the first max(200, T//100) slots for every policy.",
             "invalid": "Preflight-invalid combinations and combinations with any runtime-invalid seed are excluded from aggregates and plots; per-seed runtime failures are retained in runtime_failures.csv.",
         },
     }

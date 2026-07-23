@@ -10,6 +10,8 @@ from dnn_profile import (
     ms_to_s,
     s_to_ms,
 )
+from metrics import summarize_policy
+from policies import PolicyResult
 from run_sweep import _d_min_acceptance
 
 
@@ -63,3 +65,26 @@ def test_dmin_is_normal_only_and_boost_can_meet_tight_bad_slot():
     )
     assert costs.feasible[0]
     assert costs.mode_names[costs.meet_local_mode[0]] == "boost"
+
+
+def test_policy_burst_statistics_exclude_configured_burn_in_only():
+    violations = np.array([1, 1, 1, 1, 0, 1, 1], dtype=bool)
+    result = PolicyResult(
+        name="test",
+        violate=violations,
+        split_p=np.zeros(len(violations), dtype=np.int16),
+        local_mode=np.zeros(len(violations), dtype=np.int8),
+        energy_j=np.ones(len(violations)),
+        mode_names=("normal",),
+    )
+
+    full = summarize_policy(result, np.zeros(len(violations), dtype=np.int8))
+    burned = summarize_policy(
+        result,
+        np.zeros(len(violations), dtype=np.int8),
+        burn_in_slots=5,
+    )
+
+    assert (full["max_violation_run"], full["burst_count_ge2"]) == (4, 2)
+    assert (burned["max_violation_run"], burned["burst_count_ge2"]) == (2, 1)
+    assert burned["violation_count"] == full["violation_count"] == 6
