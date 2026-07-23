@@ -91,7 +91,11 @@ def plot_gap_heatmaps(
         ax.set_yticks(range(len(epsilons)), [str(v) for v in epsilons])
         ax.set_xlabel(r"Deadline tightness $D/D_{min}$")
         ax.set_ylabel(r"Violation budget $\epsilon$")
-        ax.set_title(f"Pure temporal targeting gain: {skip_mode}")
+        title = {
+            "drop": "Energy Savings from Choosing When to Drop",
+            "late": "Energy Savings from Choosing When to Finish Late",
+        }[skip_mode]
+        ax.set_title(title)
         for iy in range(len(epsilons)):
             for ix in range(len(deadline_ratios)):
                 if np.isnan(grid[iy, ix]):
@@ -188,7 +192,8 @@ def plot_decomposition(
     for ax in axes[::3]:
         ax.set_ylabel("Energy normalized by P1 [%]")
     fig.suptitle(
-        f"Energy decomposition (D/Dmin={representative_ratio:g}, "
+        "Energy Use of Each Policy under Different Channel Conditions\n"
+        f"(D/Dmin={representative_ratio:g}, "
         f"eps={representative_epsilon:g}, skip=drop/late)"
     )
     _save(
@@ -229,7 +234,7 @@ def plot_rho_dependence(
         xlabel=RHO_AXIS_LABEL,
         ylabel=r"Online recovery $(P1-P3)/(P1-P2)$",
         title=(
-            "Online policy's recovery of oracle savings\n"
+            "How Much of the Best Possible Savings the Online Policy Achieves\n"
             f"(D/Dmin={representative_ratio:g}, eps={representative_epsilon:g}, "
             f"skip=drop/late; gap < {gap_mask_percent:g}% masked)"
         ),
@@ -253,8 +258,12 @@ def plot_rho_dependence(
             ax.legend()
         axes[0].set_ylabel("Maximum consecutive violations")
         axes[1].set_ylabel("Number of violation bursts (length >= 2)")
+        title = {
+            "drop": "Consecutive Violations under Drop",
+            "late": "Consecutive Violations under Late Processing",
+        }[skip_mode]
         fig.suptitle(
-            "Violation clustering under energy-optimal budget spending\n"
+            f"{title}\n"
             f"(D/Dmin={representative_ratio:g}, eps={representative_epsilon:g}, "
             f"skip={skip_mode})"
         )
@@ -274,7 +283,7 @@ def plot_rho_dependence(
         xlabel=RHO_AXIS_LABEL,
         ylabel=r"$(P2'-P2)/P1$ [%]",
         title=(
-            "Energy cost of banning consecutive violations (ε=0.15)\n"
+            "Energy Cost of Avoiding Consecutive Violations\n"
             f"(D/Dmin={representative_ratio:g}, eps=0.15, skip=drop/late)"
         ),
     )
@@ -312,7 +321,9 @@ def plot_oracle_invariance(
     lines, labels = ax.get_legend_handles_labels()
     lines2, labels2 = ax2.get_legend_handles_labels()
     ax.legend(lines + lines2, labels + labels2, loc="best")
-    ax.set_title("Check: offline oracle gap is invariant to channel correlation")
+    ax.set_title(
+        "Sanity Check: Offline Savings Do Not Depend on Channel Correlation"
+    )
     _save(fig, output_dir / "fig_sanity_oracle_flatness.png")
 
 
