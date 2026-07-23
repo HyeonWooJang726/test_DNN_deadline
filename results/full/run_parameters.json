@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-07-22T04:10:43.102605+00:00",
+  "generated_utc": "2026-07-23T08:33:07.616336+00:00",
   "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
   "platform": "Windows-10-10.0.26200-SP0",
   "config": {
@@ -108,8 +108,19 @@
       ],
       "p3_v_values": [
         10.0,
+        20.0,
+        30.0,
+        50.0,
+        70.0,
         100.0,
+        150.0,
+        200.0,
+        300.0,
+        500.0,
+        700.0,
         1000.0,
+        2000.0,
+        5000.0,
         10000.0
       ],
       "relative_energy_tolerance": 0.005,
@@ -121,11 +132,13 @@
   "derived_d_min_ms": {
     "device_0": 36.045
   },
+  "burst_burn_in_slots": 1000,
   "notes": {
     "rho": "The state transition probabilities are inverted directly from stationary pi_B and specified lag-1 rho; rho=0 is i.i.d.",
     "D_min": "D_min uses normal mode only and is fixed at 36.045 ms for the default profile.",
     "rate_jitter": "Rates use independent clipped lognormal multiplicative jitter; state occupancy and autocorrelation checks use state labels only.",
     "P2prime": "T>2000 uses cardinality-priced (Lagrangian) exact path DP plus deterministic safe augmentation.",
+    "burst_statistics": "Maximum violation run and burst counts exclude the first max(200, T//100) slots for every policy.",
     "invalid": "Preflight-invalid combinations and combinations with any runtime-invalid seed are excluded from aggregates and plots; per-seed runtime failures are retained in runtime_failures.csv."
   }
 }

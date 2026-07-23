@@ -35,25 +35,23 @@ the full deadline/ε grid.
 
   ![H1a temporal-targeting gain under the conservative late model](figures/full/fig_h1a_gap_heatmap_late.png)
 
-- **H1b-i — online recovery.** Recovery remains approximately **97–98%** in
-  loose, highly correlated regimes (`D/D_min=2.0`, ρ=0.9375–0.975, both skip
-  modes), but falls to **58–63%** in the tightest valid high-correlation
-  combinations under `late` (`ρ=0.975, ε=0.15`: 58.0% at `D/D_min=1.1` and
-  62.9% at `D/D_min=1.2`, from `comparison_aggregate.csv`). The embedded
-  figure is the representative `D/D_min=1.5, ε=0.05` slice, where recovery
-  falls to approximately **73%** under `drop`; it therefore does not directly
-  display the 58–63% full-grid values. A myopic Lyapunov policy suffices except
-  in the tight-and-correlated regime. P3's recovery is an optimistic upper
-  bound on truly online performance; the tight-regime decline therefore holds
-  a fortiori.
+- **H1b-i — online recovery.** With the denser post-hoc V calibration and the
+  corrected violation cap, aggregate recovery is **96.3–99.7%** across all
+  reportable full-grid combinations. In the tight, highly correlated `late`
+  regime (`ρ=0.975, ε=0.15`), it is **96.5%** at `D/D_min=1.1` and **96.8%**
+  at `D/D_min=1.2`. The representative `D/D_min=1.5, ε=0.05` `drop` slice
+  declines modestly from **99.6%** at i.i.d. to **97.9%** at `ρ=0.975`.
+  Correlation therefore still reduces recovery, but the corrected optimistic
+  upper bound closes most of the offline-oracle gap even in the tight regime.
 
   ![Online recovery at the representative condition](figures/full/fig_h1b1_online_recovery.png)
 
 - **H1b-ii — burst formation.** For offline P2 under `late` at the
   representative `D/D_min=1.5, ε=0.05` condition, violation bursts of length
-  at least two grow monotonically with ρ, from approximately **240** at i.i.d.
-  to approximately **850** at ρ=0.975 (244.0 to 847.2). This is the hidden
-  failure mode of a pure long-run-rate constraint.
+  at least two grow monotonically with ρ, from approximately **241** at i.i.d.
+  to approximately **838** at ρ=0.975 (240.9 to 837.9 after the uniform
+  1,000-slot burn-in). This is the hidden failure mode of a pure long-run-rate
+  constraint.
 - **H1b-iii — cost of a hard burst ban.** Under `drop` at
   `D/D_min=1.5, ε=0.15`, banning consecutive violations costs approximately
   **0.8%** at i.i.d. and up to **6.5%** at ρ=0.975. It reaches approximately
@@ -74,13 +72,20 @@ and [oracle-flatness sanity check](figures/full/fig_sanity_oracle_flatness.png).
 |---|---|---|
 | P1 | Meet every deadline (boost allowed) | Status-quo baseline |
 | P0 | Spend the same budget on random slots | Control: isolates the workload-reduction benefit |
-| P3 | Calibrated-V upper bound of online performance (V selected post hoc per combination; uses horizon budget cap ⌊εT⌋) | Optimistic online upper bound |
+| P3 | Calibrated-V upper bound (V and the full-trace forced count are used post hoc; optional cap is ⌊εT⌋ minus forced violations) | Optimistic online upper bound |
 | P2' | Oracle + no-consecutive-violation constraint | Cost of banning bursts |
 | P2 | Offline oracle: spend on highest-saving slots | Upper bound |
 
-Ordering: energy decreases downward (`P1 ≥ P0 ≥ P3 ≳ P2' ≥ P2`). Central
-decomposition — `P1-P0`: workload-reduction benefit; `P0-P2`: pure
-temporal-targeting benefit (the claim of this work).
+Core energy ordering is `P1 ≥ P0 ≥ P2`. Both P3 and P2' remain above the P2
+oracle, but they have no guaranteed mutual ordering because only P2' bans
+consecutive violations. Central decomposition — `P1-P0`: workload-reduction
+benefit; `P0-P2`: pure temporal-targeting benefit (the claim of this work).
+
+P3 is a post-hoc-calibrated upper bound, not a deployable policy. A deployable
+online policy would reserve budget against expected future forced violations
+(estimable from the preflight forced-rate) and therefore performs at or below
+P3; the tight-regime recovery decline reported here thus applies a fortiori to
+any such policy.
 
 ## Run
 
@@ -111,7 +116,7 @@ python replot.py --results results/full
 
 Fixed seeds make full re-runs bit-identical, verified through
 `results/full/reproducibility_hashes.csv`. Results in this README correspond to
-tag `v0.2-h1`.
+tag `v0.3-h1`.
 
 ## H2 shared-server extension
 
