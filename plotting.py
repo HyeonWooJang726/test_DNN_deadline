@@ -39,7 +39,7 @@ def rho_label(rho, pi_bad=0.2):
 
 
 def _ordinal(ax, values):
-    """비등간격 스윕 값을 등간격 위치에 매핑하고 눈금을 설정."""
+    """Map uneven sweep values to evenly spaced positions and set the ticks."""
     order = sorted(set(float(v) for v in values))
     pos = {v: i for i, v in enumerate(order)}
     ax.set_xticks(
@@ -327,7 +327,21 @@ def create_all_plots(
     gap_mask_percent: float,
     output_dir: Path,
 ) -> None:
-    plot_gap_heatmaps(comparison_aggregate, preflight, deadline_ratios, epsilons, skip_modes, output_dir)
-    plot_decomposition(policy_aggregate, output_dir)
-    plot_rho_dependence(comparison_aggregate, policy_aggregate, output_dir, gap_mask_percent)
-    plot_oracle_invariance(comparison_aggregate, channel_stats, output_dir)
+    figures_dir = Path("figures") / output_dir.name
+    figures_dir.mkdir(parents=True, exist_ok=True)
+    plot_gap_heatmaps(
+        comparison_aggregate,
+        preflight,
+        deadline_ratios,
+        epsilons,
+        skip_modes,
+        figures_dir,
+    )
+    plot_decomposition(policy_aggregate, figures_dir)
+    plot_rho_dependence(
+        comparison_aggregate,
+        policy_aggregate,
+        figures_dir,
+        gap_mask_percent,
+    )
+    plot_oracle_invariance(comparison_aggregate, channel_stats, figures_dir)

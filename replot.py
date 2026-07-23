@@ -30,7 +30,8 @@ def replot(results_dir: Path) -> None:
         gap_mask_percent=2.0,
         output_dir=results_dir,
     )
-    print(f"Regenerated plots in: {results_dir.resolve()}")
+    figures_dir = Path("figures") / results_dir.name
+    print(f"Regenerated plots in: {figures_dir.resolve()}")
 
 
 def parse_args() -> argparse.Namespace:

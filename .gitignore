@@ -6,3 +6,8 @@ results/*/checkpoint/
 results/destructive_test/
 results/resume_a/
 results/resume_b/
+results/smoke/
+results/quick/
+figures/smoke/
+figures/quick/
+h2/results/*/checkpoint/

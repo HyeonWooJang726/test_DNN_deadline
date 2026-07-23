@@ -98,8 +98,8 @@ class GilbertElliottChannel(ChannelSource):
         # Starting in stationarity removes burn-in. Rejection only controls finite-T
         # marginal noise for the requested rho-invariance sanity check; set tolerance
         # to None to obtain an entirely unconditioned Markov trace.
+        rho_key = int(round((self.rho + 1.0) * 1_000_000))
         for attempt in range(self.max_resamples):
-            rho_key = int(round((self.rho + 1.0) * 1_000_000))
             ss = np.random.SeedSequence([seed, rho_key, attempt])
             rng = np.random.default_rng(ss)
             initial_bad = rng.random() < self.pi_bad

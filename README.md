@@ -33,7 +33,7 @@ the full deadline/ε grid.
   percentage-point threshold. The gain peaks at `D/D_min=1.35` and grows with
   ε.
 
-  ![H1a temporal-targeting gain under the conservative late model](results/full/fig_h1a_gap_heatmap_late.png)
+  ![H1a temporal-targeting gain under the conservative late model](figures/full/fig_h1a_gap_heatmap_late.png)
 
 - **H1b-i — online recovery.** Recovery remains approximately **97–98%** in
   loose, highly correlated regimes (`D/D_min=2.0`, ρ=0.9375–0.975, both skip
@@ -47,7 +47,7 @@ the full deadline/ε grid.
   bound on truly online performance; the tight-regime decline therefore holds
   a fortiori.
 
-  ![Online recovery at the representative condition](results/full/fig_h1b1_online_recovery.png)
+  ![Online recovery at the representative condition](figures/full/fig_h1b1_online_recovery.png)
 
 - **H1b-ii — burst formation.** For offline P2 under `late` at the
   representative `D/D_min=1.5, ε=0.05` condition, violation bursts of length
@@ -63,10 +63,10 @@ the full deadline/ε grid.
   theory-predicted invariance under a fixed stationary marginal and confirming
   implementation correctness.
 
-Additional figures: [energy decomposition](results/full/fig_h1a_energy_decomposition.png),
-[late-model burstiness](results/full/fig_h1b2_burstiness_late.png),
-[cost of banning consecutive violations](results/full/fig_h1b3_burst_ban_cost.png),
-and [oracle-flatness sanity check](results/full/fig_sanity_oracle_flatness.png).
+Additional figures: [energy decomposition](figures/full/fig_h1a_energy_decomposition.png),
+[late-model burstiness](figures/full/fig_h1b2_burstiness_late.png),
+[cost of banning consecutive violations](figures/full/fig_h1b3_burst_ban_cost.png),
+and [oracle-flatness sanity check](figures/full/fig_sanity_oracle_flatness.png).
 
 ### Policies
 
@@ -96,12 +96,12 @@ python run_sweep.py --mode full
 - `quick`: `T=10,000`, three seeds, full ρ/deadline/ε grid.
 - `full`: `T=100,000`, ten seeds, full grid.
 
-Outputs go to `results/<mode>`; use `--output PATH` to override. Sanity
+CSV and JSON outputs go to `results/<mode>`, while figures go to
+`figures/<mode>`; use `--output PATH` to override the results directory. Sanity
 assertions are strict by default and can be collected without stopping via
-`--no-strict-sanity`. Plotting can be disabled with `--no-plots`. Each
-completed `(D/D_min, ε, skip)` group is checkpointed under
-`results/<mode>/checkpoint`; pass `--resume` to skip completed groups after an
-interruption.
+`--no-strict-sanity`. Plotting can be disabled with `--no-plots`. Each completed
+`(D/D_min, ε, skip)` group is checkpointed under `results/<mode>/checkpoint`;
+pass `--resume` to skip completed groups after an interruption.
 
 Paper figures are regenerated from committed CSVs without re-simulation:
 
@@ -115,28 +115,7 @@ tag `v0.2-h1`.
 
 ## H2 shared-server extension
 
-H2 models `N` devices sharing a fixed server speedup of 20 through ideal
-GPS-style proportional allocation. `I1` and `I2` retain fixed equal shares
-and exactly reuse the H1 policy path; `J1` jointly reallocates server capacity
-with I1's violation sets fixed; `J2` jointly selects violations and capacity
-with a Lagrangian heuristic, capacity-aware repair, and an `I2`/`J1` guard.
-Late work consumes energy but runs outside the missed slot's real-time server
-capacity. The independent/common channel synchronization control and all
-other modeling assumptions are recorded in each run's `run_parameters.json`.
-
-Run H2 in the preregistered order:
-
-```powershell
-python run_h2_sweep.py --mode smoke
-python run_h2_sweep.py --mode quick
-python run_h2_sweep.py --mode full
-```
-
-H2 outputs go to `results/h2_<mode>`. They include raw and aggregate policy
-CSVs, `h2_decomposition.csv`, `h2_fairness.csv`, capacity/budget sanity
-checks, reproducibility hashes, runtime projection, preregistration
-assessment, and four H2 figures. Checkpoint/resume, preflight exclusion, and
-per-seed runtime-failure isolation follow the H1 workflow.
+The H2 extension is isolated under `h2/` and is currently inactive.
 
 ## Main outputs
 

@@ -1,4 +1,12 @@
+import sys
 from dataclasses import replace
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).resolve().parents[2]
+H2_DIR = ROOT_DIR / "h2"
+for path in (ROOT_DIR, H2_DIR):
+    if str(path) not in sys.path:
+        sys.path.insert(0, str(path))
 
 import pandas as pd
 import pytest
