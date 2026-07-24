@@ -28,7 +28,7 @@ def test_preflight_and_fixed_seed_pipeline_hash():
     device = config.devices[0]
     channel = config.channel
     d_min = minimum_good_deadline_ms(device.profile, channel.r_good_mbps, channel.tx_power_w)
-    assert d_min == 36.045
+    assert d_min == 35.0
     assert not preflight_check(device, channel, 1.2 * d_min, 0.05).valid
     assert preflight_check(device, channel, 1.35 * d_min, 0.05).valid
 

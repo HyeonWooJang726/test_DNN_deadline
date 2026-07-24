@@ -40,9 +40,14 @@ class DNNProfileConfig:
     server_speedup: float = 20.0
     local_modes: tuple[LocalMode, ...] = (
         LocalMode("normal", 1.0, 1.0),
-        # The prescribed second smoke adjustment lowers 0.55 to 0.42 after
-        # r_B=12 Mbps still left fewer than two valid ratios below 1.35.
-        LocalMode("boost", 0.42, 2.6),
+        # CutEdge Jetson TX2 GPU profile (Lim et al., IEEE TSC 17(6):3300-3316, 2024).
+        # normal = 850 MHz, boost = 1300 MHz (the TX2 DVFS maximum).
+        #   speed  = 850/1300 = 0.654                            (T ~ 1/f)
+        #   energy = [P(1300)/P(850)] * 0.654 = 2.510 * 0.654 = 1.64
+        # from P(f) = alpha*f^gamma + beta with
+        # (alpha, beta, gamma) = (3.8351e-8, 0.7312, 2.6343).
+        # Frequency-based toy approximations, not measured ratios.
+        LocalMode("boost", 0.654, 1.64),
     )
 
     def __post_init__(self) -> None:
@@ -73,7 +78,7 @@ class DeviceConfig:
     profile: DNNProfileConfig = field(default_factory=DNNProfileConfig)
     # Update this frozen-profile guard when profile measurements change, or
     # set it to None to record the measured D_min without enforcing a value.
-    expected_d_min_ms: float | None = 36.045
+    expected_d_min_ms: float | None = 35.0
 
     def __post_init__(self) -> None:
         if self.expected_d_min_ms is not None and self.expected_d_min_ms <= 0:
@@ -82,10 +87,12 @@ class DeviceConfig:
 
 @dataclass(frozen=True)
 class ChannelConfig:
-    r_good_mbps: float = 40.0
-    # Raised from 10 after the prescribed smoke adjustment ladder: at 10 Mbps
-    # only D/D_min=1.35 survived at the tight end even with local boost.
-    r_bad_mbps: float = 12.0
+    # CutEdge's trace-driven simulation uses a measured uplink trace spanning
+    # 10.864-53.196 Mbps. The Bad and Good states represent the low and high
+    # ends of that range. These are representative two-state throughputs, not
+    # the measured goodput of any specific MCS.
+    r_good_mbps: float = 48.0
+    r_bad_mbps: float = 16.0
     pi_bad: float = 0.2
     rate_jitter_sigma_log: float = 0.25
     tx_power_w: float = 1.2

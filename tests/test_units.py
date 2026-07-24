@@ -1,6 +1,6 @@
 import numpy as np
 
-from config import DeviceConfig, DNNProfileConfig, default_experiment
+from config import DeviceConfig, DNNProfileConfig
 from dnn_profile import (
     compute_slot_costs,
     j_to_mj,
@@ -16,12 +16,12 @@ from run_sweep import _d_min_acceptance
 
 
 def test_d_min_acceptance_uses_optional_configured_expectation():
-    default_device = default_experiment("smoke").devices[0]
+    default_device = DeviceConfig(expected_d_min_ms=35.0)
     passed, detail = _d_min_acceptance(
-        (default_device,), {default_device.name: 36.045}
+        (default_device,), {default_device.name: 35.0}
     )
     assert passed
-    assert '"expected_d_min_ms": 36.045' in detail
+    assert '"expected_d_min_ms": 35.0' in detail
 
     changed_profile_device = DeviceConfig(expected_d_min_ms=None)
     passed, detail = _d_min_acceptance(
@@ -32,7 +32,7 @@ def test_d_min_acceptance_uses_optional_configured_expectation():
     assert '"measured_d_min_ms": 123.456' in detail
 
     failed, _ = _d_min_acceptance(
-        (default_device,), {default_device.name: 36.045000002}
+        (default_device,), {default_device.name: 35.000000002}
     )
     assert not failed
 
