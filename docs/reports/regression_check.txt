@@ -1,3 +1,4 @@
+> **STALE (pre-parameter-update).** Generated under the previous boost/channel parameters. Regenerate after this update.
 H1 v0.1-h1 -> v0.2-h1 regression check
 old_source=v0.1-h1:results/full
 new_source=results/full

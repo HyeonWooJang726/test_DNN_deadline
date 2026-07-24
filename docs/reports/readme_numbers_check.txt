@@ -1,3 +1,4 @@
+> **STALE (pre-parameter-update).** Generated under the previous boost/channel parameters. Regenerate after this update.
 README numeric cross-check against results/full
 ===============================================
 

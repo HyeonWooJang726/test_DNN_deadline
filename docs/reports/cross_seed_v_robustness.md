@@ -1,3 +1,4 @@
+> **STALE (pre-parameter-update).** Generated under the previous boost/channel parameters. Regenerate after this update.
 # Cross-seed robustness of P3 V calibration
 
 ## Method

@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-07-23T08:33:07.616336+00:00",
+  "generated_utc": "2026-07-24T08:16:14.673658+00:00",
   "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
   "platform": "Windows-10-10.0.26200-SP0",
   "config": {
@@ -48,17 +48,17 @@
             },
             {
               "name": "boost",
-              "speed_scale": 0.42,
-              "energy_scale": 2.6
+              "speed_scale": 0.654,
+              "energy_scale": 1.64
             }
           ]
         },
-        "expected_d_min_ms": 36.045
+        "expected_d_min_ms": 35.0
       }
     ],
     "channel": {
-      "r_good_mbps": 40.0,
-      "r_bad_mbps": 12.0,
+      "r_good_mbps": 48.0,
+      "r_bad_mbps": 16.0,
       "pi_bad": 0.2,
       "rate_jitter_sigma_log": 0.25,
       "tx_power_w": 1.2,
@@ -130,12 +130,12 @@
     }
   },
   "derived_d_min_ms": {
-    "device_0": 36.045
+    "device_0": 35.0
   },
   "burst_burn_in_slots": 1000,
   "notes": {
     "rho": "The state transition probabilities are inverted directly from stationary pi_B and specified lag-1 rho; rho=0 is i.i.d.",
-    "D_min": "D_min uses normal mode only and is fixed at 36.045 ms for the default profile.",
+    "D_min": "D_min uses normal mode only and is fixed at 35.0 ms for the default profile.",
     "rate_jitter": "Rates use independent clipped lognormal multiplicative jitter; state occupancy and autocorrelation checks use state labels only.",
     "P2prime": "T>2000 uses cardinality-priced (Lagrangian) exact path DP plus deterministic safe augmentation.",
     "burst_statistics": "Maximum violation run and burst counts exclude the first max(200, T//100) slots for every policy.",
