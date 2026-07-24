@@ -61,7 +61,7 @@ the full deadline/ε grid.
   theory-predicted invariance under a fixed stationary marginal and confirming
   implementation correctness.
 
-Additional figures: [energy decomposition](figures/full/fig_h1a_energy_decomposition.png),
+Additional figures: [energy decomposition (drop)](figures/full/fig_h1a_energy_decomposition_drop.png), [energy decomposition (late)](figures/full/fig_h1a_energy_decomposition_late.png),
 [late-model burstiness](figures/full/fig_h1b2_burstiness_late.png),
 [cost of banning consecutive violations](figures/full/fig_h1b3_burst_ban_cost.png),
 and [oracle-flatness sanity check](figures/full/fig_sanity_oracle_flatness.png).

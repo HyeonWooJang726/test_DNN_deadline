@@ -12,15 +12,30 @@ from plotting import create_all_plots
 
 def replot(results_dir: Path) -> None:
     policy_aggregate = pd.read_csv(results_dir / "policy_aggregate.csv")
+    policy_runs = pd.read_csv(results_dir / "policy_runs.csv")
     comparison_aggregate = pd.read_csv(results_dir / "comparison_aggregate.csv")
     preflight = pd.read_csv(results_dir / "preflight.csv")
     channel_stats = pd.read_csv(results_dir / "channel_stats.csv")
+
+    valid_keys = (
+        preflight.loc[
+            preflight["valid"].astype(bool),
+            ["device", "rho", "deadline_ratio", "epsilon", "skip_mode"],
+        ].drop_duplicates()
+    )
+    policy_analysis_df = policy_runs.merge(
+        valid_keys,
+        on=["device", "rho", "deadline_ratio", "epsilon", "skip_mode"],
+        how="inner",
+        validate="many_to_one",
+    )
 
     deadline_ratios = tuple(sorted(float(v) for v in preflight["deadline_ratio"].unique()))
     epsilons = tuple(sorted(float(v) for v in preflight["epsilon"].unique()))
     skip_modes = tuple(sorted(str(v) for v in preflight["skip_mode"].unique()))
     create_all_plots(
         policy_aggregate,
+        policy_analysis_df,
         comparison_aggregate,
         preflight,
         channel_stats,

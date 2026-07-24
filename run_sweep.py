@@ -814,6 +814,7 @@ def run_sweep(
     if make_plots:
         create_all_plots(
             policy_aggregate,
+            policy_analysis_df,
             comparison_aggregate,
             preflight_df,
             channel_df,

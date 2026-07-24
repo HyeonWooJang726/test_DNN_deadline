@@ -126,93 +126,163 @@ def plot_gap_heatmaps(
 
 
 def plot_decomposition(
-    policy_aggregate: pd.DataFrame,
+    policy_runs: pd.DataFrame,
     output_dir: Path,
     representative_ratio: float = 1.5,
-    representative_epsilon: float = 0.05,
+    rho_values: tuple[float, ...] = (0.75, 0.975),
 ) -> None:
-    data = policy_aggregate[
-        np.isclose(policy_aggregate["deadline_ratio"], representative_ratio)
-        & np.isclose(policy_aggregate["epsilon"], representative_epsilon)
-        & policy_aggregate["rho"].isin([0.0, 0.75, 0.975])
+    data = policy_runs[
+        np.isclose(policy_runs["deadline_ratio"], representative_ratio)
     ].copy()
-    if data.empty:
+    if data.empty or not rho_values:
         return
+    pair_keys = [
+        "device",
+        "rho",
+        "seed",
+        "deadline_ratio",
+        "epsilon",
+        "skip_mode",
+    ]
     policies = ["P1", "P0", "P2", "P2prime", "P3"]
-    panels = sorted(data[["skip_mode", "rho"]].drop_duplicates().itertuples(index=False, name=None))
-    fig, axes = plt.subplots(
-        2,
-        3,
-        figsize=(14.5, 8),
-        sharey=True,
-        layout="constrained",
-    )
-    axes = axes.ravel()
-    all_values = []
-    for ax, (skip_mode, rho) in zip(axes, panels):
-        subset = (
-            data[(data["skip_mode"] == skip_mode) & np.isclose(data["rho"], rho)]
-            .drop_duplicates("policy", keep="first")
-            .set_index("policy")
-            .reindex(policies)
+    epsilon_values = (0.01, 0.05, 0.1, 0.15)
+    for skip_mode in ("drop", "late"):
+        fig, axes = plt.subplots(
+            len(rho_values),
+            len(epsilon_values),
+            figsize=(18, 8),
+            layout="constrained",
         )
-        baseline_value = subset.loc["P1", "mean_energy_j_mean"]
-        baseline = float(baseline_value) if pd.notna(baseline_value) else float("nan")
-        values = []
-        errors = []
-        for policy in policies:
-            mean_value = subset.loc[policy, "mean_energy_j_mean"]
-            std_value = subset.loc[policy, "mean_energy_j_std"]
-            if pd.isna(mean_value) or not np.isfinite(baseline) or baseline <= 0.0:
-                values.append(float("nan"))
-                errors.append(float("nan"))
-            else:
-                values.append(100.0 * float(mean_value) / baseline)
-                errors.append(
-                    100.0 * float(std_value) / baseline
-                    if pd.notna(std_value)
-                    else 0.0
+        axes = np.asarray(axes).reshape(len(rho_values), len(epsilon_values))
+        for row_index, rho in enumerate(rho_values):
+            for column_index, epsilon in enumerate(epsilon_values):
+                ax = axes[row_index, column_index]
+                subset = data[
+                    (data["skip_mode"] == skip_mode)
+                    & np.isclose(data["rho"], rho)
+                    & np.isclose(data["epsilon"], epsilon)
+                ]
+                if subset.empty:
+                    ax.set_axis_off()
+                    continue
+
+                if subset.duplicated(
+                    pair_keys + ["policy"],
+                    keep=False,
+                ).any():
+                    raise ValueError(
+                        "Duplicate policy rows found for paired decomposition"
+                    )
+                wide = subset.pivot(
+                    index=pair_keys,
+                    columns="policy",
+                    values="mean_energy_j",
                 )
-        finite_values = [value for value in values if np.isfinite(value)]
-        all_values.extend(finite_values)
-        x = np.arange(len(policies))
-        ax.bar(
-            x,
-            values,
-            yerr=errors,
-            capsize=3,
-            color=[POLICY_COLORS[p] for p in policies],
-        )
-        ax.set_xticks(x, policies)
-        ax.set_xlim(-0.6, len(policies) - 0.4)
-        for index, value in enumerate(values):
-            if not np.isfinite(value):
-                ax.text(
-                    index,
-                    0.5,
-                    "n/a",
-                    transform=ax.get_xaxis_transform(),
-                    ha="center",
-                    va="center",
-                    color="#666666",
+                wide = wide.reindex(columns=policies)
+
+                if wide["P1"].isna().any():
+                    missing_rows = wide.index[wide["P1"].isna()]
+                    details = [
+                        (
+                            f"device={device}, rho={missing_rho:g}, "
+                            f"deadline_ratio={deadline_ratio:g}, "
+                            f"epsilon={missing_epsilon:g}, "
+                            f"skip_mode={missing_skip_mode}, policy=P1, "
+                            f"missing_seed={seed}"
+                        )
+                        for (
+                            device,
+                            missing_rho,
+                            seed,
+                            deadline_ratio,
+                            missing_epsilon,
+                            missing_skip_mode,
+                        ) in missing_rows
+                    ]
+                    raise ValueError(
+                        "Missing P1 baseline for one or more paired seeds: "
+                        + "; ".join(details)
+                    )
+                if (wide["P1"] <= 0).any():
+                    raise ValueError("P1 energy must be positive")
+
+                missing_details = []
+                for policy in policies[1:]:
+                    missing_rows = wide.index[wide[policy].isna()]
+                    missing_details.extend(
+                        (
+                            f"device={device}, rho={missing_rho:g}, "
+                            f"deadline_ratio={deadline_ratio:g}, "
+                            f"epsilon={missing_epsilon:g}, "
+                            f"skip_mode={missing_skip_mode}, policy={policy}, "
+                            f"missing_seed={seed}"
+                        )
+                        for (
+                            device,
+                            missing_rho,
+                            seed,
+                            deadline_ratio,
+                            missing_epsilon,
+                            missing_skip_mode,
+                        ) in missing_rows
+                    )
+                if missing_details:
+                    raise ValueError(
+                        "Missing paired policy rows: "
+                        + "; ".join(missing_details)
+                    )
+
+                ratios = wide[policies].div(wide["P1"], axis=0)
+                values = 100.0 * ratios.mean(axis=0)
+                errors = 100.0 * ratios.std(axis=0, ddof=1)
+                finite_values = [
+                    float(value)
+                    for value in values
+                    if np.isfinite(value)
+                ]
+                x = np.arange(len(policies))
+                ax.bar(
+                    x,
+                    values,
+                    yerr=errors,
+                    capsize=3,
+                    color=[POLICY_COLORS[p] for p in policies],
+                )
+                ax.set_xticks(x, policies)
+                ax.set_xlim(-0.6, len(policies) - 0.4)
+                for index, value in enumerate(values):
+                    if not np.isfinite(value):
+                        ax.text(
+                            index,
+                            0.5,
+                            "n/a",
+                            transform=ax.get_xaxis_transform(),
+                            ha="center",
+                            va="center",
+                            color="#666666",
+                            fontsize=9,
+                        )
+                if finite_values:
+                    ax.set_ylim(
+                        bottom=max(0.0, min(finite_values) - 3.0),
+                        top=102.0,
+                    )
+                if column_index == 0:
+                    ax.set_ylabel("Energy normalized by P1 [%]")
+                ax.set_title(
+                    f"{rho_label(rho)} — eps={epsilon:g}",
                     fontsize=9,
                 )
-        ax.set_title(f"{skip_mode} — {rho_label(rho, style='panel')}")
-        ax.grid(axis="y", alpha=0.25)
-    if all_values:
-        axes[0].set_ylim(bottom=max(0.0, min(all_values) - 3.0), top=102.0)
-    for ax in axes[::3]:
-        ax.set_ylabel("Energy normalized by P1 [%]")
-    fig.suptitle(
-        "Energy Use of Each Policy under Different Channel Conditions\n"
-        f"(D/Dmin={representative_ratio:g}, "
-        f"eps={representative_epsilon:g}, skip=drop/late)"
-    )
-    _save(
-        fig,
-        output_dir / "fig_h1a_energy_decomposition.png",
-        tight_layout=False,
-    )
+                ax.grid(axis="y", alpha=0.25)
+        fig.suptitle(
+            "Energy Use of Each Policy across Violation Budgets\n"
+            f"(D/Dmin={representative_ratio:g}, skip={skip_mode})"
+        )
+        _save(
+            fig,
+            output_dir / f"fig_h1a_energy_decomposition_{skip_mode}.png",
+            tight_layout=False,
+        )
 
 
 def plot_rho_dependence(
@@ -341,6 +411,7 @@ def plot_oracle_invariance(
 
 def create_all_plots(
     policy_aggregate: pd.DataFrame,
+    policy_runs: pd.DataFrame,
     comparison_aggregate: pd.DataFrame,
     preflight: pd.DataFrame,
     channel_stats: pd.DataFrame,
@@ -360,7 +431,7 @@ def create_all_plots(
         skip_modes,
         figures_dir,
     )
-    plot_decomposition(policy_aggregate, figures_dir)
+    plot_decomposition(policy_runs, figures_dir)
     plot_rho_dependence(
         comparison_aggregate,
         policy_aggregate,
