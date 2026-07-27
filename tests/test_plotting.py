@@ -25,26 +25,26 @@ def test_rho_label_uses_axis_and_panel_styles():
     )
 
 
-def test_decomposition_has_five_policy_ticks_in_every_panel(monkeypatch, tmp_path: Path):
-    policies = ["P1", "P0", "P2", "P2prime", "P3"]
+def test_decomposition_has_four_policy_ticks_in_every_panel(monkeypatch, tmp_path: Path):
+    policies = ["P1", "P0", "P2", "P2prime"]
     rows = []
     for skip_mode in ("drop", "late"):
-        for rho in (0.0, 0.75, 0.975):
-            for index, policy in enumerate(policies):
-                # Exercise the explicit n/a path in one panel.
-                if skip_mode == "late" and rho == 0.975 and policy == "P3":
-                    continue
-                rows.append(
-                    {
-                        "deadline_ratio": 1.5,
-                        "epsilon": 0.05,
-                        "rho": rho,
-                        "skip_mode": skip_mode,
-                        "policy": policy,
-                        "mean_energy_j_mean": 1.0 - 0.04 * index,
-                        "mean_energy_j_std": 0.01,
-                    }
-                )
+        for rho in (0.75, 0.975):
+            for epsilon in (0.01, 0.05, 0.1, 0.15):
+                for seed in (1701, 1702):
+                    for index, policy in enumerate(policies):
+                        rows.append(
+                            {
+                                "device": "device_0",
+                                "deadline_ratio": 1.5,
+                                "epsilon": epsilon,
+                                "rho": rho,
+                                "seed": seed,
+                                "skip_mode": skip_mode,
+                                "policy": policy,
+                                "mean_energy_j": 1.0 - 0.04 * index,
+                            }
+                        )
     frame = pd.DataFrame(rows)
     captured = {}
 
@@ -56,12 +56,11 @@ def test_decomposition_has_five_policy_ticks_in_every_panel(monkeypatch, tmp_pat
     plotting.plot_decomposition(frame, tmp_path)
 
     fig = captured["fig"]
-    assert len(fig.axes) == 6
-    assert all(len(ax.get_xticklabels()) == 5 for ax in fig.axes)
+    assert len(fig.axes) == 8
+    assert all(len(ax.get_xticklabels()) == 4 for ax in fig.axes)
     assert all(
         [tick.get_text() for tick in ax.get_xticklabels()] == policies
         for ax in fig.axes
     )
-    assert any(text.get_text() == "n/a" for ax in fig.axes for text in ax.texts)
-    assert np.allclose(fig.axes[0].get_xlim(), (-0.6, 4.6))
+    assert np.allclose(fig.axes[0].get_xlim(), (-0.6, 3.6))
     plt.close(fig)

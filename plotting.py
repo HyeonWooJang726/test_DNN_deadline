@@ -17,7 +17,6 @@ POLICY_COLORS = {
     "P0": "#9ecae1",
     "P2": "#2171b5",
     "P2prime": "#6baed6",
-    "P3": "#f28e2b",
 }
 RHO_AXIS_LABEL = (
     "Channel state correlation ρ (run = mean bad-state run length, slots)"
@@ -144,7 +143,7 @@ def plot_decomposition(
         "epsilon",
         "skip_mode",
     ]
-    policies = ["P1", "P0", "P2", "P2prime", "P3"]
+    policies = ["P1", "P0", "P2", "P2prime"]
     epsilon_values = (0.01, 0.05, 0.1, 0.15)
     for skip_mode in ("drop", "late"):
         fig, axes = plt.subplots(
@@ -293,37 +292,11 @@ def plot_rho_dependence(
     representative_ratio: float = 1.5,
     representative_epsilon: float = 0.05,
 ) -> None:
-    comp = comparison_aggregate[
-        np.isclose(comparison_aggregate["deadline_ratio"], representative_ratio)
-        & np.isclose(comparison_aggregate["epsilon"], representative_epsilon)
-    ].sort_values("rho")
     pol = policy_aggregate[
         np.isclose(policy_aggregate["deadline_ratio"], representative_ratio)
         & np.isclose(policy_aggregate["epsilon"], representative_epsilon)
-        & policy_aggregate["policy"].isin(["P2", "P3"])
+        & policy_aggregate["policy"].isin(["P2"])
     ].sort_values("rho")
-
-    fig, ax = plt.subplots(figsize=(11, 5.7))
-    pos = _ordinal(ax, comp["rho"])
-    for skip_mode, group in comp.groupby("skip_mode"):
-        y = group["online_recovery_mean"].to_numpy(copy=True)
-        oracle_gap = group["oracle_gap_percent_mean"].to_numpy()
-        y[oracle_gap < gap_mask_percent] = np.nan
-        x = [pos[float(value)] for value in group["rho"]]
-        ax.errorbar(x, y, yerr=group["online_recovery_std"], marker="o", capsize=3, label=skip_mode)
-    ax.axhline(1.0, color="black", linewidth=0.8, linestyle="--")
-    ax.set(
-        xlabel=RHO_AXIS_LABEL,
-        ylabel=r"Online recovery $(P1-P3)/(P1-P2)$",
-        title=(
-            "How Much of the Best Possible Savings the Online Policy Achieves\n"
-            f"(D/Dmin={representative_ratio:g}, eps={representative_epsilon:g}, "
-            f"skip=drop/late; gap < {gap_mask_percent:g}% masked)"
-        ),
-    )
-    ax.grid(alpha=0.25)
-    ax.legend()
-    _save(fig, output_dir / "fig_h1b1_online_recovery.png")
 
     for skip_mode, group in pol.groupby("skip_mode"):
         fig, axes = plt.subplots(1, 2, figsize=(17, 5.5))

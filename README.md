@@ -6,9 +6,8 @@ budget (ε) in DNN split-offloading:
 - **(H1a)** the value of temporally targeting violations at expensive slots —
   as a function of deadline tightness and ε. This offline value is provably
   invariant to channel correlation, which we verify as a sanity check.
-- **(H1b)** how channel state correlation ρ affects (i) how much of that value
-  an online policy can recover, (ii) how violations cluster into bursts, and
-  (iii) the energy cost of banning consecutive violations.
+- **(H1b)** how channel state correlation ρ affects (i) how violations cluster
+  into bursts and (ii) the energy cost of banning consecutive violations.
 
 The local action space is the product of DNN split point and local execution
 mode. The default profile provides `normal` and a faster, higher-energy
@@ -20,7 +19,7 @@ and applies independent clipped-lognormal rate jitter within each state.
 
 These results use the committed `full` run (`T=100,000`, 10 seeds). Reported
 ranges come from the full-grid CSVs and are not read from a representative
-slice. The online-recovery and other line/bar figures use
+slice. The line/bar figures use
 `D/D_min=1.5, ε=0.05` unless their title says otherwise; the H1a heatmap spans
 the full deadline/ε grid.
 
@@ -35,24 +34,13 @@ the full deadline/ε grid.
 
   ![H1a temporal-targeting gain under the conservative late model](figures/full/fig_h1a_gap_heatmap_late.png)
 
-- **H1b-i — online recovery.** With the denser post-hoc V calibration and the
-  corrected violation cap, aggregate recovery is **96.3–99.7%** across all
-  reportable full-grid combinations. In the tight, highly correlated `late`
-  regime (`ρ=0.975, ε=0.15`), it is **96.5%** at `D/D_min=1.1` and **96.8%**
-  at `D/D_min=1.2`. The representative `D/D_min=1.5, ε=0.05` `drop` slice
-  declines modestly from **99.6%** at i.i.d. to **97.9%** at `ρ=0.975`.
-  Correlation therefore still reduces recovery, but the corrected optimistic
-  upper bound closes most of the offline-oracle gap even in the tight regime.
-
-  ![Online recovery at the representative condition](figures/full/fig_h1b1_online_recovery.png)
-
-- **H1b-ii — burst formation.** For offline P2 under `late` at the
+- **H1b-i — burst formation.** For offline P2 under `late` at the
   representative `D/D_min=1.5, ε=0.05` condition, violation bursts of length
   at least two grow monotonically with ρ, from approximately **241** at i.i.d.
   to approximately **838** at ρ=0.975 (240.9 to 837.9 after the uniform
   1,000-slot burn-in). This is the hidden failure mode of a pure long-run-rate
   constraint.
-- **H1b-iii — cost of a hard burst ban.** Under `drop` at
+- **H1b-ii — cost of a hard burst ban.** Under `drop` at
   `D/D_min=1.5, ε=0.15`, banning consecutive violations costs approximately
   **0.8%** at i.i.d. and up to **6.5%** at ρ=0.975. It reaches approximately
   **12%** at `D/D_min=1.35, ε=0.15` and high ρ (12.37% at ρ=0.975). This
@@ -72,22 +60,20 @@ and [oracle-flatness sanity check](figures/full/fig_sanity_oracle_flatness.png).
 |---|---|---|
 | P1 | Meet every deadline (boost allowed) | Status-quo baseline |
 | P0 | Spend the same budget on random slots | Control: isolates the workload-reduction benefit |
-| P3 | Calibrated-V upper bound (V and the full-trace forced count are used post hoc; optional cap is ⌊εT⌋ minus forced violations) | Optimistic online upper bound |
-| P2' | Oracle + no-consecutive-violation constraint | Cost of banning bursts |
 | P2 | Offline oracle: spend on highest-saving slots | Upper bound |
+| P2prime | Oracle + no-consecutive-violation constraint | Cost of banning bursts |
 
-Core energy ordering is `P1 ≥ P0 ≥ P2`. Both P3 and P2' remain above the P2
-oracle, but they have no guaranteed mutual ordering because only P2' bans
-consecutive violations. Central decomposition — `P1-P0`: workload-reduction
-benefit; `P0-P2`: pure temporal-targeting benefit (the claim of this work).
+Core energy ordering is `P1 ≥ P0 ≥ P2`. P2prime remains above the P2 oracle
+because it additionally bans consecutive violations. Central decomposition —
+`P1-P0`: workload-reduction benefit; `P0-P2`: pure temporal-targeting benefit
+(the claim of this work).
 
-P3 is a post-hoc-calibrated upper bound, not a deployable policy. A deployable
-online policy would reserve budget against expected future forced violations
-(estimable from the preflight forced-rate) and therefore performs at or below
-P3; the tight-regime recovery decline reported here thus applies a fortiori to
-any such policy. A five-seed cross-seed check finds that transferring the
-calibrated V changes recovery by less than 1 percentage point in all tested
-conditions.
+## Limitations and future work
+
+The current study's policies are all offline and analyze the upper bound on
+the benefit obtainable by temporally targeting allowed violations. Online
+policies and shared-resource control will be addressed in a future
+multi-device extension.
 
 ## Run
 
@@ -127,9 +113,9 @@ The H2 extension is isolated under `h2/` and is currently inactive.
 ## Main outputs
 
 - `policy_runs.csv`, `policy_aggregate.csv`: policy energy, violation, burst,
-  selected-V, and boost-use metrics.
+  and boost-use metrics.
 - `comparisons.csv`, `comparison_aggregate.csv`: discard gain, temporal
-  targeting gain, offline oracle gap, online recovery, and P2' cost.
+  targeting gain, offline oracle gap, and P2prime cost.
 - `preflight.csv`: invalid combinations and exact exclusion reasons under the
   expected forced-violation `< ε/2` rule.
 - `runtime_failures.csv`: per-seed `runtime-invalid` combinations and exception

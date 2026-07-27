@@ -29,7 +29,7 @@ def test_runtime_failure_isolated_and_non_strict_sanity_checkpointed(
 
     def fail_one_combination(*args):
         epsilon = args[5]
-        seed = args[8]
+        seed = args[7]
         if epsilon == 0.05 and seed == 1701:
             raise ValueError("forced count exceeds budget")
         return real_simulate(*args)

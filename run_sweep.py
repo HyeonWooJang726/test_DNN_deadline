@@ -361,11 +361,9 @@ def run_sweep(
                                     ratio,
                                     epsilon,
                                     skip_mode,
-                                    sweep.p3_v_values,
                                     seed,
                                     rho,
                                     device_index,
-                                    sweep.violation_tolerance,
                                 )
                             except Exception as exc:
                                 group_tables["runtime_failure_rows"].append(
@@ -417,7 +415,7 @@ def run_sweep(
                                 group_tables["policy_rows"].append({**common, **summary})
                                 for usage in mode_usage_rows(result, trace.state):
                                     group_tables["mode_usage_rows"].append({**common, **usage})
-                                if result.name in ("P2", "P3"):
+                                if result.name in ("P2",):
                                     for hist in interval_histogram(result):
                                         group_tables["interval_rows"].append({**common, **hist})
 
@@ -451,17 +449,11 @@ def run_sweep(
                                     "discard_gain_percent": 100.0 * (energies["P1"] - energies["P0"]) / max(p1, 1e-15),
                                     "targeting_gain_percent": 100.0 * (energies["P0"] - energies["P2"]) / max(p1, 1e-15),
                                     "oracle_gap_percent": oracle_gap_percent,
-                                    "online_recovery": (
-                                        (energies["P1"] - energies["P3"]) / oracle_denominator
-                                        if oracle_gap_percent >= sweep.oracle_gap_mask_percent and oracle_denominator > 0
-                                        else np.nan
-                                    ),
                                     "p2prime_gap_percent": 100.0 * (energies["P2prime"] - energies["P2"]) / max(p1, 1e-15),
                                     "P1_violation_count": violation_counts["P1"],
                                     "P0_violation_count": violation_counts["P0"],
                                     "P2_violation_count": violation_counts["P2"],
                                     "P2prime_violation_count": violation_counts["P2prime"],
-                                    "P3_violation_count": violation_counts["P3"],
                                 }
                             )
                             checks = combination_sanity_rows(
@@ -470,16 +462,8 @@ def run_sweep(
                                 sweep.relative_energy_tolerance,
                                 sweep.violation_tolerance,
                             )
-                            # P3 has no no-adjacent constraint (its bursts are an
-                            # H1b outcome), so it can legitimately beat P2prime.
-                            # Keep the requested ordering as a visible diagnostic,
-                            # but do not mislabel it as a mathematical assertion.
                             for check in checks:
-                                check["severity"] = (
-                                    "diagnostic"
-                                    if check["check"] == "energy_P2prime_le_P3"
-                                    else "required"
-                                )
+                                check["severity"] = "required"
                             for check in checks:
                                 group_tables["sanity_rows"].append({**common, **check})
                             if strict_sanity:
@@ -567,11 +551,9 @@ def run_sweep(
             float(first_digest["deadline_ratio"]),
             float(first_digest["epsilon"]),
             str(first_digest["skip_mode"]),
-            sweep.p3_v_values,
             int(first_digest["seed"]),
             float(first_digest["rho"]),
             repro_device_index,
-            sweep.violation_tolerance,
         )
         repeated_digest = stable_simulation_digest(repeated)
         first_repro_digest = str(first_digest["sha256"])
@@ -658,11 +640,10 @@ def run_sweep(
         "boost_use_rate",
         "boost_use_rate_good",
         "boost_use_rate_bad",
-        "selected_v",
     ]
     policy_aggregate = _aggregate(policy_analysis_df, policy_group, policy_values)
     comparison_group = ["device", "rho", "deadline_ratio", "epsilon", "skip_mode"]
-    comparison_values = ["discard_gain_percent", "targeting_gain_percent", "oracle_gap_percent", "online_recovery", "p2prime_gap_percent", "pi_bad_observed", "lag1_autocorr"]
+    comparison_values = ["discard_gain_percent", "targeting_gain_percent", "oracle_gap_percent", "p2prime_gap_percent", "pi_bad_observed", "lag1_autocorr"]
     comparison_aggregate = _aggregate(
         comparison_analysis_df, comparison_group, comparison_values
     )
@@ -781,7 +762,7 @@ def run_sweep(
     comparison_aggregate.to_csv(outputs["comparison_aggregate"], index=False)
     preflight_df.to_csv(outputs["preflight"], index=False)
     channel_df.to_csv(outputs["channel_stats"], index=False)
-    policy_df[policy_df["policy"].isin(["P2", "P3"])].to_csv(outputs["violation_patterns"], index=False)
+    policy_df[policy_df["policy"].isin(["P2"])].to_csv(outputs["violation_patterns"], index=False)
     interval_df.to_csv(outputs["interval_histograms"], index=False)
     sanity_df.to_csv(outputs["sanity"], index=False)
     digest_df.to_csv(outputs["digests"], index=False)

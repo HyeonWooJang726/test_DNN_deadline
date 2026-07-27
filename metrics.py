@@ -66,9 +66,6 @@ def summarize_policy(
         "boost_use_rate": float(np.mean(boost)),
         "boost_use_rate_good": float(np.mean(boost[good_slots])) if np.any(good_slots) else float("nan"),
         "boost_use_rate_bad": float(np.mean(boost[bad_slots])) if np.any(bad_slots) else float("nan"),
-        "selected_v": float(result.metadata.get("selected_v", np.nan)),
-        "q_final": float(result.metadata.get("q_final", np.nan)),
-        "q_max": float(result.metadata.get("q_max", np.nan)),
         "policy_metadata_json": json.dumps(result.metadata, sort_keys=True),
     }
 
@@ -157,24 +154,14 @@ def combination_sanity_rows(
     scale = e["P1"]
     checks: list[tuple[str, bool, str]] = [
         ("energy_P2_le_P2prime", _leq(e["P2"], e["P2prime"], scale, relative_energy_tolerance), f"{e['P2']:.9g} <= {e['P2prime']:.9g}"),
-        ("energy_P2prime_le_P3", _leq(e["P2prime"], e["P3"], scale, relative_energy_tolerance), f"{e['P2prime']:.9g} <= {e['P3']:.9g}"),
         ("energy_P2_le_P0", _leq(e["P2"], e["P0"], scale, relative_energy_tolerance), f"{e['P2']:.9g} <= {e['P0']:.9g}"),
         ("energy_P0_le_P1", _leq(e["P0"], e["P1"], scale, relative_energy_tolerance), f"{e['P0']:.9g} <= {e['P1']:.9g}"),
     ]
-    for name in ("P0", "P2", "P2prime", "P3"):
+    for name in ("P0", "P2", "P2prime"):
         rate = p[name].violation_rate
         checks.append(
             (f"violation_{name}_within_budget", rate <= epsilon + violation_tolerance + 1e-12, f"{rate:.9g} <= {epsilon + violation_tolerance:.9g}")
         )
-    p3_count = int(p["P3"].violate.sum())
-    total_budget = int(np.floor(epsilon * len(p["P3"].violate)))
-    checks.append(
-        (
-            "violation_P3_total_within_floor_budget",
-            p3_count <= total_budget,
-            f"{p3_count} <= floor(epsilon*T)={total_budget}",
-        )
-    )
     p1_rate = p["P1"].violation_rate
     forced_rate = simulation.forced_count / len(p["P1"].violate)
     checks.append(

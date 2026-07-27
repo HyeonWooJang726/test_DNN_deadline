@@ -63,11 +63,9 @@ def test_h2_n1_independent_path_bitwise_reduces_to_h1_p1_p2():
         2.0,
         0.15,
         "drop",
-        config.sweep.lambda_iterations * (10.0,),
         88,
         0.75,
         0,
-        0.005,
     )
     i1, i2, _ = independent_policy_sets(
         (trace,),
