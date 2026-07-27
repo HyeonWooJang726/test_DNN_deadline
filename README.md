@@ -17,44 +17,12 @@ and applies independent clipped-lognormal rate jitter within each state.
 
 ## Key results
 
-These results use the committed `full` run (`T=100,000`, 10 seeds). Reported
-ranges come from the full-grid CSVs and are not read from a representative
-slice. The line/bar figures use
-`D/D_min=1.5, ε=0.05` unless their title says otherwise; the H1a heatmap spans
-the full deadline/ε grid.
+Results are omitted while the simulation parameters are being
+finalized. Regenerate them with `python run_sweep.py --mode full`
+and read them from `results/full/comparison_aggregate.csv` and
+`results/full/policy_aggregate.csv`.
 
-- **H1a — accepted.** At `ε=0.15`, pure temporal-targeting gain
-  `(P0-P2)/P1` rises from **11.7%** at `D/D_min=1.1` to **25.9%** at
-  `D/D_min=1.35` under the conservative `late` skip model (ρ-averaged values
-  from `comparison_aggregate.csv`: 11.67% and 25.93%). Under `drop`, it spans
-  approximately **15–37%** over the same tight-deadline region and reaches
-  36.73% at `D/D_min=1.35, ε=0.15`. This exceeds the pre-registered 10
-  percentage-point threshold. The gain peaks at `D/D_min=1.35` and grows with
-  ε.
-
-  ![H1a temporal-targeting gain under the conservative late model](figures/full/fig_h1a_gap_heatmap_late.png)
-
-- **H1b-i — burst formation.** For offline P2 under `late` at the
-  representative `D/D_min=1.5, ε=0.05` condition, violation bursts of length
-  at least two grow monotonically with ρ, from approximately **241** at i.i.d.
-  to approximately **838** at ρ=0.975 (240.9 to 837.9 after the uniform
-  1,000-slot burn-in). This is the hidden failure mode of a pure long-run-rate
-  constraint.
-- **H1b-ii — cost of a hard burst ban.** Under `drop` at
-  `D/D_min=1.5, ε=0.15`, banning consecutive violations costs approximately
-  **0.8%** at i.i.d. and up to **6.5%** at ρ=0.975. It reaches approximately
-  **12%** at `D/D_min=1.35, ε=0.15` and high ρ (12.37% at ρ=0.975). This
-  motivates a soft burst-rate constraint instead of a hard ban.
-- **Sanity.** The offline oracle gap is flat in ρ, matching the
-  theory-predicted invariance under a fixed stationary marginal and confirming
-  implementation correctness.
-
-Additional figures: [energy decomposition (drop)](figures/full/fig_h1a_energy_decomposition_drop.png), [energy decomposition (late)](figures/full/fig_h1a_energy_decomposition_late.png),
-[late-model burstiness](figures/full/fig_h1b2_burstiness_late.png),
-[cost of banning consecutive violations](figures/full/fig_h1b3_burst_ban_cost.png),
-and [oracle-flatness sanity check](figures/full/fig_sanity_oracle_flatness.png).
-
-### Policies
+## Policies
 
 | Policy | Behavior | Role |
 |---|---|---|
@@ -103,8 +71,7 @@ python replot.py --results results/full
 ```
 
 Fixed seeds make full re-runs bit-identical, verified through
-`results/full/reproducibility_hashes.csv`. Results in this README correspond to
-tag `v0.3-h1`.
+`results/full/reproducibility_hashes.csv`.
 
 ## H2 shared-server extension
 
@@ -112,6 +79,14 @@ The H2 extension is isolated under `h2/` and is currently inactive.
 
 ## Main outputs
 
+- `skip_mode`: the service-degradation model applied when the budget is
+  spent. The two modes represent different QoS events and must not be
+  pooled.
+  - `drop`: the frame is not processed. ε bounds the long-run fraction
+    of omitted frames.
+  - `late`: the frame is processed using the globally minimum-energy
+    configuration and completes after the deadline. ε bounds the
+    long-run deadline-miss rate.
 - `policy_runs.csv`, `policy_aggregate.csv`: policy energy, violation, burst,
   and boost-use metrics.
 - `comparisons.csv`, `comparison_aggregate.csv`: discard gain, temporal
