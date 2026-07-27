@@ -13,10 +13,10 @@ import pandas as pd
 
 
 POLICY_COLORS = {
-    "P1": "#636363",
-    "P0": "#9ecae1",
-    "P2": "#2171b5",
-    "P2prime": "#6baed6",
+    "P1": "#636363",       # gray: status quo
+    "P0": "#9ecae1",       # light blue: same budget, random placement
+    "P2": "#2171b5",       # dark blue: same budget, targeted placement
+    "P2prime": "#e6550d",  # orange: differs by constraint, not by placement quality
 }
 RHO_AXIS_LABEL = (
     "Channel state correlation ρ (run = mean bad-state run length, slots)"
@@ -294,35 +294,67 @@ def plot_rho_dependence(
 ) -> None:
     pol = policy_aggregate[
         np.isclose(policy_aggregate["deadline_ratio"], representative_ratio)
-        & np.isclose(policy_aggregate["epsilon"], representative_epsilon)
-        & policy_aggregate["policy"].isin(["P2"])
+        & policy_aggregate["policy"].isin(["P0", "P2", "P2prime"])
     ].sort_values("rho")
 
+    epsilon_values = (0.01, 0.05, 0.1, 0.15)
     for skip_mode, group in pol.groupby("skip_mode"):
-        fig, axes = plt.subplots(1, 2, figsize=(17, 5.5))
-        pos = _ordinal(axes[0], group["rho"])
-        _ordinal(axes[1], group["rho"])
-        for policy, part in group.groupby("policy"):
-            color = POLICY_COLORS[policy]
-            x = [pos[float(value)] for value in part["rho"]]
-            axes[0].errorbar(x, part["max_violation_run_mean"], yerr=part["max_violation_run_std"], marker="o", capsize=3, color=color, label=policy)
-            axes[1].errorbar(x, part["burst_count_ge2_mean"], yerr=part["burst_count_ge2_std"], marker="o", capsize=3, color=color, label=policy)
-        for ax in axes:
-            ax.set_xlabel(RHO_AXIS_LABEL)
-            ax.grid(alpha=0.25)
-            ax.legend()
-        axes[0].set_ylabel("Maximum consecutive violations")
-        axes[1].set_ylabel("Number of violation bursts (length >= 2)")
+        fig, axes = plt.subplots(
+            2,
+            len(epsilon_values),
+            figsize=(22, 9),
+            layout="constrained",
+        )
+        for column_index, epsilon in enumerate(epsilon_values):
+            epsilon_group = group[np.isclose(group["epsilon"], epsilon)]
+            top = axes[0, column_index]
+            bottom = axes[1, column_index]
+            top_pos = _ordinal(top, epsilon_group["rho"])
+            bottom_pos = _ordinal(bottom, epsilon_group["rho"])
+            top.set_xticklabels([])
+            for policy in ("P0", "P2", "P2prime"):
+                part = epsilon_group[epsilon_group["policy"] == policy]
+                color = POLICY_COLORS[policy]
+                top_x = [top_pos[float(value)] for value in part["rho"]]
+                bottom_x = [bottom_pos[float(value)] for value in part["rho"]]
+                top.errorbar(
+                    top_x,
+                    part["max_violation_run_mean"],
+                    yerr=part["max_violation_run_std"],
+                    marker="o",
+                    capsize=3,
+                    color=color,
+                    label=policy,
+                )
+                bottom.errorbar(
+                    bottom_x,
+                    part["burst_count_ge2_mean"],
+                    yerr=part["burst_count_ge2_std"],
+                    marker="o",
+                    capsize=3,
+                    color=color,
+                    label=policy,
+                )
+            top.set_title(f"eps={epsilon:g}")
+            top.grid(alpha=0.25)
+            bottom.grid(alpha=0.25)
+        axes[0, 0].set_ylabel("Maximum consecutive violations")
+        axes[1, 0].set_ylabel("Number of violation bursts (length >= 2)")
+        fig.supxlabel(RHO_AXIS_LABEL)
+        axes[0, 0].legend()
         title = {
             "drop": "Consecutive Violations under Drop",
             "late": "Consecutive Violations under Late Processing",
         }[skip_mode]
         fig.suptitle(
             f"{title}\n"
-            f"(D/Dmin={representative_ratio:g}, eps={representative_epsilon:g}, "
-            f"skip={skip_mode})"
+            f"(D/Dmin={representative_ratio:g}, skip={skip_mode})"
         )
-        _save(fig, output_dir / f"fig_h1b2_burstiness_{skip_mode}.png")
+        _save(
+            fig,
+            output_dir / f"fig_h1b2_burstiness_{skip_mode}.png",
+            tight_layout=False,
+        )
 
     # epsilon=0.15 exceeds pi_B/2 and exposes the P2-P2prime trade-off.
     comp_gap = comparison_aggregate[
