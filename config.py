@@ -106,7 +106,9 @@ class SweepConfig:
     t_slots: int
     seeds: tuple[int, ...]
     rho_values: tuple[float, ...] = (0.0, 0.375, 0.75, 0.875, 0.9375, 0.975)
-    deadline_ratios: tuple[float, ...] = (1.05, 1.1, 1.2, 1.35, 1.5, 2.0)
+    deadline_ratios: tuple[float, ...] = (
+        1.05, 1.1, 1.2, 1.35, 1.5, 2.0, 2.5, 3.0, 4.0
+    )
     epsilons: tuple[float, ...] = (0.01, 0.05, 0.1, 0.15)
     skip_modes: tuple[str, ...] = ("drop", "late")
     relative_energy_tolerance: float = 0.005
