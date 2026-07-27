@@ -1,7 +1,7 @@
 {
-  "generated_utc": "2026-07-24T08:16:14.673658+00:00",
-  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
-  "platform": "Windows-10-10.0.26200-SP0",
+  "generated_utc": "2026-07-27T03:33:41.681623+00:00",
+  "python": "3.12.13 (main, Mar  3 2026, 15:01:35) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
   "config": {
     "devices": [
       {
